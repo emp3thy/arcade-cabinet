@@ -337,3 +337,41 @@ stage L (`cad/lap_disc_l.py`).
 *Consequences:* BOM base bolts 6 → 10. Bodies: ring 327.6 cm³, sled 139.4,
 plate 228.1, TPU ring 309.2, tyre 302.5; mass estimate unchanged at ~2.2 kg.
 `06-enclosure-reference.md` updated the same day.
+
+---
+
+**D-018 — The Street Fighter II logo is debossed into the plate; the decals go**
+*Date:* 2026-09-13 · *Status:* settled by the owner
+The logo was a Fusion decal, so it existed only as an appearance: a pad printed
+from the model carried nothing unless the slicer painted it. It is now geometry,
+modelled as stage M (`cad/lap_disc_m.py`).
+
+- **Recess:** `sf2_deboss` cuts `logo_deboss` 0.6 mm down from the plate's top
+  face through the whole logo footprint, 29.08 cm². `sf2_counters` joins the
+  same 0.6 mm back under the six enclosed counters of the letterforms, 0.73 cm²,
+  so they stand flush in the recess rather than being cut away with it. The
+  floor left is 28.36 cm² at z 51.4.
+- **Size and place:** 117.0 × 59.8 mm centred at (0, 72.9), bottom edge at
+  y 43.0, in the free band above the buttons. 2 mm to the top button's raised
+  disc at y 41, 6.4 mm from the top corners to the plate rim at r 124.65. This
+  is the practical ceiling — the round plate cuts the corners away faster than
+  extra width buys, so even at a 4 mm rim margin the logo only reaches about
+  120 mm.
+- **Art:** `cad/art/logo/sf2_deboss_solid.dxf` (the letterforms) and
+  `sf2_deboss_holes.dxf` (their counters), both written in millimetres in model
+  coordinates, so they import at final size and place with no move and no scale.
+  `sf2_deboss.dxf` is an earlier combined variant and is not used.
+- **Both decals deleted.** The Chun-Li decal went with the SF2 one; neither was
+  load-bearing. `cad/lap_disc_logo.py` and `cad/lap_disc_art.py` stay in the
+  repo as reference, so either can be put back without rewriting its placement
+  arithmetic.
+- **Printing:** nothing prints unsupported — the recess floor is flat and faces
+  up, and the counters stand on it. The slicer can still paint the two colours
+  from `cad/art/logo/sf2_red.svg` and `sf2_black.svg`; the deboss reads on its
+  own if it does not.
+
+*Consequences:* plate 228.1 → 226.4 cm³; other bodies and the ~2.2 kg mass
+estimate unchanged. Stage M's verification reports `sketch.unconstrained`
+against both imported art sketches: that is expected for imported geometry —
+the DXF is the placement, and the script asserts the landed box instead.
+`06-enclosure-reference.md` updated the same day.
