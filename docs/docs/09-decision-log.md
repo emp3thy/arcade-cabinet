@@ -337,3 +337,81 @@ stage L (`cad/lap_disc_l.py`).
 *Consequences:* BOM base bolts 6 → 10. Bodies: ring 327.6 cm³, sled 139.4,
 plate 228.1, TPU ring 309.2, tyre 302.5; mass estimate unchanged at ~2.2 kg.
 `06-enclosure-reference.md` updated the same day.
+
+---
+
+**D-018 — The Street Fighter II logo is debossed into the plate; the decals go**
+*Date:* 2026-09-13 · *Status:* settled by the owner
+The logo was a Fusion decal, so it existed only as an appearance: a pad printed
+from the model carried nothing unless the slicer painted it. It is now geometry,
+modelled as stage M (`cad/lap_disc_m.py`).
+
+- **Recess:** `sf2_deboss` cuts `logo_deboss` 0.6 mm down from the plate's top
+  face through the whole logo footprint, 29.08 cm². `sf2_counters` joins the
+  same 0.6 mm back under the six enclosed counters of the letterforms, 0.73 cm²,
+  so they stand flush in the recess rather than being cut away with it. The
+  floor left is 28.36 cm² at z 51.4.
+- **Size and place:** 117.0 × 59.8 mm centred at (0, 72.9), bottom edge at
+  y 43.0, in the free band above the buttons. 2 mm to the top button's raised
+  disc at y 41, 6.4 mm from the top corners to the plate rim at r 124.65. This
+  is the practical ceiling — the round plate cuts the corners away faster than
+  extra width buys, so even at a 4 mm rim margin the logo only reaches about
+  120 mm.
+- **Art:** `cad/art/logo/sf2_deboss_solid.dxf` (the letterforms) and
+  `sf2_deboss_holes.dxf` (their counters), both written in millimetres in model
+  coordinates, so they import at final size and place with no move and no scale.
+  `sf2_deboss.dxf` is an earlier combined variant and is not used.
+- **Both decals deleted.** The Chun-Li decal went with the SF2 one; neither was
+  load-bearing. `cad/lap_disc_logo.py` and `cad/lap_disc_art.py` stay in the
+  repo as reference, so either can be put back without rewriting its placement
+  arithmetic.
+- **Printing:** nothing prints unsupported — the recess floor is flat and faces
+  up, and the counters stand on it. The slicer can still paint the two colours
+  from `cad/art/logo/sf2_red.svg` and `sf2_black.svg`; the deboss reads on its
+  own if it does not.
+
+*Consequences:* plate 228.1 → 226.4 cm³; other bodies and the ~2.2 kg mass
+estimate unchanged. Stage M's verification reports `sketch.unconstrained`
+against both imported art sketches: that is expected for imported geometry —
+the DXF is the placement, and the script asserts the landed box instead.
+`06-enclosure-reference.md` updated the same day.
+
+---
+
+**D-019 — Anti-slide grooves in the TPU ring's underside**
+*Date:* 2026-09-13 · *Status:* settled by the owner
+D-014 gave the TPU ring the anti-slide job the wedge's rake used to do, and
+left its underside flat: one face, 486.2 cm². A 2.2 kg pad over that area
+presses at about 0.44 kPa, too little to push 85A TPU into a denim weave or a
+beanbag's pile, so the pad grips by adhesion alone. Modelled as stage N
+(`cad/lap_disc_n.py`).
+
+- **Grooves:** eight concentric grooves cut into the underside, `groove_w`
+  4 mm wide, `groove_d` 1 mm deep, `groove_pitch` 8 mm apart, innermost
+  centred at `groove_r0` 69 mm and outermost at 125. Contact falls from 486.2
+  to 291.2 cm², so pressure on the lands rises about 1.67×. TPU ring 309.2 →
+  289.7 cm³.
+- **Cut, not proud.** Standing ridges would work the same way, but grooves
+  keep the pad's z envelope exactly as D-016 left it (−6 to 0), keep the ten
+  bolt clamp faces flat, and leave the same first layer against the bed.
+- **Concentric, not a crosshatch.** Concentric rings resist the fore-and-aft
+  slide a rounded thigh causes and leave rotation free, which D-014 wants —
+  each player takes their own hand angle by turning the pad.
+- **Shallow on purpose.** The pressure concentration that makes a groove grip
+  is the same thing that imprints on a thigh over a long session, so this is
+  1 mm, not the 3 mm ridges D-013 drew for the superseded wedge.
+- **The band is boxed in.** The grooves span r 67 to 127: 1.5 mm clear of the
+  inner TPU bolt counterbores (r 65.5) and 1.6 mm of the base bolt ones
+  (r 128.6), and inside both edge fillets. The script asserts all four
+  clearances before cutting, so moving `groove_r0` or `groove_pitch` past a
+  counterbore fails rather than nicking one.
+- **Print the contact face against a textured plate.** TPU off smooth PEI
+  comes out glossy, and that costs more grip than these grooves buy back.
+
+*The grip claim is judgement, not measurement* — `[UNVERIFIED]`. Ridges help
+on a lap, where the limit is pressure, and hurt on a hard smooth surface,
+where rubber friction follows real contact area and a flat pad wins. The lap
+is the design case. Sit on the first pad before cutting a second set.
+
+*Consequences:* TPU ring 309.2 → 289.7 cm³; mass estimate unchanged at
+~2.2 kg. `06-enclosure-reference.md` updated the same day.

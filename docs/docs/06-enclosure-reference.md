@@ -159,10 +159,10 @@ left of the bounding square, y from the player's edge.
 | ~~Qi coil~~ | ~~centre (185, 55), boss ⌀62, under the right palm, hole in the TPU ring~~ — removed by D-015 |
 | Port board | 64-wide flat facet on the rear wall, x 133–163; the charging input (D-015). Tyre windowed over it (stage E) |
 | Antenna bracket | ~~front wall, x 116–124~~ rear-right wall at 60° from +x (D-016), 30 cm pigtail looped through the hoops |
-| Underside | TPU 85A ring ⌀110–280, 6 thick, 25 % gyroid; thigh contact 247 / 224 / 180 per side at crest spacing 170 / 200 / 240 |
+| Underside | TPU 85A ring ⌀110–280, 6 thick, 25 % gyroid; thigh contact 247 / 224 / 180 per side at crest spacing 170 / 200 / 240. **Eight anti-slide grooves (D-019)**, 4 wide × 1 deep at 8 pitch, centres r 69–125: contact 486.2 → 291.2 cm². Print this face against a textured plate |
 | Mass | about 2.2 kg estimated (D-016 added the ledge wedge and a thicker plate; D-017 is volume-neutral) |
 | Bed | single-nozzle mode at ⌀300 (325 × 320); ⌀296 if dual-nozzle |
-| Livery | rim band carries the marquee lettering; tyre in the player colour (red P1/P4, blue P2, green P3); button discs in the punch/kick ramp; character inlay on the free plate face — **P1 art placed 2026-09-13:** Chun-Li poster (`../../cad/art/chunli.svg`), 45.7 × 64 mm, centred at (0, −84) in model coordinates (x from the disc centre, player at −y), i.e. the front band between the cluster and the rim; 4 mm to the LK and stick discs, 6.4 mm to the plate edge. Stage G (`../../cad/lap_disc_g.py`, same day) recesses a **50.1 × 68.4 mm pocket, 0.6 mm deep**, art plus `art_margin` 2.2 a side, centred at (0, −85): the slicer colours its floor black and the per-colour layers in `../../cad/art/layers/set4/` sit inside it (frame outer 49.8 × 68.2 at 64 mm art height). Corners clear the stick disc by 1.6 mm and the plate's flat by 1.9 mm, so the pocket cannot grow. The Fusion decal (`../../cad/lap_disc_art.py`) sits on the pocket floor as a visualisation |
+| Livery | rim band carries the marquee lettering; tyre in the player colour (red P1/P4, blue P2, green P3); button discs in the punch/kick ramp; character inlay on the free plate face — **P1 art placed 2026-09-13:** Chun-Li poster (`../../cad/art/chunli.svg`), 45.7 × 64 mm, centred at (0, −84) in model coordinates (x from the disc centre, player at −y), i.e. the front band between the cluster and the rim; 4 mm to the LK and stick discs, 6.4 mm to the plate edge. Stage G (`../../cad/lap_disc_g.py`, same day) recesses a **50.1 × 68.4 mm pocket, 0.6 mm deep**, art plus `art_margin` 2.2 a side, centred at (0, −85): the slicer colours its floor black and the per-colour layers in `../../cad/art/layers/set4/` sit inside it (frame outer 49.8 × 68.2 at 64 mm art height). Corners clear the stick disc by 1.6 mm and the plate's flat by 1.9 mm, so the pocket cannot grow. The Fusion decal (`../../cad/lap_disc_art.py`) placed it as a visualisation; **deleted 2026-09-13 (D-018)** along with the logo decal — the script is kept as reference. The **Street Fighter II logo** sits in the band above the buttons, debossed 0.6 mm into the plate, 117.0 × 59.8 mm centred at (0, 72.9) — stage M, D-018 |
 
 CAD: `../../cad/lap_disc.py` (author script, fusion-design skill; bundle with
 `python -m fusionhelper.bundle`, gate with `python -m fusionhelper.preflight`,
@@ -206,6 +206,24 @@ rim-band lettering and the raised-disc colour split. Renders in
 > (`hoop_*`; enlarged the same day so the antenna's 2 mm connector passes), routing the pigtail from the Brook's corner round the +x side
 > to the antenna bracket at −103°; opening ceiling is a 3.5 mm bridge,
 > prints from the floor.
+
+> **Stage N, `lap_disc_n.py` (2026-09-13, D-019):** anti-slide grooves in
+> the TPU ring's underside. Eight concentric grooves, `groove_w` 4 mm wide,
+> `groove_d` 1 mm deep, `groove_pitch` 8 mm apart, centres r 69 to 125, so
+> the band spans r 67–127 — 1.5 mm clear of the inner bolt counterbores and
+> 1.6 mm of the base ones. Contact 486.2 → 291.2 cm²; TPU ring 309.2 →
+> 289.7 cm³; z envelope unchanged at −6…0.
+
+> **Stage M, `lap_disc_m.py` (2026-09-13, D-018):** the Street Fighter II
+> logo debossed into the plate's top face. `sf2_deboss` cuts `logo_deboss`
+> 0.6 mm through the logo footprint (29.08 cm², imported from
+> `../../cad/art/logo/sf2_deboss_solid.dxf`); `sf2_counters` joins the same
+> 0.6 mm back under the six letterform counters (0.73 cm², from
+> `sf2_deboss_holes.dxf`) so they stand flush in the recess. 117.0 × 59.8 mm
+> centred at (0, 72.9), bottom edge y 43.0 — 2 mm to the top button disc,
+> 6.4 mm from the top corners to the rim. Both DXFs are written in
+> millimetres in model coordinates, so they import at final size and place.
+> Plate 228.1 → 226.4 cm³.
 
 > **Stage L, `lap_disc_l.py` (2026-09-13, D-017):** headroom for the port
 > board. `port_relief` cuts a 28 × 6 mm box out of the ledge wedge from the
