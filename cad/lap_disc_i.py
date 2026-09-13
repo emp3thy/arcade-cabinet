@@ -43,7 +43,7 @@ PARAMS_I = (
     ("port_plate_h",     "31 mm",   "mm", "faceplate height (z)"),
     ("port_plate_t",     "1.5 mm",  "mm", "faceplate thickness"),
     ("port_board_len",   "28.3 mm", "mm", "rear board depth behind the faceplate"),
-    ("port_hole_inset",  "3 mm",    "mm", "M3 hole centre from each plate edge (owner: 2 mm from the corner)"),
+    ("port_hole_inset",  "2 mm",    "mm", "M3 hole centre from each plate edge (owner, 2026-09-13: 2 mm from both edges)"),
     ("port_pilot",       "2.5 mm",  "mm", "M3 thread-forming pilot in the boss"),
     ("port_pilot_depth", "6 mm",    "mm", "pilot depth into the boss_in 8 mm boss"),
     ("port_hole_dx",     "port_plate_w / 2 - port_hole_inset", "mm", "derived"),
@@ -220,7 +220,7 @@ def run(_context: str):
     ctx.up.itemByName("port_hole_inset").expression = "4 mm"  # fusionhelper: allow R5 — pilot_offsets re-resolves the shell by name; shell re-resolved below
     adsk.doEvents()
     d1 = pilot_offsets()
-    ctx.up.itemByName("port_hole_inset").expression = "3 mm"  # fusionhelper: allow R5 — pilot_offsets re-resolves the shell by name; shell re-resolved below
+    ctx.up.itemByName("port_hole_inset").expression = "2 mm"  # fusionhelper: allow R5 — pilot_offsets re-resolves the shell by name; shell re-resolved below
     adsk.doEvents()
     d2 = pilot_offsets()
     shell = body_named(ctx, "shell")

@@ -18,7 +18,7 @@ of the components live in `../STEP_Reference_Files/`.
 | LiPo 103395 | 95 × 33 × 10 | strapped/foamed, no hard mount |
 | ~~TP4056 module~~ | ~~26 × 17~~ | **Removed by D-010** — do not allocate space or standoffs |
 | ~~Qi receiver coil~~ | ~~⌀50, 1.5 mm thick~~ | **Removed by D-015** — no coil boss, no ring hole |
-| Port board: Brook panel-mount B-C16046, USB **Type-B** socket + 3.5 mm jack, 5-pin cable to the Brook (owner, photos, 2026-09-13) | faceplate 26.1 × 31 × 1.5, rear board 28.3 deep, M3 holes at two diagonal corners, centres ~3 from the edges | **Stage I:** faceplate against the inside face of the rear boss, centred on the port axis, screws from inside into four 2.5 mm pilots 6 deep (either diagonal fits); the boss window is a 22 × 16 plug tunnel, tyre window 23 × 17. Rear board reaches y = 97.9, Brook standoffs end at 94.5 |
+| Port board: Brook panel-mount B-C16046, USB **Type-B** socket + 3.5 mm jack, 5-pin cable to the Brook (owner, photos, 2026-09-13) | faceplate 26.1 × 31 × 1.5, rear board 28.3 deep, M3 holes at two diagonal corners, centres 2 from both edges | **Stage I:** faceplate against the inside face of the rear boss, centred on the port axis, screws from inside into four 2.5 mm pilots 6 deep (either diagonal fits); the boss window is a 22 × 16 plug tunnel, tyre window 23 × 17. Rear board reaches y = 97.9, Brook standoffs end at 94.5 |
 | OLED module | 27 × 15 active area | panel cutout |
 | Joystick (from the cabinet — cross-pattern plate, so probably not a Sanwa JLF despite the STEP file) | **21 mm shaft hole** (measured on the steel plate, 2026-09-12; cut the printed plate at 22 mm so the steel edge is the limit); **4 mounting holes on the axes, each 16 mm from the shaft centre** (owner, 2026-09-12) | **4× M3 × 12 mm bolts through the top plate into the stick's mounting plate, nuts below (owner, 2026-09-12)**. Heads countersunk into the 3.5 mm plate. A **steel plate, 53 mm wide (left–right) × 95 mm front-to-back × 1 mm thick** from the cabinet goes between the stick and the printed plate as a stiffener; give the underside of the top plate a matching 1 mm pocket, centred on the stick (x 48.5–101.5, y 52.5–147.5 in the study's coordinates). It already has the shaft hole and the four M3 holes in the right places, so it doubles as the template for the printed plate's holes (owner, 2026-09-12). |
 | Action buttons | ⌀30 hole, snap-in; **40 mm below-panel depth** (measured 2026-09-12: from the top surface of the hole to the bottom of the microswitch) | — |
@@ -211,7 +211,7 @@ rim-band lettering and the raised-disc colour split. Renders in
 > The board is Brook's USB Type-B panel-mount (not USB-C): faceplate
 > 26.1 × 31 sits against the inside of the 8 mm rear boss at z 8.7–39.7,
 > four M3 pilots (`port_pilot` 2.5, `port_pilot_depth` 6) at the plate's
-> corners (`port_hole_inset` 3), boss window shrunk to `port_w` × `port_h`
+> corners (`port_hole_inset` 2), boss window shrunk to `port_w` × `port_h`
 > = 22 × 16 as the plug tunnel, tyre window follows to 23 × 17. The plug's
 > overmould travels 24 mm of tunnel to reach the socket: overmoulds up to
 > about 20 × 14 pass.
