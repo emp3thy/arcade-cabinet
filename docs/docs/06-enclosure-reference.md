@@ -181,9 +181,21 @@ in the same document (Fusion now reports it as "Arcade Controller v2", a
 saved version, not a new file): four parametric edge fillets — `tyre_r`
 10 on the tyre's two outer edges, `ring_r` 2.5 on the TPU ring's two
 underside edges, `plate_r` 1 on the plate's top outer edge, `disc_r` 0.8 on
-the seven raised discs. Not yet modelled: port-board M3 holes (ASSUMED
-24 × 20, wait for the measurement), the rim-band lettering and the
-raised-disc colour split. Renders in `cad/renders/`.
+the seven raised discs. Stage E, `lap_disc_e.py`, same day: the port
+facet had left a lens-shaped gap (3.8 mm at the centre) between the flat
+and the round tyre, open from above; the tyre now fills that lens
+(`tyre_fill`) and carries a `tyre_win_w` × `tyre_win_h` window
+(`tyre_win_clear` 0.5 a side over the port window) so the port stays
+reachable from outside — it is the charging input (owner, 2026-09-13; see
+the open decision-log conflict with D-010 below). Not yet modelled:
+port-board M3 holes (ASSUMED 24 × 20, wait for the measurement), the
+rim-band lettering and the raised-disc colour split. Renders in
+`cad/renders/`.
+
+> **Open, 2026-09-13:** the owner states the rear port is how the battery
+> charges. D-010 and D-014 record Qi-only charging with no externally
+> reachable USB-C. Whether this port is in addition to Qi or replaces it is
+> undecided; no decision-log entry has been written yet.
 
 Plan view: `../comfort-study/plan-outthere-circles.svg`. Full proposal:
 `../comfort-study/design-3b-outthere-forms.md`. The 280 × 200 rectangle and
