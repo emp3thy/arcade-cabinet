@@ -17,8 +17,8 @@ of the components live in `../STEP_Reference_Files/`.
 | Brook Gen 5W | 97 × 52 (a verified 96 × 45 STEP also exists — **measure yours**) | 4× corner M3 |
 | LiPo 103395 | 95 × 33 × 10 | strapped/foamed, no hard mount |
 | ~~TP4056 module~~ | ~~26 × 17~~ | **Removed by D-010** — do not allocate space or standoffs |
-| Qi receiver coil | ⌀50, 1.5 mm thick | flat against the underside, recessed |
-| USB-C plug + 2 pull-ups | small, internal | Sits on the Brook's port. Needs slack and strain relief, not a panel cutout |
+| ~~Qi receiver coil~~ | ~~⌀50, 1.5 mm thick~~ | **Removed by D-015** — no coil boss, no ring hole |
+| USB-C port board | ~30 × 26 board, holes ASSUMED 24 × 20 — **measure** | In the rear facet window (30.4 × 26.4), wired to the Brook's USB-C input; pigtail needs slack and strain relief (D-015) |
 | OLED module | 27 × 15 active area | panel cutout |
 | Joystick (from the cabinet — cross-pattern plate, so probably not a Sanwa JLF despite the STEP file) | **21 mm shaft hole** (measured on the steel plate, 2026-09-12; cut the printed plate at 22 mm so the steel edge is the limit); **4 mounting holes on the axes, each 16 mm from the shaft centre** (owner, 2026-09-12) | **4× M3 × 12 mm bolts through the top plate into the stick's mounting plate, nuts below (owner, 2026-09-12)**. Heads countersunk into the 3.5 mm plate. A **steel plate, 53 mm wide (left–right) × 95 mm front-to-back × 1 mm thick** from the cabinet goes between the stick and the printed plate as a stiffener; give the underside of the top plate a matching 1 mm pocket, centred on the stick (x 48.5–101.5, y 52.5–147.5 in the study's coordinates). It already has the shaft hole and the four M3 holes in the right places, so it doubles as the template for the printed plate's holes (owner, 2026-09-12). |
 | Action buttons | ⌀30 hole, snap-in; **40 mm below-panel depth** (measured 2026-09-12: from the top surface of the hole to the bottom of the microswitch) | — |
@@ -76,10 +76,6 @@ Other reference parameters from the SCAD file:
 
 ## Clearances to design in
 
-- **Qi coil**: the receiver must sit close to the underside skin with no metal
-  or infill-dense plastic between it and the transmitter. Target ≤3 mm of
-  plastic; a thin recessed pocket, printed with sparse infill, in the region
-  directly above the transmitter pad's coil.
 - **Battery**: pouch cells swell over their life. Leave ~2 mm of clearance on
   the large faces and do not clamp it. Keep it away from the Brook's charging
   circuit for thermal reasons.
@@ -160,8 +156,8 @@ left of the bounding square, y from the player's edge.
 | Palm room | 104 in front of the kick index, 123 to the shaft |
 | Brook | x 150–246, y 200–245, flat on the floor |
 | LiPo | x 28–123, y 172–205, behind the stick body |
-| Qi coil | centre (185, 55), boss ⌀62, under the right palm, hole in the TPU ring |
-| Port board | 64-wide flat facet on the rear wall, x 133–163 |
+| ~~Qi coil~~ | ~~centre (185, 55), boss ⌀62, under the right palm, hole in the TPU ring~~ — removed by D-015 |
+| Port board | 64-wide flat facet on the rear wall, x 133–163; the charging input (D-015). Tyre windowed over it (stage E) |
 | Antenna bracket | front wall, x 116–124 |
 | Underside | TPU 85A ring ⌀110–280, 6 thick, 25 % gyroid; thigh contact 247 / 224 / 180 per side at crest spacing 170 / 200 / 240 |
 | Mass | about 2.0 kg estimated |
@@ -192,10 +188,9 @@ port-board M3 holes (ASSUMED 24 × 20, wait for the measurement), the
 rim-band lettering and the raised-disc colour split. Renders in
 `cad/renders/`.
 
-> **Open, 2026-09-13:** the owner states the rear port is how the battery
-> charges. D-010 and D-014 record Qi-only charging with no externally
-> reachable USB-C. Whether this port is in addition to Qi or replaces it is
-> undecided; no decision-log entry has been written yet.
+> **Settled the same day, D-015:** the rear port replaces Qi charging. The
+> stage C coil boss and the TPU ring's coil hole are to be removed from the
+> model (stage F, pending).
 
 Plan view: `../comfort-study/plan-outthere-circles.svg`. Full proposal:
 `../comfort-study/design-3b-outthere-forms.md`. The 280 × 200 rectangle and

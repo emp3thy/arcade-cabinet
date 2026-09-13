@@ -12,10 +12,11 @@ A hardware build, not a software repo. Two physically separate units:
    functions (Player 1–4 Start, Select, Hotkey). Drives the projector over HDMI.
 2. **Wireless Lap Pad** (up to 4, one per player) — fully wireless, sits on the
    player's lap for beanbag gaming. Brook Gen 5W wireless fighting board,
-   8-way joystick, 6× 30 mm action buttons, 3700 mAh LiPo, Qi charging.
+   8-way joystick, 6× 30 mm action buttons, 3700 mAh LiPo, USB-C charging
+   through a port in the rear rim.
    Bluetooth to the Pi.
 
-Keep these as distinct design concerns. The Pi box needs no battery and no Qi.
+Keep these as distinct design concerns. The Pi box needs no battery.
 The lap pads need no HDMI, ethernet or GPIO.
 
 ## Current phase
@@ -23,9 +24,10 @@ The lap pads need no HDMI, ethernet or GPIO.
 Planning / pre-assembly. Nothing is soldered yet. Most parts are bought
 (see `docs/02-bom.md`).
 
-The charging architecture is **decided** as of 2026-09-06: one charger, Qi into
-the Brook's own USB-C input, TP4056 removed (D-010). The build is still gated on
-a bench test — see `docs/08-open-issues.md` OI-001.
+The charging architecture is **decided**: one charger, the Brook's own USB-C
+input, TP4056 removed (D-010, 2026-09-06); fed from a USB-C port board in the
+rear rim, the Qi receiver dropped (D-015, 2026-09-13). The build is still
+gated on a bench test — see `docs/08-open-issues.md` OI-001.
 
 Enclosure CAD moved from the owner to Claude on 2026-09-06 (D-011); it is done
 in Fusion 360 through the `fusion-design` skill.
@@ -35,8 +37,9 @@ flat, in Street Fighter livery (D-014), after a comfort study in
 `docs/comfort-study/`. The reused cabinet stick and buttons (D-009) set the
 thickness.
 
-Remaining blockers: the OI-001 bench gate, JST PH 2.0 mm pigtails, a USB-C plug
-breakout and 56 kΩ pull-ups, and the enclosure model itself.
+Remaining blockers: the OI-001 bench gate, JST PH 2.0 mm pigtails, confirming
+the port board passes CC through (else 56 kΩ pull-ups), and the enclosure
+model itself.
 
 ## File map
 
@@ -80,9 +83,9 @@ breakout and 56 kΩ pull-ups, and the enclosure model itself.
   Brook board. Any change to the power chain gets called out explicitly, not
   buried in a diff. D-010 leaves exactly one charger on the cell; do not
   reintroduce a second one without a new decision entry.
-- **Duty cycle:** a pad runs from its cell while someone plays, then recharges on
-  the Qi plate. Play and charge never overlap. Wired play is not wanted, so lap
-  pads have no externally reachable USB-C port.
+- **Duty cycle:** a pad runs from its cell while someone plays, then recharges
+  from a USB-C charger through the rear port (D-015). Wired play is possible
+  but not a design goal. The rear port is the pad's only external connector.
 - Units are millimetres and volts. UK suppliers preferred; AliExpress excluded.
 
 ## Conventions

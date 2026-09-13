@@ -1,7 +1,9 @@
 # 03 — Lap Pad Wiring
 
-Charging topology settled 2026-09-06 by **D-010** (Fix A). One charger: the Qi
-receiver feeds the Brook's own USB-C input, and the TP4056 is not fitted.
+Charging topology settled 2026-09-06 by **D-010** (Fix A) and revised
+2026-09-13 by **D-015**. One charger: a USB-C port board in the rear rim feeds
+the Brook's own USB-C input, and the TP4056 is not fitted. The Qi receiver
+D-010 used as the 5 V source is dropped.
 
 **The power chain is still gated on a bench test.** Do not solder sections 1–3
 until the checks in `08-open-issues.md` OI-001 pass on one pad.
@@ -9,9 +11,9 @@ until the checks in `08-open-issues.md` OI-001 pass on one pad.
 ## Power chain overview
 
 ```
-[Qi Tx plate] ~~inductive~~> [Qi Rx module, 5 V]
+[USB-C charger] ──cable──> [USB-C port board, rear rim]
                                      │
-                                     │  VBUS + GND + R_p on both CC lines
+                                     │  VBUS + GND + CC1 + CC2 passed through
                                      ▼
                             [USB-C plug] ──> [Brook USB-C input]
                                                       │
@@ -23,19 +25,24 @@ until the checks in `08-open-issues.md` OI-001 pass on one pad.
                                              [Brook logic + BT]
 ```
 
-One charging control loop, on one cell. No TP4056, no boost converter, no
-external USB-C port.
+One charging control loop, on one cell. No TP4056, no boost converter. The
+rear port is the pad's only external connector.
 
-## 1. Qi receiver → USB-C plug
+## 1. Port board → Brook USB-C input
 
-| From | To |
+| Port board | To |
 |---|---|
-| Qi Rx V+ (5 V out) | USB-C plug `VBUS` |
-| Qi Rx GND | USB-C plug `GND` |
-| Qi Rx V+ (5 V out) | `CC1` via R_p |
-| Qi Rx V+ (5 V out) | `CC2` via R_p |
+| `VBUS` | USB-C plug `VBUS` |
+| `GND` | USB-C plug `GND` |
+| `CC1` | USB-C plug `CC1` |
+| `CC2` | USB-C plug `CC2` |
 
-**The pull-ups are not optional.** A bare 5 V on `VBUS` with floating CC pins is
+Pass the CC lines through and the wall charger's own R_p reaches the Brook;
+nothing else is needed. `[UNVERIFIED]` — confirm the purchased port board
+brings `CC1` and `CC2` out. If it carries only `VBUS` and `GND`, fit R_p at
+the plug end as D-010 had it:
+
+**Then the pull-ups are not optional.** A bare 5 V on `VBUS` with floating CC pins is
 invisible to a compliant USB-C sink. A *source* advertises its current capability
 with R_p, a pull-**up** to 5 V, one resistor per CC line, both the same value:
 
@@ -45,10 +52,8 @@ with R_p, a pull-**up** to 5 V, one resistor per CC line, both the same value:
 | 22 kΩ | 1.5 A |
 | 10 kΩ | 3 A |
 
-Use **56 kΩ**. Do not advertise more than the Qi module can actually deliver;
-most receiver modules this size are 5 W parts, so 5 V at 1 A, and asking for
-1.5 A makes the rail sag instead of charging. Measure the module before
-considering 22 kΩ.
+Use **56 kΩ** in that case. Do not advertise more than the charger can deliver;
+22 kΩ only with a charger rated for 1.5 A.
 
 Do **not** fit 5.1 kΩ anywhere in this harness. 5.1 kΩ to ground is R_d, the
 pull-**down** a *sink* presents. The Brook already has it. Fitting your own would
@@ -135,9 +140,9 @@ at the same time") because two chargers sat on one cell. D-010 removes the secon
 charger, so the rule is gone with it. There is nothing to remember and nothing a
 user can do wrong, which was the point.
 
-Duty cycle: the pad runs from its cell while someone plays, then sits on the Qi
-plate to recharge. Play and charge never overlap. Expect roughly 8 hours from
-flat at 500 mA, which is an overnight recharge between sessions.
+Duty cycle: the pad runs from its cell while someone plays, then charges from a
+USB-C charger through the rear port (D-015). Charge time depends on what the
+Brook's charger draws from a wall charger, `[UNVERIFIED]`; measure it (OI-010).
 
-**No USB-C cutout in the enclosure.** The port is occupied by the internal Qi
-feed. Firmware updates mean opening the pad, which is accepted — see `06`.
+**The rear port is the only cutout.** It reaches the Brook's USB-C input, so
+firmware updates no longer mean opening the pad.

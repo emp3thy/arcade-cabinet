@@ -13,18 +13,16 @@ whole charging design rests on the first two checks.
       current.
 - [ ] If not, fit 56 kΩ R_p from 5 V to each of `CC1` and `CC2` and retry.
       Record the current it settles at.
-- [ ] Does it still charge with no USB host attached? The Qi feed carries power
-      and no data.
+- [ ] Does it still charge with no USB host attached? A wall charger carries
+      power and no data.
 - [ ] What mode does the board enter when it sees `VBUS`? If it drops to wired
-      controller mode that is harmless here, since nobody plays a pad on the
-      plate, but record it so it is not mistaken for a fault later.
-- [ ] Qi transmitter powered, receiver on it: measure receiver output. Expect
-      ~5 V. Record the actual figure **and its delivered current under load** —
-      this is what limits the R_p choice, not the charge time you would like.
-- [ ] Full chain, Qi through to the cell: battery terminal voltage after charge
-      is 4.15–4.2 V.
-- [ ] Time from flat, measured. Expect roughly 8 hours at 500 mA. If it is much
-      worse, the Qi module is the suspect.
+      controller mode, record it so it is not mistaken for a fault later.
+- [ ] Port board in the loop: confirm `CC1` and `CC2` reach the Brook (D-015).
+      If they do not, fit the 56 kΩ R_p at the plug end and retry.
+- [ ] Full chain, wall charger through the rear port to the cell: battery
+      terminal voltage after charge is 4.15–4.2 V.
+- [ ] Time from flat, measured, and the charge current the Brook draws. Both
+      are `[UNVERIFIED]` under D-015.
 - [ ] Battery holds ≥4.0 V after 30 minutes off charge.
 - [ ] Nothing in the chain gets warm enough to be uncomfortable to touch.
 
@@ -44,14 +42,12 @@ improvise a third topology at the bench.
 
 ## C. Charging safety
 
-Under D-010 there is one charger and no external port, so the old dual-charger
-test is gone. What remains:
+Under D-010 there is one charger, so the old dual-charger test is gone. What
+remains:
 
 - [ ] Cell temperature through a full charge cycle. Warm is fine, hot is not.
-- [ ] Charge terminates. Leave it on the plate past the expected finish time and
-      confirm the cell settles rather than climbing past 4.2 V.
-- [ ] Pad on the plate at an angle, and offset from the coil centre: it either
-      charges or it does not, with no sustained half-coupled state getting warm.
+- [ ] Charge terminates. Leave it on the charger past the expected finish time
+      and confirm the cell settles rather than climbing past 4.2 V.
 - [ ] Over-discharge: play a pad to cutoff and confirm something stops it. With
       the TP4056 gone, this is the pack's own protection board or the Brook's
       management, and it is the one safety function nobody has verified. See

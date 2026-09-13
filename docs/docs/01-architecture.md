@@ -22,7 +22,7 @@
        ┌─────┴────┐ ┌─────┴────┐            ┌─────┴────┐ ┌─────┴────┐
        │ LAP PAD 1│ │ LAP PAD 2│            │ LAP PAD 3│ │ LAP PAD 4│
        └──────────┘ └──────────┘            └──────────┘ └──────────┘
-       (identical, one per player, charged on Qi pads between sessions)
+       (identical, one per player, charged over USB-C between sessions)
 ```
 
 ## Why the split
@@ -38,7 +38,7 @@ the point. So:
 ## Lap pad internal blocks
 
 ```
-[Qi Rx coil] ──5V + R_p on CC──> [Brook USB-C in]
+[USB-C port board, rear rim] ──VBUS GND CC1 CC2──> [Brook USB-C in]
                                         │
                                  [Brook on-board charger]
                                         │ JST PH 2.0mm, 3.7V
@@ -54,13 +54,14 @@ the point. So:
 No boost converter. The Brook Gen 5W takes 3.7 V nominal directly — see
 `09-decision-log.md` D-002.
 
-No TP4056 either. The Qi receiver feeds the Brook's own charger, so exactly one
-charging control loop sits on the cell — see D-010. The earlier design put a
+No TP4056 either. The rear USB-C port feeds the Brook's own charger, so exactly
+one charging control loop sits on the cell — see D-010 and D-015 (the Qi
+receiver that D-010 used as the source was dropped on 2026-09-13). The earlier design put a
 TP4056 and the Brook's charger on the same cell with no arbitration between
 them; that is resolved, and the operational rule it needed is gone with it.
 
-Duty cycle: play from the cell, then recharge on the Qi plate. The two never
-overlap. There is no externally reachable USB-C port on a lap pad.
+Duty cycle: play from the cell, then recharge from a USB-C charger through the
+rear port. Wired play is possible but not a design goal.
 
 > **Still gated.** The power chain is not buildable until the bench checks in
 > `08-open-issues.md` OI-001 pass on one pad.

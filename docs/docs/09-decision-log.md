@@ -220,3 +220,38 @@ at the pinky nut and 13 mm at the stiffener; prints in either bed mode.
   the test.
 
 *Discussion artefact:* https://claude.ai/code/artifact/28289a89-8921-427e-a3c4-b8082337952b (section 14)
+
+---
+
+**D-015 — Lap pads charge through a rear USB-C port; the Qi receiver is dropped**
+*Date:* 2026-09-13 · *Status:* settled by the owner
+The port board in the rear facet (D-014) is the charging input. The owner's
+reason: fewer components and a simpler design. The Qi receiver module, the Qi
+transmitter pads, the ⌀62 coil boss on the underside and the coil hole in the
+TPU ring all go.
+
+D-010's principle stands: exactly one charging control loop on the cell, the
+Brook Gen 5W's own on-board charger. Only the source of its 5 V changes, from
+the Qi receiver to a USB-C charger plugged into the rear port. The port board
+must pass `VBUS`, `GND`, `CC1` and `CC2` through to the Brook's USB-C input so
+the charger's own R_p advertisement reaches the Brook; a breakout that carries
+only `VBUS` and `GND` needs the 56 kΩ pull-ups from D-010 fitted at the Brook
+end instead. `[UNVERIFIED]` — which kind the purchased port board is.
+
+*Consequences:*
+- D-010's "no externally reachable USB-C port" is superseded. Wired play
+  becomes physically possible; it is still not a design goal.
+- OI-001's Qi-specific checks (receiver output, delivered current, coupling at
+  an angle) are gone. The check that the Brook charges its attached cell from
+  5 V on USB-C stays, and is now the ordinary use of the board.
+- Charge current is whatever the Brook's charger draws from a wall charger,
+  `[UNVERIFIED]`; the 500 mA / 8 h figure from D-010 was set by the Qi module
+  and no longer applies.
+- BOM: Qi receiver and transmitter become surplus; the 56 kΩ pull-ups are
+  needed only if the port board lacks CC pass-through.
+- CAD: stage E (`cad/lap_disc_e.py`, same day) fills the facet gap in the
+  tyre and windows the tyre for the port. The coil boss and the ring's coil
+  hole are to be removed from the model (stage F); `coil_x`, `coil_y`,
+  `coil_boss_d`, `coil_boss_h`, `ring_coil_hole` go with them.
+- `06-enclosure-reference.md`, `01`, `02`, `03`, `07`, `08` and `CLAUDE.md`
+  updated the same day.

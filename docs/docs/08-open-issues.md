@@ -9,8 +9,9 @@ can do.
 ## OI-001 — Two chargers on one cell (DECIDED 2026-09-06 — Fix A, build gated on a bench test)
 
 **Decision.** Fix A is adopted. See `09-decision-log.md` D-010. The TP4056 comes
-out; the Qi receiver's 5 V goes into the Brook's USB-C input; one charger remains
-on the cell. OI-002 closes as a consequence.
+out; 5 V goes into the Brook's USB-C input; one charger remains on the cell.
+OI-002 closes as a consequence. **Revised by D-015 (2026-09-13):** the 5 V now
+comes from a USB-C port board in the rear rim, not a Qi receiver.
 
 **Still gating the build.** Do not solder the power chain until the bench test
 below passes on one pad:
@@ -19,13 +20,12 @@ below passes on one pad:
       USB-C. Bench supply, current meter in line, cell attached. Try bare
       `VBUS` first — many devices charge without CC negotiation. If it does
       not, fit 56 kΩ R_p pull-ups and retry.
-- [ ] It still charges with `VBUS` present and no USB host attached. The Qi
-      feed carries power and no data. If the board drops into wired controller
-      mode on seeing `VBUS`, that is harmless under the owner's duty cycle —
-      nobody plays a pad sitting on the plate — but record the behaviour.
-- [ ] The Qi receiver's actual delivered current under load, measured rather
-      than read off the listing. This sets the R_p value and the honest charge
-      time.
+- [ ] It still charges with `VBUS` present and no USB host attached. A wall
+      charger carries power and no data. If the board drops into wired
+      controller mode on seeing `VBUS`, record the behaviour.
+- [ ] The port board passes `CC1` and `CC2` through to the Brook (D-015). If
+      it carries only `VBUS` and `GND`, the 56 kΩ pull-ups go at the plug end.
+- [ ] Charge current and time from flat through the rear port, measured.
 
 If the gate fails, fall back to Fix B below and move the load to `OUT+/OUT−`.
 
@@ -180,7 +180,8 @@ Everything marked `[UNVERIFIED]` in the docs, collected:
   the D-010 build — see OI-001)**
 - Whether it charges with `VBUS` present and no USB host, and what mode it
   enters when it sees `VBUS`
-- The Qi receiver module's real delivered current under load
+- Whether the purchased USB-C port board passes `CC1`/`CC2` through (D-015)
+- The Brook's charge current from a wall charger, and the time from flat
 - Brook display-header pinout and voltage; what the OLED actually reports
 - Whether the 103395 pack has an integrated protection circuit **(now the pad's
   only over-discharge protection under D-010)**
@@ -194,8 +195,10 @@ duplicating anything four times.
 
 ## OI-010 — Runtime per charge is now a gating number (OPEN)
 
-D-010 accepts a recharge of roughly 8 hours at 500 mA. That only works if a
-single charge covers a whole evening of play. Measure hours to first low-battery
-warning under continuous use early, not at the end of the build. If one charge
-does not cover a session, the answer is a higher R_p (and a Qi module that can
-actually supply it), not a return to the TP4056.
+D-010 accepted a recharge of roughly 8 hours at 500 mA from the Qi module.
+D-015 replaces the Qi module with a wall charger through the rear port, so the
+charge time is now whatever the Brook's charger draws, `[UNVERIFIED]`. A single
+charge still has to cover a whole evening of play. Measure hours to first
+low-battery warning under continuous use early, not at the end of the build.
+If one charge does not cover a session, the answer is not a return to the
+TP4056.
