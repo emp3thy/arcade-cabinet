@@ -263,3 +263,44 @@ USB-C breakout. Consequences: no CC lines and no pull-ups; charge through a
 USB-C-to-B (or A-to-B) cable; the Brook sees plain 5 V on VBUS through its
 own USB header. Mount modelled as stage I (`cad/lap_disc_i.py`). Where the
 text above says USB-C for the port, read USB-B.
+
+---
+
+**D-016 — Lap pad is a bolted, serviceable assembly: ring, sled, plate, two TPU parts**
+*Date:* 2026-09-13 · *Status:* settled by the owner
+The owner wants the plate removable for repairs and upgrades with no
+fasteners on its top face, the electronics reachable, and every printed part
+free of unsupported overhangs. The shell is therefore split at the floor line
+into a **ring** (walls, ledge, rim, port boss) and a **sled** (floor slab with
+the Brook standoffs, LiPo tray and plinth, antenna cable hoops and antenna
+bracket). Modelled as stage J (`cad/lap_disc_j.py`).
+
+- **Plate** grows from 3.5 to 5 mm (`plate_t`); top face unchanged at 52. Six
+  M3 heat-set inserts (4 mm hole, 4.2 deep, 0.8 mm skin) sit in its underside
+  at r 116, angles 30/130/170/210/245/330°. Nothing hangs below the plate, so
+  it prints top-up without support.
+- **Plate to ring:** six 45° gussets rise from the wall to the plate seat, one
+  per screw; the screw hole runs 13 mm down through the gusset to a ⌀7 spot
+  face 9 mm below the seat. M3 × 16 socket screws from inside the cavity.
+- **Ledge support:** a continuous 45° wedge under the ledge (an inside-corner
+  chamfer, 17.6 mm each way, absent only at the port boss) so the ring prints
+  open side up with no overhang. +119 cm³ ≈ 150 g PETG; pad estimate rises to
+  about 2.2 kg.
+- **Sled to ring:** six M3 × 12 from underneath, up through the TPU ring
+  (⌀7 × 3.5 counterbores), the sled floor (⌀3.4) and into ⌀8 × 8 bosses on the
+  ring's inner wall (2.5 mm pilots, 7 deep) at 55/115/185/235/285/345°. The
+  same bolts clamp the TPU ring; nothing is glued.
+- **Antenna bracket** moves from the front wall to 60° (rear-right), 22.7 mm
+  from the nearest Brook standoff, so the 30 cm pigtail reaches with slack
+  looped through the hoops. Hoops sit 0.4 mm off the wall so they belong to
+  the sled.
+- **Tyre:** top outer edge keeps the 10 mm fillet; bottom outer edge becomes a
+  10 mm 45° chamfer so it prints flat. Its plug tunnel keeps a flat 23 mm top
+  (TPU bridges poorly; cosmetic, inside the tunnel).
+- **Venting:** none. The Brook's charger dissipates about 1 W; the button
+  holes, stick hole and port tunnel breathe. Measure cell temperature on the
+  first full charge.
+
+*Consequences:* D-014's mass estimate becomes ~2.2 kg. BOM gains 6 × M3 × 16,
+6 × M3 × 12, 6 × M3 × 4 heat-set inserts. `06-enclosure-reference.md` updated
+the same day.

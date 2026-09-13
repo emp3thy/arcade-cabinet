@@ -149,7 +149,7 @@ left of the bounding square, y from the player's edge.
 
 | Item | Value |
 |---|---|
-| Rings, outside in | TPU 85A tyre (equator 32 tall at r 150, top 44 at r 138); PETG rim band r 125–138, 46 rising to 53; PLA plate ⌀250 at 52; raised discs 2 mm proud (⌀90 under the stick, ⌀40 under each button) |
+| Rings, outside in | TPU 85A tyre (equator 32 tall at r 150, top 44 at r 138); PETG rim band r 125–138, 46 rising to 53; PLA plate ⌀250 at 52, **5 mm thick (D-016)**; raised discs 2 mm proud (⌀90 under the stick, ⌀40 under each button) |
 | Stick centre | (94, 134); shaft hole 21 (22 in the plate); M3 on the axes at 16; steel plate 53 × 95 pocket, 95 along x |
 | Kick row (near) | LK (165, 120) · MK (205, 134) · HK (245, 128) — Sega arc, chosen by the owner 2026-09-12 |
 | Punch row (far) | LP (157, 160) · MP (197, 174) · HP (237, 168) |
@@ -158,9 +158,9 @@ left of the bounding square, y from the player's edge.
 | LiPo | x 28–123, y 172–205, behind the stick body |
 | ~~Qi coil~~ | ~~centre (185, 55), boss ⌀62, under the right palm, hole in the TPU ring~~ — removed by D-015 |
 | Port board | 64-wide flat facet on the rear wall, x 133–163; the charging input (D-015). Tyre windowed over it (stage E) |
-| Antenna bracket | front wall, x 116–124 |
+| Antenna bracket | ~~front wall, x 116–124~~ rear-right wall at 60° from +x (D-016), 30 cm pigtail looped through the hoops |
 | Underside | TPU 85A ring ⌀110–280, 6 thick, 25 % gyroid; thigh contact 247 / 224 / 180 per side at crest spacing 170 / 200 / 240 |
-| Mass | about 2.0 kg estimated |
+| Mass | about 2.2 kg estimated (D-016 added the ledge wedge and a thicker plate) |
 | Bed | single-nozzle mode at ⌀300 (325 × 320); ⌀296 if dual-nozzle |
 | Livery | rim band carries the marquee lettering; tyre in the player colour (red P1/P4, blue P2, green P3); button discs in the punch/kick ramp; character inlay on the free plate face — **P1 art placed 2026-09-13:** Chun-Li poster (`../../cad/art/chunli.svg`), 45.7 × 64 mm, centred at (0, −84) in model coordinates (x from the disc centre, player at −y), i.e. the front band between the cluster and the rim; 4 mm to the LK and stick discs, 6.4 mm to the plate edge. Stage G (`../../cad/lap_disc_g.py`, same day) recesses a **50.1 × 68.4 mm pocket, 0.6 mm deep**, art plus `art_margin` 2.2 a side, centred at (0, −85): the slicer colours its floor black and the per-colour layers in `../../cad/art/layers/set4/` sit inside it (frame outer 49.8 × 68.2 at 64 mm art height). Corners clear the stick disc by 1.6 mm and the plate's flat by 1.9 mm, so the pocket cannot grow. The Fusion decal (`../../cad/lap_disc_art.py`) sits on the pocket floor as a visualisation |
 
@@ -206,6 +206,19 @@ rim-band lettering and the raised-disc colour split. Renders in
 > (`hoop_*`; enlarged the same day so the antenna's 2 mm connector passes), routing the pigtail from the Brook's corner round the +x side
 > to the antenna bracket at −103°; opening ceiling is a 3.5 mm bridge,
 > prints from the floor.
+
+> **Stage J, `lap_disc_j.py` (2026-09-13, D-016):** the serviceable assembly.
+> Shell split at the floor line into `ring` and `sled` bodies (the sled
+> carries every internal fitting); plate 5 mm thick with six M3 inserts
+> at r 116; six 45° screw gussets in the ring with ⌀7 spot faces 9 mm
+> below the plate seat (M3 × 16 from inside); a continuous 45° wedge under
+> the ledge so the ring prints open side up; six M3 × 12 base bolts from
+> underneath through the TPU ring's counterbores and the sled floor into
+> ⌀8 wall bosses (the same bolts clamp the TPU ring); antenna bracket moved
+> to 60°; tyre bottom edge chamfered 10 × 45° for flat printing. Print
+> orientations: ring open side up, sled floor down, plate top up, TPU ring
+> counterbore side down, tyre flat. Bodies now: ring 329 cm³, sled 138,
+> plate 228, TPU ring 310, tyre 303.
 
 > **Stage I, `lap_disc_i.py` (2026-09-13):** port board mount, closes OI-011.
 > The board is Brook's USB Type-B panel-mount (not USB-C): faceplate

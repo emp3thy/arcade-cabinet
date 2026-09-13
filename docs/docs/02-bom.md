@@ -21,7 +21,11 @@ ordering.
 | Battery connector | JST PH 2.0 mm pigtail (Brook battery input) | **NEEDED** |
 | Charge port | Brook panel-mount board B-C16046: USB Type-B socket + 3.5 mm jack, 26.1 × 31 faceplate, 5-pin cable to the Brook (D-015 addendum) | HAVE (photographed 2026-09-13) — plus 2 × M3 × 8 screws and a USB-C-to-B charge cable |
 | CC pull-ups | 2 × 56 kΩ resistors per pad | **NOT NEEDED** — the port is USB-B, no CC lines (2026-09-13) |
-| Enclosure | 3D printed; Fusion CAD by Claude, owner reviews and prints (D-011) | **NEEDED** |
+| Enclosure | 3D printed; Fusion CAD by Claude, owner reviews and prints (D-011). Five parts per pad: ring, sled, plate, TPU ring, TPU tyre (D-016) | **NEEDED** |
+| Plate screws | 6 × M3 × 16 socket cap, into M3 heat-set inserts (6 × M3 × 4 mm, ⌀4 hole) in the plate | **NEEDED** (D-016) |
+| Base bolts | 6 × M3 × 12 socket cap, from underneath through the TPU ring and sled into the ring bosses | **NEEDED** (D-016) |
+| Port board screws | 2 × M3 × 8 into the rear boss pilots | **NEEDED** (stage I) |
+| Zip ties | 2 × ≥200 mm, 4.8 wide, through the LiPo plinth tunnels | **NEEDED** (stage H) |
 | Charger | TP4056 module with DW01 protection | **NOT NEEDED** (D-010) — purchased, now surplus |
 | Boost converter | MT3608 3.7 V → 5 V | **NOT NEEDED** (D-002) |
 
