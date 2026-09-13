@@ -375,3 +375,43 @@ estimate unchanged. Stage M's verification reports `sketch.unconstrained`
 against both imported art sketches: that is expected for imported geometry —
 the DXF is the placement, and the script asserts the landed box instead.
 `06-enclosure-reference.md` updated the same day.
+
+---
+
+**D-019 — Anti-slide grooves in the TPU ring's underside**
+*Date:* 2026-09-13 · *Status:* settled by the owner
+D-014 gave the TPU ring the anti-slide job the wedge's rake used to do, and
+left its underside flat: one face, 486.2 cm². A 2.2 kg pad over that area
+presses at about 0.44 kPa, too little to push 85A TPU into a denim weave or a
+beanbag's pile, so the pad grips by adhesion alone. Modelled as stage N
+(`cad/lap_disc_n.py`).
+
+- **Grooves:** eight concentric grooves cut into the underside, `groove_w`
+  4 mm wide, `groove_d` 1 mm deep, `groove_pitch` 8 mm apart, innermost
+  centred at `groove_r0` 69 mm and outermost at 125. Contact falls from 486.2
+  to 291.2 cm², so pressure on the lands rises about 1.67×. TPU ring 309.2 →
+  289.7 cm³.
+- **Cut, not proud.** Standing ridges would work the same way, but grooves
+  keep the pad's z envelope exactly as D-016 left it (−6 to 0), keep the ten
+  bolt clamp faces flat, and leave the same first layer against the bed.
+- **Concentric, not a crosshatch.** Concentric rings resist the fore-and-aft
+  slide a rounded thigh causes and leave rotation free, which D-014 wants —
+  each player takes their own hand angle by turning the pad.
+- **Shallow on purpose.** The pressure concentration that makes a groove grip
+  is the same thing that imprints on a thigh over a long session, so this is
+  1 mm, not the 3 mm ridges D-013 drew for the superseded wedge.
+- **The band is boxed in.** The grooves span r 67 to 127: 1.5 mm clear of the
+  inner TPU bolt counterbores (r 65.5) and 1.6 mm of the base bolt ones
+  (r 128.6), and inside both edge fillets. The script asserts all four
+  clearances before cutting, so moving `groove_r0` or `groove_pitch` past a
+  counterbore fails rather than nicking one.
+- **Print the contact face against a textured plate.** TPU off smooth PEI
+  comes out glossy, and that costs more grip than these grooves buy back.
+
+*The grip claim is judgement, not measurement* — `[UNVERIFIED]`. Ridges help
+on a lap, where the limit is pressure, and hurt on a hard smooth surface,
+where rubber friction follows real contact area and a flat pad wins. The lap
+is the design case. Sit on the first pad before cutting a second set.
+
+*Consequences:* TPU ring 309.2 → 289.7 cm³; mass estimate unchanged at
+~2.2 kg. `06-enclosure-reference.md` updated the same day.
