@@ -23,8 +23,9 @@ below passes on one pad:
 - [ ] It still charges with `VBUS` present and no USB host attached. A wall
       charger carries power and no data. If the board drops into wired
       controller mode on seeing `VBUS`, record the behaviour.
-- [ ] The port board passes `CC1` and `CC2` through to the Brook (D-015). If
-      it carries only `VBUS` and `GND`, the 56 kΩ pull-ups go at the plug end.
+- [x] ~~The port board passes `CC1` and `CC2` through to the Brook.~~ Moot: the
+      port is USB Type-B (Brook panel-mount board, 2026-09-13); no CC lines,
+      no pull-ups. Charge with a USB-C-to-B or A-to-B cable.
 - [ ] Charge current and time from flat through the rear port, measured.
 
 If the gate fails, fall back to Fix B below and move the load to `OUT+/OUT−`.
@@ -180,7 +181,6 @@ Everything marked `[UNVERIFIED]` in the docs, collected:
   the D-010 build — see OI-001)**
 - Whether it charges with `VBUS` present and no USB host, and what mode it
   enters when it sees `VBUS`
-- Whether the purchased USB-C port board passes `CC1`/`CC2` through (D-015)
 - The Brook's charge current from a wall charger, and the time from flat
 - Brook display-header pinout and voltage; what the OLED actually reports
 - Whether the 103395 pack has an integrated protection circuit **(now the pad's
@@ -205,7 +205,15 @@ TP4056.
 
 ---
 
-## OI-011 — Port board mount needs the real board (OPEN, 2026-09-13)
+## OI-011 — Port board mount needs the real board (RESOLVED 2026-09-13)
+
+**Resolved.** The board is Brook's USB Type-B panel-mount B-C16046 (socket +
+3.5 mm jack, 5-pin cable to the Brook); faceplate 26.1 × 31 × 1.5, rear board
+28.3 deep, M3 holes at diagonal corners. Stage I (`cad/lap_disc_i.py`) mounts
+it against the inside of the rear boss with four pilots and a 22 × 16 plug
+tunnel. Because the socket is USB-B there are no CC lines: the 56 kΩ pull-up
+question in OI-001 and OI-009 is moot, and a USB-C charger reaches it through
+a C-to-B cable. Original statement kept below.
 
 The rear facet has a 30.4 × 26.4 window (stage C) and the tyre a matching
 window (stage E), but nothing to bolt the port board to. The two M3 holes

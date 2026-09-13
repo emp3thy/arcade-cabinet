@@ -19,8 +19,8 @@ ordering.
 | Action buttons | 6 × 30 mm arcade pushbuttons — stripped from existing cabinet | HAVE |
 | Wiring | Wire, crimps, quick-disconnect harness | HAVE |
 | Battery connector | JST PH 2.0 mm pigtail (Brook battery input) | **NEEDED** |
-| Charge port | USB-C port board in the rear rim, ~30 × 26 mm, wired to the Brook's USB-C input with `VBUS`, `GND`, `CC1`, `CC2` (D-015) | status **UNCONFIRMED** — the enclosure window is cut to 30.4 × 26.4; confirm the board and whether it passes CC through |
-| CC pull-ups | 2 × 56 kΩ resistors per pad | **NEEDED only if the port board does not pass CC through** (D-015) |
+| Charge port | Brook panel-mount board B-C16046: USB Type-B socket + 3.5 mm jack, 26.1 × 31 faceplate, 5-pin cable to the Brook (D-015 addendum) | HAVE (photographed 2026-09-13) — plus 2 × M3 × 8 screws and a USB-C-to-B charge cable |
+| CC pull-ups | 2 × 56 kΩ resistors per pad | **NOT NEEDED** — the port is USB-B, no CC lines (2026-09-13) |
 | Enclosure | 3D printed; Fusion CAD by Claude, owner reviews and prints (D-011) | **NEEDED** |
 | Charger | TP4056 module with DW01 protection | **NOT NEEDED** (D-010) — purchased, now surplus |
 | Boost converter | MT3608 3.7 V → 5 V | **NOT NEEDED** (D-002) |

@@ -255,3 +255,11 @@ end instead. `[UNVERIFIED]` — which kind the purchased port board is.
   `coil_boss_d`, `coil_boss_h`, `ring_coil_hole` go with them.
 - `06-enclosure-reference.md`, `01`, `02`, `03`, `07`, `08` and `CLAUDE.md`
   updated the same day.
+
+*Addendum, 2026-09-13 (same day):* the port board turned out to be Brook's
+own panel-mount board B-C16046 — a USB **Type-B** socket plus a 3.5 mm jack on a
+26.1 × 31 faceplate, with a 5-pin cable to the Brook's USB header — not a
+USB-C breakout. Consequences: no CC lines and no pull-ups; charge through a
+USB-C-to-B (or A-to-B) cable; the Brook sees plain 5 V on VBUS through its
+own USB header. Mount modelled as stage I (`cad/lap_disc_i.py`). Where the
+text above says USB-C for the port, read USB-B.

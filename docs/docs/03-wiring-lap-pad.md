@@ -28,19 +28,15 @@ until the checks in `08-open-issues.md` OI-001 pass on one pad.
 One charging control loop, on one cell. No TP4056, no boost converter. The
 rear port is the pad's only external connector.
 
-## 1. Port board → Brook USB-C input
+## 1. Port board → Brook USB header
 
-| Port board | To |
-|---|---|
-| `VBUS` | USB-C plug `VBUS` |
-| `GND` | USB-C plug `GND` |
-| `CC1` | USB-C plug `CC1` |
-| `CC2` | USB-C plug `CC2` |
+The port board is Brook's panel-mount B-C16046 (2026-09-13): a USB **Type-B**
+socket and a 3.5 mm jack on the faceplate, with the supplied 5-pin cable to
+the Brook's USB header. No wiring to do: plug the cable in. USB-B has no CC
+lines, so nothing below about R_p applies to this board; a USB-C charger
+reaches it through a C-to-B cable, whose plug carries the required pull-down.
 
-Pass the CC lines through and the wall charger's own R_p reaches the Brook;
-nothing else is needed. `[UNVERIFIED]` — confirm the purchased port board
-brings `CC1` and `CC2` out. If it carries only `VBUS` and `GND`, fit R_p at
-the plug end as D-010 had it:
+The R_p notes are kept for the case of a USB-C breakout being substituted:
 
 **Then the pull-ups are not optional.** A bare 5 V on `VBUS` with floating CC pins is
 invisible to a compliant USB-C sink. A *source* advertises its current capability
