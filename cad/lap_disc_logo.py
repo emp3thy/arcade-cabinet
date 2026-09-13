@@ -13,8 +13,10 @@ Placed on the plate's top face in the free band above the buttons (+y):
   centre (LOGO_CX, LOGO_CY), LOGO_W wide, height from the PNG's aspect.
 
 The band is bounded below by the top button's raised disc, which reaches
-y 41, and above by the plate rim at r 124.65. LOGO_W 110 leaves 2.5 mm to
-the disc and 10.7 mm from the top corners to the rim.
+y 41, and above by the plate rim at r 124.65. LOGO_W 117 leaves 2 mm to the
+disc and 6.4 mm from the top corners to the rim. That is the practical
+ceiling: the round plate cuts the corners away faster than the extra width
+buys, so even at a 4 mm rim margin the logo only reaches about 120 mm.
 
 Fusion decal transforms carry the decal's size in the magnitudes of the X
 and Y axes (cm), so both axes are set to the wanted size.
@@ -30,9 +32,9 @@ import math
 
 LOGO_PNG = r"C:\Users\gethi\source\arcade-cabinet\cad\art\sf2_logo.png"
 LOGO_ASPECT = 2998.0 / 1532.0   # the cropped PNG
-LOGO_W = 110.0                  # mm
+LOGO_W = 117.0                  # mm, the practical maximum (see below)
 LOGO_CX = 0.0                   # mm
-LOGO_BOTTOM = 43.5              # mm, 2.5 clear of the top button disc at y 41
+LOGO_BOTTOM = 43.0              # mm, 2 clear of the top button disc at y 41
 BUTTONS = ("lp", "mp", "hp", "lk", "mk", "hk")
 
 
