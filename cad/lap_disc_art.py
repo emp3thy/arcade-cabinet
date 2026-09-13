@@ -7,7 +7,7 @@ Art: cad/art/chunli.svg (owner, 2026-09-13), rasterised to cad/art/chunli.png
 face in the free band in front of the stick and buttons (the player's side,
 -y), upright for the player:
 
-  centre (ART_CX_MM, ART_CY_MM), ART_H_MM tall, width from the image aspect.
+  centre (art_cx, art_cy), art_w x art_h, on the stage G pocket floor.
 
 Fusion decal transforms carry the decal's size in the magnitudes of the X
 and Y axes (cm) -- measured 2026-09-13: the default transform for this PNG
@@ -24,9 +24,9 @@ import adsk.core
 import adsk.fusion
 import math
 
-ART_H_MM = 64.0
-ART_ASPECT = 0.7141   # w / h of cad/art/chunli.png
-ART_CX_MM, ART_CY_MM = 0.0, -84.0
+# Size and centre now come from the stage G user parameters art_w, art_h,
+# art_cx, art_cy (cad/lap_disc_g.py); the decal sits on the pocket floor at
+# art_floor_z. Keep this script after stage G.
 ART_PNG = r"C:\Users\gethi\source\arcade-cabinet\cad\art\chunli.png"
 BUTTONS = ("lp", "mp", "hp", "lk", "mk", "hk")
 
@@ -39,21 +39,27 @@ def run(_context: str):
     des = adsk.fusion.Design.cast(app.activeProduct)
     root = des.rootComponent
     v = lambda n: des.userParameters.itemByName(n).value
-    plate = [b for b in root.bRepBodies if b.name == "plate"][0]
-    ztop = v("plate_top_z")
-    top = None
-    for f in plate.faces:
-        pl = adsk.core.Plane.cast(f.geometry)
-        if pl is None:
-            continue
-        if pl.normal.z > 0.999 and abs(f.boundingBox.maxPoint.z - ztop) < 0.001:
-            if top is None or f.area > top.area:
-                top = f
     dec = root.decals
     old = dec.itemByName("chunli")
     if old:
         old.deleteMe()
         adsk.doEvents()
+    # resolve the face AFTER the delete: a held BRep handle dies on any document
+    # change (R5; measured 2026-09-13 as InternalValidationError: asmFace)
+    plate = [b for b in root.bRepBodies if b.name == "plate"][0]
+    ART_CX_MM, ART_CY_MM = v("art_cx") * 10, v("art_cy") * 10
+    ART_H_MM, ART_ASPECT = v("art_h") * 10, v("art_w") / v("art_h")
+    ztop = v("art_floor_z")
+    top = None
+    for f in plate.faces:
+        pl = adsk.core.Plane.cast(f.geometry)
+        if pl is None or abs(pl.normal.z) < 0.999:  # cut floors can report a flipped surface normal
+            continue
+        bb = f.boundingBox
+        if abs(bb.maxPoint.z - ztop) < 0.001 and bb.minPoint.x * 10 <= ART_CX_MM <= bb.maxPoint.x * 10 and bb.minPoint.y * 10 <= ART_CY_MM <= bb.maxPoint.y * 10:
+            top = f
+    if top is None:
+        raise RuntimeError("no pocket floor face under the art centre; run stage G first")
     P, V = adsk.core.Point3D.create, adsk.core.Vector3D.create
     w = ART_H_MM * ART_ASPECT / 10.0
     h = ART_H_MM / 10.0
