@@ -202,3 +202,18 @@ charge still has to cover a whole evening of play. Measure hours to first
 low-battery warning under continuous use early, not at the end of the build.
 If one charge does not cover a session, the answer is not a return to the
 TP4056.
+
+---
+
+## OI-011 — Port board mount needs the real board (OPEN, 2026-09-13)
+
+The rear facet has a 30.4 × 26.4 window (stage C) and the tyre a matching
+window (stage E), but nothing to bolt the port board to. The two M3 holes
+were only ever ASSUMED at 24 × 20 on the diagonal; no measurement or board
+identity is recorded anywhere in the docs. The mount also depends on how the
+socket sits: an upright (vertical) socket on a board that stands in the
+facet bolts straight into the 8 mm boss around a smaller through-cut; an
+edge socket needs the board horizontal on a shelf inside the boss, screws
+vertical. Owner to supply: board outline, hole pitch and diameter, socket
+type and its position relative to the holes. Then a stage cuts the holes
+and shelf or recess.

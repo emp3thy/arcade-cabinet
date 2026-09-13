@@ -18,7 +18,7 @@ of the components live in `../STEP_Reference_Files/`.
 | LiPo 103395 | 95 × 33 × 10 | strapped/foamed, no hard mount |
 | ~~TP4056 module~~ | ~~26 × 17~~ | **Removed by D-010** — do not allocate space or standoffs |
 | ~~Qi receiver coil~~ | ~~⌀50, 1.5 mm thick~~ | **Removed by D-015** — no coil boss, no ring hole |
-| USB-C port board | ~30 × 26 board, holes ASSUMED 24 × 20 — **measure** | In the rear facet window (30.4 × 26.4), wired to the Brook's USB-C input; pigtail needs slack and strain relief (D-015) |
+| USB-C port board | ~30 × 26 board, holes ASSUMED 24 × 20 — **measure; also state whether the socket is upright or edge-mounted, which decides the mount** | In the rear facet window (30.4 × 26.4), wired to the Brook's USB-C input; pigtail needs slack and strain relief (D-015) |
 | OLED module | 27 × 15 active area | panel cutout |
 | Joystick (from the cabinet — cross-pattern plate, so probably not a Sanwa JLF despite the STEP file) | **21 mm shaft hole** (measured on the steel plate, 2026-09-12; cut the printed plate at 22 mm so the steel edge is the limit); **4 mounting holes on the axes, each 16 mm from the shaft centre** (owner, 2026-09-12) | **4× M3 × 12 mm bolts through the top plate into the stick's mounting plate, nuts below (owner, 2026-09-12)**. Heads countersunk into the 3.5 mm plate. A **steel plate, 53 mm wide (left–right) × 95 mm front-to-back × 1 mm thick** from the cabinet goes between the stick and the printed plate as a stiffener; give the underside of the top plate a matching 1 mm pocket, centred on the stick (x 48.5–101.5, y 52.5–147.5 in the study's coordinates). It already has the shaft hole and the four M3 holes in the right places, so it doubles as the template for the printed plate's holes (owner, 2026-09-12). |
 | Action buttons | ⌀30 hole, snap-in; **40 mm below-panel depth** (measured 2026-09-12: from the top surface of the hole to the bottom of the microswitch) | — |
@@ -192,6 +192,22 @@ rim-band lettering and the raised-disc colour split. Renders in
 > Stage F, `lap_disc_f.py`, removed the stage C coil boss, rebuilt the TPU
 > ring without its coil hole (re-rounded with `ring_r`) and deleted the five
 > coil parameters. Verified green; shell underside back at z = 0.
+
+> **Stage H, `lap_disc_h.py` (2026-09-13, owner's fit-out requests):**
+> steel stiffener pocket corrected to **53 along x, 95 along y** (`stiff_w`,
+> `stiff_d` swapped; it had been cut the other way round). **LiPo plinth**
+> 4 mm tall (`plinth_h`) filling the tray floor, with two **zip-tie tunnels**
+> 5 × 2 mm (`tie_w`, `tie_h`) through plinth and tray walls along y at
+> `lipo_cx` ± 25 (`tie_dx`): a tie passes under the cell, up the outside of
+> the tray wall, over the cell and back; use ties ≥ 200 mm. Cell top now
+> 14 mm above the floor, 31 mm under the plate. **Five antenna cable hoops**
+> on the floor against the inner wall at 30, 0, −30, −60 and −90° from +x
+> (`hoop_ang_1..5`), 6 deep × 7 tall × 8 wide with a 3.5 × 4.5 opening
+> (`hoop_*`), routing the pigtail from the Brook's corner round the +x side
+> to the antenna bracket at −103°; opening ceiling is a 3.5 mm bridge,
+> prints from the floor. **Port board mounting is still not modelled:** no
+> hole positions or board type were ever recorded (only the ASSUMED
+> 24 × 20), see the open item in `08-open-issues.md`.
 
 Plan view: `../comfort-study/plan-outthere-circles.svg`. Full proposal:
 `../comfort-study/design-3b-outthere-forms.md`. The 280 × 200 rectangle and
