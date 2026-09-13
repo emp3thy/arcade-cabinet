@@ -53,6 +53,11 @@ FH_OPTS = {
     "only_params": ["logo_deboss"],
     "liveness_budget_s": 240,
     "max_bodies": 6,
+    # The two imported art sketches fail the constraints check by design (see
+    # the docstring), which would otherwise skip liveness as prior_failure and
+    # leave logo_deboss unproven. It is the only parameter this stage adds and
+    # it drives both extrudes, so liveness is the check that matters here.
+    "force_liveness": True,
 }
 INTERFERENCE_ALLOWED = []
 CLEARANCES = []
@@ -216,15 +221,22 @@ def join_named(ctx, profs, dist_expr, body_name, want_cm3, tol, kind):
 
 
 def flat_faces_at(body, z_cm, box_mm, pad_mm=1.0):
-    """Up-facing planar faces lying at z_cm, whose whole extent is inside
+    """Horizontal planar faces lying at z_cm, whose whole extent is inside
     box_mm. The box filter keeps the stage G art pocket -- same 0.6 mm depth,
-    other side of the plate -- out of the sweep."""
+    other side of the plate -- out of the sweep; it is also what tells the
+    counters at the plate top from the plate's own top face, whose box spans
+    the whole disc.
+
+    Sign is not a filter: measured 2026-09-13, Fusion hands back a recess
+    floor as a plane whose normal.z is -1 (the stage G pocket floor reads
+    that way too), so an up-facing test finds nothing. Height and extent
+    identify these faces on their own."""
     x0, x1, y0, y1 = (v / 10.0 for v in box_mm)
     pad = pad_mm / 10.0
     out = []
     for f in body.faces:
         pl = adsk.core.Plane.cast(f.geometry)
-        if pl is None or pl.normal.z < 0.999:
+        if pl is None or abs(pl.normal.z) < 0.999:
             continue
         bb = f.boundingBox
         if abs(bb.maxPoint.z - z_cm) > EPS or abs(bb.minPoint.z - z_cm) > EPS:
