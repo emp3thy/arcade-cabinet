@@ -162,7 +162,7 @@ left of the bounding square, y from the player's edge.
 | Underside | TPU 85A ring ⌀110–280, 6 thick, 25 % gyroid; thigh contact 247 / 224 / 180 per side at crest spacing 170 / 200 / 240 |
 | Mass | about 2.0 kg estimated |
 | Bed | single-nozzle mode at ⌀300 (325 × 320); ⌀296 if dual-nozzle |
-| Livery | rim band carries the marquee lettering; tyre in the player colour (red P1/P4, blue P2, green P3); button discs in the punch/kick ramp; character inlay on the free plate face |
+| Livery | rim band carries the marquee lettering; tyre in the player colour (red P1/P4, blue P2, green P3); button discs in the punch/kick ramp; character inlay on the free plate face — **P1 art placed 2026-09-13:** Chun-Li poster (`../../cad/art/chunli.svg`), 45.7 × 64 mm, centred at (0, −84) in model coordinates (x from the disc centre, player at −y), i.e. the front band between the cluster and the rim; 4 mm to the LK and stick discs, 6.4 mm to the plate edge. In Fusion it is a decal (`../../cad/lap_disc_art.py`), a visualisation only; the printed form is still to be chosen |
 
 CAD: `../../cad/lap_disc.py` (author script, fusion-design skill; bundle with
 `python -m fusionhelper.bundle`, gate with `python -m fusionhelper.preflight`,
