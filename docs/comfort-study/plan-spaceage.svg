@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 336 290" width="672" height="580" font-family="monospace" font-size="6">
+<!-- Space age variant, round two. 1 unit = 1 mm. Design y (from front edge) = 250 - svg y. Player at the bottom. -->
+<title>Space age lap controller, plan</title>
+<!-- shell outline: fan plan, front 250 wide, 296 at y200, rear brow arc R400 -->
+<path d="M58.3,250.0 A35,35 0 0 1 23.7,219.8 L2.2,65.9 A45,45 0 0 1 34.0,16.6 A400,400 0 0 1 262.0,16.6 A45,45 0 0 1 293.8,65.9 L272.3,219.8 A35,35 0 0 1 237.7,250.0 Z" fill="#eee" stroke="#222" stroke-width="1"/>
+<!-- removable plate (flush LCARS panel), y60-190 -->
+<path d="M27.5,190 L268.5,190 L286.6,60 L9.4,60 Z" fill="#ddd" stroke="#555" stroke-width="0.5"/>
+<!-- brow band y195-250 and light bar -->
+<line x1="0.7" y1="55" x2="295.3" y2="55" stroke="#555" stroke-width="0.5" stroke-dasharray="3 2"/>
+<rect x="88" y="40" width="28" height="5" rx="2.5" fill="none" stroke="#555" stroke-width="0.5"/>
+<rect x="122" y="40" width="28" height="5" rx="2.5" fill="none" stroke="#555" stroke-width="0.5"/>
+<rect x="156" y="40" width="28" height="5" rx="2.5" fill="none" stroke="#555" stroke-width="0.5"/>
+<rect x="190" y="40" width="28" height="5" rx="2.5" fill="none" stroke="#555" stroke-width="0.5"/>
+<text x="224" y="45">light bar (brow face)</text>
+<text x="4" y="10">brow crest z70, y195-250</text>
+<!-- palm rest: TPU pad y8-58 -->
+<rect x="30" y="192" width="236" height="50" rx="10" fill="#c9d6df" stroke="none"/>
+<text x="34" y="222">TPU palm pad 236x50, z45-51, 7 deg down to player</text>
+<!-- bow undercut start line (underside) -->
+<line x1="23" y1="204" x2="273" y2="204" stroke="#888" stroke-width="0.4" stroke-dasharray="1 1.5"/>
+<text x="150" y="232">underside bow undercut starts y46 (z0 to z28 at y18)</text>
+<!-- stick: centre (75,104), body 75x65 dashed, shaft hole 21, M3 at 16 on axes -->
+<rect x="37.5" y="113.5" width="75" height="65" fill="none" stroke="#444" stroke-width="0.5" stroke-dasharray="2 2"/>
+<circle cx="75" cy="146" r="17.5" fill="none" stroke="#222" stroke-width="0.8"/>
+<circle cx="75" cy="146" r="10.5" fill="#fff" stroke="#222" stroke-width="0.5"/>
+<circle cx="59" cy="146" r="1.6" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="91" cy="146" r="1.6" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="75" cy="130" r="1.6" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="75" cy="162" r="1.6" fill="none" stroke="#222" stroke-width="0.4"/>
+<text x="40" y="188">stick (75,104)</text>
+<!-- kick row (near): (146,96) (186,104) (226,100) -->
+<circle cx="146" cy="154" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="146" cy="154" r="18" fill="none" stroke="#222" stroke-width="0.4" stroke-dasharray="2 1.5"/>
+<circle cx="186" cy="146" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="186" cy="146" r="18" fill="none" stroke="#222" stroke-width="0.4" stroke-dasharray="2 1.5"/>
+<circle cx="226" cy="150" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="226" cy="150" r="18" fill="none" stroke="#222" stroke-width="0.4" stroke-dasharray="2 1.5"/>
+<!-- punch row (far): (138,136) (178,144) (218,140) -->
+<circle cx="138" cy="114" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="138" cy="114" r="18" fill="none" stroke="#222" stroke-width="0.4" stroke-dasharray="2 1.5"/>
+<circle cx="178" cy="106" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="178" cy="106" r="18" fill="none" stroke="#222" stroke-width="0.4" stroke-dasharray="2 1.5"/>
+<circle cx="218" cy="110" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="218" cy="110" r="18" fill="none" stroke="#222" stroke-width="0.4" stroke-dasharray="2 1.5"/>
+<text x="130" y="176">kick 146,96 186,104 226,100</text>
+<text x="150" y="84">punch 138,136 178,144 218,140</text>
+<!-- LCARS tactile pills on the plate between the rows -->
+<rect x="150" y="128" width="20" height="3" rx="1.5" fill="#f4a460" stroke="none"/>
+<rect x="190" y="124" width="20" height="3" rx="1.5" fill="#f4a460" stroke="none"/>
+<rect x="230" y="128" width="20" height="3" rx="1.5" fill="#f4a460" stroke="none"/>
+<!-- internals, dashed -->
+<rect x="14" y="55" width="96" height="45" fill="none" stroke="#c00" stroke-width="0.5" stroke-dasharray="3 2"/>
+<text x="17" y="80" fill="#c00">Brook 96x45 x14-110 y150-195</text>
+<rect x="150" y="19" width="95" height="33" fill="none" stroke="#c00" stroke-width="0.5" stroke-dasharray="3 2"/>
+<text x="153" y="38" fill="#c00">LiPo 95x33 x150-245 y198-231</text>
+<rect x="115" y="60" width="30" height="30" fill="none" stroke="#c00" stroke-width="0.5" stroke-dasharray="3 2"/>
+<text x="117" y="66" fill="#c00">Qi pcb</text>
+<circle cx="148" cy="130" r="25" fill="none" stroke="#c00" stroke-width="0.5" stroke-dasharray="3 2"/>
+<circle cx="148" cy="130" r="31" fill="none" stroke="#c00" stroke-width="0.4" stroke-dasharray="1 1.5"/>
+<text x="10" y="108" fill="#c00">Qi coil 50 dia (148,120)</text>
+<rect x="1.5" y="20" width="4" height="30" fill="none" stroke="#c00" stroke-width="0.5" stroke-dasharray="2 1"/>
+<text x="7" y="30" fill="#c00">port board</text>
+<text x="7" y="37" fill="#c00">left wall y200-230</text>
+<rect x="60" y="18" width="20" height="6" fill="none" stroke="#c00" stroke-width="0.5" stroke-dasharray="2 1"/>
+<text x="82" y="23" fill="#c00">antenna</text>
+<!-- thigh crest guide lines (knees together, 170 apart) -->
+<line x1="63" y1="250" x2="63" y2="20" stroke="#9ab" stroke-width="0.4" stroke-dasharray="4 3"/>
+<line x1="233" y1="250" x2="233" y2="20" stroke="#9ab" stroke-width="0.4" stroke-dasharray="4 3"/>
+<text x="238" y="200" fill="#578">thigh crest ~170 apart</text>
+<!-- scale bar -->
+<line x1="0" y1="262" x2="100" y2="262" stroke="#222" stroke-width="1"/>
+<line x1="0" y1="258" x2="0" y2="266" stroke="#222" stroke-width="0.6"/>
+<line x1="100" y1="258" x2="100" y2="266" stroke="#222" stroke-width="0.6"/>
+<text x="40" y="259">100 mm</text>
+<text x="120" y="264">bbox 296 x 250 mm, plan area 64,800 mm2, player edge at bottom</text>
+</svg>

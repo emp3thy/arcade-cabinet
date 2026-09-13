@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 340" width="360mm" height="340mm" font-family="monospace" font-size="6">
+<title>Out there (b): base-forward triangle, plan, mm, player edge at bottom</title>
+<polygon points="30.4,292.8 29.1,299.1 29.9,305.5 32.6,311.3 37.1,316.0 42.7,319.0 49.1,320.0 310.9,320.0 317.3,319.0 322.9,316.0 327.4,311.3 330.1,305.5 330.9,299.1 329.6,292.8 231.2,36.1 228.9,31.6 225.8,27.6 222.0,24.4 217.6,22.0 212.8,20.5 207.8,20.0 152.2,20.0 147.2,20.5 142.4,22.0 138.0,24.4 134.2,27.6 131.1,31.6 128.8,36.1" fill="#eee" stroke="#222" stroke-width="1"/>
+<polygon points="42.0,284.8 40.7,291.1 41.5,297.5 44.2,303.3 48.7,308.0 54.3,311.0 60.7,312.0 299.3,312.0 305.7,311.0 311.3,308.0 315.8,303.3 318.5,297.5 319.3,291.1 318.0,284.8 225.7,44.0 223.4,39.6 220.3,35.6 216.5,32.4 212.1,30.0 207.3,28.5 202.3,28.0 157.7,28.0 152.7,28.5 147.9,30.0 143.5,32.4 139.7,35.6 136.6,39.6 134.3,44.0" fill="#f6f6f6" stroke="#222" stroke-width="0.6"/>
+<polygon points="30.6,308 329.4,308 311.8,262 48.2,262" fill="#d9e4f0" stroke="none"/>
+<text x="220" y="296" >palm rest y 12-58</text>
+<text x="40" y="316" >front edge R12 roll, top 52 -> 44</text>
+<rect x="77.5" y="203.5" width="95.0" height="53.0" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<circle cx="125" cy="230" r="17.5" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="125" cy="230" r="10.5" fill="none" stroke="#222" stroke-width="0.5"/>
+<text x="113" y="254" >stick 105,90</text>
+<circle cx="196" cy="244" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="196" cy="244" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="185" y="245.5" font-size="5">176,76</text>
+<circle cx="236" cy="230" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="236" cy="230" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="225" y="231.5" font-size="5">216,90</text>
+<circle cx="276" cy="236" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="276" cy="236" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="265" y="237.5" font-size="5">256,84</text>
+<circle cx="188" cy="204" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="188" cy="204" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="177" y="205.5" font-size="5">168,116</text>
+<circle cx="228" cy="190" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="228" cy="190" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="217" y="191.5" font-size="5">208,130</text>
+<circle cx="268" cy="196" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="268" cy="196" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="257" y="197.5" font-size="5">248,124</text>
+<rect x="120" y="120" width="96" height="45" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="124" y="147" >Brook 96x45</text>
+<rect x="130" y="82" width="95" height="33" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="134" y="103" >LiPo 95x33</text>
+<circle cx="225" cy="284" r="31" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<circle cx="225" cy="284" r="25" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="260" y="280" >Qi coil 50/boss 62</text>
+<rect x="165" y="20" width="30" height="4" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="140" y="32" >port board (tail)</text>
+<rect x="76" y="308" width="8" height="9" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="50" y="314" >antenna</text>
+<text x="120" y="62" >tail over knees, no controls</text>
+<text x="24" y="220" >thigh</text>
+<text x="316" y="220" >thigh</text>
+<text x="235" y="28" >base 320 x depth 300, nose 90</text>
+<line x1="40" y1="332" x2="140" y2="332" stroke="#222" stroke-width="1.2"/>
+<text x="40" y="328" >100 mm</text>
+</svg>

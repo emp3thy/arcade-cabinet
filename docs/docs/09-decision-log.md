@@ -1,0 +1,222 @@
+# 09 — Decision Log
+
+Decisions already taken, with the reasoning. Read before proposing a change; if
+new information contradicts one, say so explicitly rather than quietly editing.
+
+---
+
+**D-001 — Battery: 3.7 V 3700 mAh 103395 LiPo pouch, not 18650 cells**
+*Date:* 2026-04-04 · *Status:* settled
+The original brief listed 18650s. The pack actually purchased is the 103395
+pouch (95 × 33 × 10 mm). Flat form factor suits a lap pad far better than a
+cylindrical cell. All wiring and enclosure references use the pouch.
+
+---
+
+**D-002 — MT3608 boost converter removed from the build**
+*Date:* 2026-04-04 · *Status:* settled
+The Brook Gen 5W accepts 3.7 V nominal directly on its JST PH 2.0 mm battery
+input. A 3.7 V → 5 V boost stage adds a component, heat, conversion loss and a
+noise source for nothing. Battery connects to the Brook directly.
+*Consequence:* the MT3608 already purchased is surplus.
+
+---
+
+**D-003 — Charging is Qi-only; USB-C for wired play and firmware only**
+*Date:* 2026-04-04 · *Status:* **superseded by D-010 on 2026-09-06**
+Adopted as a procedural workaround for two chargers on one cell. Not a
+satisfactory end state. Retained here for history; do not build to it.
+
+---
+
+**D-004 — Console buttons use unique key codes (KEY_1–KEY_6), not BTN_START**
+*Date:* 2026-04-04 · *Status:* settled
+The `gpio-key` overlay instances feed one input stream. Four Start buttons all
+emitting `BTN_START` (315) would be indistinguishable — no way to know which
+player pressed Start. Unique key codes 2–7 give each button an identity that
+RetroArch then maps per player.
+
+---
+
+**D-005 — Overlay is `gpio-key` (singular), buttons wired GPIO→GND**
+*Date:* 2026-09-06 · *Status:* settled
+Corrects two errors in the original guide (OI-003, OI-004). Active-low with the
+SoC's internal pull-up. No external pull-down resistors.
+
+---
+
+**D-006 — `mk_arcade_joystick_rpi` not used**
+*Date:* 2026-09-06 · *Status:* settled
+Wrong tool for six system buttons with no stick; the common fork is stale and
+its DKMS build is unreliable on current 64-bit Pi kernels. The `gpio-key`
+overlay is sufficient.
+
+---
+
+**D-007 — Two-unit architecture: stationary Pi box + wireless lap pads**
+*Date:* 2026-04-04 · *Status:* settled
+Gameplay input on the pads, system input on the box. Keeps the pads identical
+and simple, and means a flat pad battery never locks anyone out of the menus.
+The Pi box needs no battery or Qi; the pads need no HDMI or ethernet.
+
+---
+
+**D-008 — Enclosures designed by the owner**
+*Date:* 2026-04-04 · *Status:* **superseded by D-011 on 2026-09-06**
+Three Bambu printers (X1 Carbon, H2C, H2D) and the owner does his own CAD.
+Deliverables from Claude are dimensions, clearances and placement data — not
+finished models. `Lap_Pad_Enclosure.scad` is reference geometry only.
+
+---
+
+**D-009 — Joystick and buttons stripped from an existing cabinet**
+*Date:* 2026-04-04 · *Status:* settled
+No new stick or buttons purchased. Ring out reused harnesses before trusting
+their pinout — clone wiring varies.
+
+---
+
+**D-010 — One charger: Qi feeds the Brook's own USB-C input, TP4056 removed**
+*Date:* 2026-09-06 · *Status:* adopted by the owner; build gated on the bench
+test in `08-open-issues.md` OI-001
+Resolves OI-001 by taking Fix A. The previous design wired a TP4056 and the
+Brook Gen 5W's on-board charger to the same cell with no arbitration between
+them. The TP4056 is removed entirely and the Qi receiver's 5 V is fed into the
+Brook's USB-C input instead, leaving exactly one charging control loop on the
+cell. OI-002 closes as a consequence: with no TP4056 there is no protection IC
+left to bypass.
+
+The owner's duty cycle (stated 2026-09-06) is what makes this cheap. A pad runs
+from its cell while someone plays, then sits on the Qi plate to recharge. Play
+and charge never overlap, and wired play over USB-C is explicitly not wanted.
+So the loss of an externally reachable USB-C port costs nothing, and the slower
+charge — roughly 8 hours at 500 mA rather than 4 hours at 1 A — is absorbed by
+charging overnight between sessions.
+
+*Consequences:*
+- The TP4056 joins the MT3608 as surplus stock.
+- The enclosure loses a 26 × 17 mm module, its two standoffs, and the 12 × 8 mm
+  USB-C slot the SCAD reference puts on the front edge at x 145.
+- The Qi feed needs a USB-C plug carrying R_p pull-ups on both CC lines; a bare
+  5 V on VBUS is invisible to a compliant sink. See `03-wiring-lap-pad.md`.
+- Runtime per charge is promoted from nice-to-know to a gating measurement: an
+  8-hour recharge only works if one charge covers a whole evening.
+
+*Fallback:* if the bench gate fails, Fix B (keep the TP4056, no USB-C cutout,
+load moved to `OUT+/OUT−`) is the fallback and gets its own decision entry.
+
+*Discussion artefact:* https://claude.ai/code/artifact/e27e12da-9b15-4990-a5b5-785cecda5941
+
+---
+
+**D-011 — Enclosure CAD moves to Claude, through FusionHelper**
+*Date:* 2026-09-06 · *Status:* settled by the owner
+Supersedes D-008. The owner has asked Claude to do the enclosure CAD rather than
+supply dimensions for him to model. The work goes through the `fusion-design`
+skill from the FusionHelper project, which enforces named parameters, named
+datums, no raw coordinates, an offline preflight gate before any script reaches
+Fusion, and a numeric verification block after it runs.
+
+The skill is installed at `.claude/skills/fusion-design/` **relative to the repo
+root** — that is `../.claude/skills/fusion-design/` from this docs tree, not
+`docs/.claude/`. It is a copy; FusionHelper remains the source of truth (see
+`VENDORED.md` beside it). Autodesk's own MCP server inside Fusion 360 is the
+connection to the running application.
+
+*What does not change:* the printers are still the owner's (H2C and H2D; print
+lap pads on the H2D in single-nozzle mode, see `06-enclosure-reference.md`), and
+the owner still reviews and owns the result.
+
+*Consequence for `Lap_Pad_Enclosure.scad`:* it was reference geometry for a
+workflow that no longer applies, and it is defective as geometry anyway. It
+should be reduced to a parameter list or deleted once the Fusion model exists.
+Pending the owner's call.
+
+---
+
+**D-012 — reserved**
+*Status:* not yet written. The Lap Arcade Enclosure Study
+(https://claude.ai/code/artifact/28289a89-8921-427e-a3c4-b8082337952b, §05
+and §13) records an owner decision for dual-source charging — Qi plus a wired
+side port, both fitted, one used at a time, no diode — that supersedes part of
+D-010 and has not been written back here or to `CLAUDE.md`. Number held so the
+study's references stay valid.
+
+---
+
+**D-013 — Lap pad grows to a 48 / 60 mm wedge; buttons and their wiring from the cabinet stay**
+*Date:* 2026-09-12 · *Status:* settled by the owner
+The buttons stripped from the cabinet (D-009) measure 40 mm from the panel
+face to the bottom of the body, and about 50 mm with a straight
+quick-disconnect fitted and the wire bent without strain. The enclosure
+study's 26 / 46 mm saddle wedge had 28.5 mm of cavity at the kick row and its
+own gate said anything over 35 mm would reopen the profile. Offered a taller
+pad, low-profile replacement buttons (38 / 50, the floor set by the stick) or
+flag connectors (42 / 54), the owner chose the taller pad with the existing
+buttons and connectors: the alternatives saved 6–12 mm for a parts order no UK
+arcade shop stocks or £55 of buttons, and were judged not worth it on a lap.
+
+Profile becomes 48 mm at the front edge, 60 mm at the rear, flat underside,
+3.4° panel rake. The R900 concave belly is deleted — it sat directly under the
+left pair of buttons and had also been left out of the study's depth budget.
+The two thigh contact ridges it provided come back as 3 mm TPU strips added to
+the flat underside along both long edges; the Qi coil boss stands proud by the
+same 3 mm so it stays flush with them and still keys into the dock pocket.
+
+*Consequences:*
+- D-009 stands; no new buttons, no new connectors.
+- Shell height under the button cluster is 52.8–55.2 mm against a 52 mm
+  minimum (50 fitted button + 2 floor).
+- The stick bolts directly to the underside of the top plate with 4× M3 × 12 mm
+  on holes 16 mm from the shaft centre at top, bottom, left and right (owner,
+  same day); no plate drop. That cross pattern is not a Sanwa JLF's. Body
+  measures 34 mm below the 1 mm steel stiffener plate, so 43.5 mm of shell is
+  needed at the stick against 54 mm available.
+- Dock bays widen to take a 48–60 mm pad; spine and pockets unchanged.
+- `06-enclosure-reference.md` updated the same day. The SCAD file was already
+  stale and is not updated.
+
+*Discussion artefact:* https://claude.ai/code/artifact/28289a89-8921-427e-a3c4-b8082337952b
+
+---
+
+**D-014 — Lap pad form is a ⌀300 nested disc, 52 thick, flat; supersedes the 280 × 200 wedge**
+*Date:* 2026-09-12 · *Status:* settled by the owner
+The comfort study (`../comfort-study/`, study artefact §14) produced three
+forms: a rectangular box with a rounded rim, a Star Trek TNG conn-station fan
+(296 × 250), and a nested disc. The owner chose the disc, in Street Fighter
+livery, and declined a foam mock-up on the grounds that a 280 mm rectangle had
+already been accepted on the same lap.
+
+Form: one ⌀300 disc, 52 thick at the panel, flat, rake 0, read as concentric
+rings — TPU tyre at the edge, PETG rim band, ⌀250 removable PLA plate, raised
+2 mm discs under the stick and each button. A TPU ring ⌀110–280 underneath is
+the thigh contact. Stick at (94, 134); buttons on 40 pitch with the Sega arc,
+index 14 mm nearer the player than middle and ring 6 mm nearer, chosen by the
+owner over the template's straight rows (same day). Internals: Brook far right, LiPo behind the stick, Qi coil under
+the right palm, port board in a rear flat facet. Dimensions in
+`06-enclosure-reference.md`.
+
+Why the disc over the box and the fan: longest thigh contact per side
+(224 mm vs 142 for the triangle) with no width to mismatch, so the two-rail
+rocking failure the lap-desk research describes cannot occur; free rotation
+gives each player their hand angle; one rounded edge meets belly, thigh and
+knee alike; 104 mm of palm room; mass centred in plan; fit margins of 9.5 mm
+at the pinky nut and 13 mm at the stiffener; prints in either bed mode.
+
+*Consequences:*
+- D-013's profile (48/60 wedge) is superseded. Its 52-mm-under-every-button
+  rule survives as the disc thickness. D-009 stands.
+- Rake is 0. The wedge's anti-slide job goes to the TPU ring's friction.
+- The dock's bays become round pockets; spine unchanged.
+- The front-band art inlay goes: marquee lettering runs round the rim band,
+  the tyre carries the player colour, button discs carry the punch/kick ramp,
+  the character inlay sits on the free plate face.
+- The H2D prints the ⌀300 shell in single-nozzle mode (325 × 320); ⌀296 if
+  dual-nozzle is wanted for the rim lettering in one job.
+- Mass about 2.0 kg estimated, the upper end of what fightstick users
+  tolerate. Weigh the first shell.
+- No round lap controller exists as a precedent. The first printed shell is
+  the test.
+
+*Discussion artefact:* https://claude.ai/code/artifact/28289a89-8921-427e-a3c4-b8082337952b (section 14)

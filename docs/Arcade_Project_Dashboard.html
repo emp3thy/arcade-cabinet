@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireless Lap Arcade Controller — Project Dashboard</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232733;
+    --border: #2e3345;
+    --text: #e2e4eb;
+    --text-dim: #8b8fa3;
+    --accent: #6c5ce7;
+    --accent-glow: rgba(108,92,231,0.15);
+    --green: #00b894;
+    --green-bg: rgba(0,184,148,0.12);
+    --orange: #fdcb6e;
+    --orange-bg: rgba(253,203,110,0.12);
+    --red: #e17055;
+    --red-bg: rgba(225,112,85,0.12);
+    --blue: #74b9ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  .header { padding: 2rem 2rem 1.5rem; border-bottom: 1px solid var(--border); }
+  .header h1 { font-size: 1.6rem; font-weight: 700; display: flex; align-items: center; gap: 0.6rem; }
+  .header p { color: var(--text-dim); margin-top: 0.3rem; font-size: 0.9rem; }
+
+  .stats-bar { display: flex; gap: 1rem; padding: 1.2rem 2rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem 1.2rem; min-width: 140px; flex: 1; }
+  .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+  .stat-value { font-size: 1.4rem; font-weight: 700; margin-top: 0.2rem; }
+  .stat-value.green { color: var(--green); }
+  .stat-value.orange { color: var(--orange); }
+  .stat-value.accent { color: var(--accent); }
+
+  .tabs { display: flex; gap: 0; padding: 0 2rem; border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .tab { padding: 0.8rem 1.4rem; font-size: 0.85rem; font-weight: 500; color: var(--text-dim); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .content { padding: 1.5rem 2rem 3rem; max-width: 1100px; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* BOM Table */
+  .bom-section { margin-bottom: 2rem; }
+  .bom-section h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 8px; overflow: hidden; }
+  th { text-align: left; padding: 0.6rem 1rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); background: var(--surface2); border-bottom: 1px solid var(--border); }
+  td { padding: 0.7rem 1rem; font-size: 0.88rem; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 10px; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .badge-purchased { background: var(--green-bg); color: var(--green); }
+  .badge-needed { background: var(--orange-bg); color: var(--orange); }
+  .badge-remove { background: var(--red-bg); color: var(--red); }
+
+  /* Alert boxes */
+  .alert { padding: 1rem 1.2rem; border-radius: 8px; margin-bottom: 1.2rem; font-size: 0.88rem; border-left: 3px solid; }
+  .alert-warn { background: var(--red-bg); border-color: var(--red); }
+  .alert-info { background: var(--accent-glow); border-color: var(--accent); }
+  .alert-ok { background: var(--green-bg); border-color: var(--green); }
+  .alert strong { display: block; margin-bottom: 0.3rem; }
+
+  /* Wiring diagrams */
+  .diagram-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .diagram-box h3 { font-size: 1rem; margin-bottom: 1rem; }
+  .wire-flow { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.82rem; line-height: 2; color: var(--blue); white-space: pre; overflow-x: auto; }
+  .wire-step { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
+  .wire-step h4 { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.4rem; }
+  .wire-step p { font-size: 0.85rem; color: var(--text-dim); }
+
+  /* GPIO table */
+  .gpio-table td:nth-child(2), .gpio-table td:nth-child(3) { font-family: 'SF Mono', monospace; font-size: 0.82rem; color: var(--blue); }
+
+  /* Config code blocks */
+  .code-block { background: #0d0f14; border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.8; overflow-x: auto; color: var(--green); margin-bottom: 1rem; white-space: pre; }
+  .code-comment { color: var(--text-dim); }
+
+  /* Checklist */
+  .checklist { list-style: none; }
+  .checklist li { padding: 0.5rem 0; font-size: 0.88rem; display: flex; align-items: center; gap: 0.6rem; border-bottom: 1px solid var(--border); }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box { width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .check-box.checked { background: var(--green); border-color: var(--green); }
+  .check-box.checked::after { content: '\2713'; color: white; font-size: 0.7rem; font-weight: 700; }
+
+  /* 3D section */
+  .param-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 1.5rem; }
+  .param-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem 1rem; }
+  .param-card .label { font-size: 0.72rem; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.06em; }
+  .param-card .value { font-size: 1.1rem; font-weight: 600; margin-top: 0.2rem; }
+
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+  h2 { font-size: 1.15rem; font-weight: 600; margin-bottom: 1rem; }
+  p.desc { color: var(--text-dim); font-size: 0.88rem; margin-bottom: 1rem; }
+
+  /* SVG diagram */
+  .svg-diagram { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; overflow-x: auto; }
+</style>
+</head>
+<body>
+<div style="background:#3a1f1a;border-bottom:2px solid #e17055;color:#f5d5cc;padding:1rem 2rem;font-size:0.92rem;line-height:1.55;">
+  <strong style="color:#e17055;">SUPERSEDED &mdash; 2026-09-06.</strong>
+  This dashboard is kept for history only. Authoritative documentation is
+  <code>CLAUDE.md</code> and <code>docs/</code>. Known errors below:
+  the <code>gpio-keys</code> overlay name (should be <code>gpio-key</code>),
+  the +3.3&nbsp;V button wiring (should be GPIO&rarr;GND with no external resistors),
+  the 2&ndash;3&nbsp;hour charge-time claim (now ~8&nbsp;hours at 500&nbsp;mA),
+  and the entire TP4056 charging chain, which was removed by decision
+  <strong>D-010</strong> &mdash; the Qi receiver now feeds the Brook's own USB-C input.
+  Enclosure CAD also moved to Fusion 360 under <strong>D-011</strong>.
+  See <code>docs/08-open-issues.md</code> and <code>docs/09-decision-log.md</code>.
+</div>
+
+
+<div class="header">
+  <h1>&#127918; Wireless Lap Arcade Controller</h1>
+  <p>Beanbag gaming via projector — Pi 4 console box + wireless Brook Gen 5W lap pads with Qi charging</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-label">Components Purchased</div>
+    <div class="stat-value green">13 / 15</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Still Needed</div>
+    <div class="stat-value orange">2 items</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Build Phase</div>
+    <div class="stat-value accent">Planning</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Wireless Controllers</div>
+    <div class="stat-value">Up to 4</div>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-panel="bom">Bill of Materials</div>
+  <div class="tab" data-panel="wiring">Wiring Guide</div>
+  <div class="tab" data-panel="retropie">RetroPie Setup</div>
+  <div class="tab" data-panel="enclosure">3D Enclosure</div>
+  <div class="tab" data-panel="checklist">Testing Checklist</div>
+</div>
+
+<div class="content">
+
+  <!-- BOM PANEL -->
+  <div class="panel active" id="bom">
+    <h2>Bill of Materials</h2>
+
+    <div class="alert alert-warn">
+      <strong>MT3608 Boost Converter — REMOVE FROM BUILD</strong>
+      The Brook Gen 5W runs natively at 3.7V from LiPo. No 5V boost is needed. The MT3608 adds unnecessary complexity, heat, and power loss.
+    </div>
+
+    <div class="bom-section">
+      <h3>&#127918; Lap Pad (per controller)</h3>
+      <table>
+        <tr><th>Component</th><th>Part</th><th>Status</th></tr>
+        <tr><td>Wireless Encoder</td><td>Brook Gen 5W Wireless Fighting Board</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Battery Charger</td><td>TP4056 module (DW01 protection)</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Battery</td><td>3.7V 3700mAh 103395 LiPo pack</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Wireless Charging Rx</td><td>Qi receiver module (5V output)</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Status Display</td><td>Small OLED for Brook Gen 5W</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Boost Converter</td><td style="text-decoration:line-through;color:var(--text-dim)">MT3608 (3.7V to 5V)</td><td><span class="badge badge-remove">Not Needed</span></td></tr>
+        <tr><td>Joystick</td><td>8-way (Sanwa JLF or clone) — from existing cabinet</td><td><span class="badge badge-purchased">Have</span></td></tr>
+        <tr><td>Action Buttons</td><td>6x 30mm arcade push buttons — from existing cabinet</td><td><span class="badge badge-purchased">Have</span></td></tr>
+        <tr><td>Battery Connector</td><td>JST PH 2.0mm pigtails (Brook board)</td><td><span class="badge badge-needed">Needed</span></td></tr>
+        <tr><td>Charging Station</td><td>Qi transmitter pad (one per station)</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Wiring</td><td>Wires, crimps, quick-disconnect harness</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Enclosure</td><td>3D printed (see Enclosure tab)</td><td><span class="badge badge-needed">Needed</span></td></tr>
+      </table>
+    </div>
+
+    <div class="bom-section">
+      <h3>&#129312; Pi Console Box</h3>
+      <table>
+        <tr><th>Component</th><th>Part</th><th>Status</th></tr>
+        <tr><td>Console</td><td>Raspberry Pi 4 Model B</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Console Buttons</td><td>6-8 arcade buttons (Start/Select/Hotkey/P1-P4)</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Pull-down Resistors</td><td>10kΩ (optional — Pi has internal pull-downs)</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Wiring</td><td>Wires, Dupont connectors</td><td><span class="badge badge-purchased">Purchased</span></td></tr>
+        <tr><td>Enclosure</td><td>Console box enclosure</td><td><span class="badge badge-needed">Needed</span></td></tr>
+      </table>
+    </div>
+
+    <div class="alert alert-info">
+      <strong>Missing from original spec</strong>
+      Qi transmitter pads (you have receivers but need transmitters), JST PH 2.0mm pigtails (Brook board's battery connector), and USB-C panel mount for the Pi box were not in the original BOM.
+    </div>
+  </div>
+
+  <!-- WIRING PANEL -->
+  <div class="panel" id="wiring">
+    <h2>Wiring Guide</h2>
+
+    <div class="diagram-box">
+      <h3>Lap Pad — Simplified Power Chain</h3>
+      <p class="desc">No boost converter. The Brook Gen 5W accepts 3.7V directly.</p>
+      <svg viewBox="0 0 800 320" style="width:100%;max-width:800px;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background -->
+        <rect width="800" height="320" rx="8" fill="#1a1d27"/>
+
+        <!-- Qi Receiver -->
+        <rect x="30" y="40" width="130" height="55" rx="6" fill="#232733" stroke="#6c5ce7" stroke-width="1.5"/>
+        <text x="95" y="62" text-anchor="middle" fill="#6c5ce7" font-size="10" font-weight="600">QI RECEIVER</text>
+        <text x="95" y="78" text-anchor="middle" fill="#8b8fa3" font-size="9">5V output</text>
+
+        <!-- Arrow 1 -->
+        <line x1="160" y1="67" x2="200" y2="67" stroke="#74b9ff" stroke-width="2" marker-end="url(#arrowBlue)"/>
+        <text x="180" y="60" text-anchor="middle" fill="#74b9ff" font-size="8">5V</text>
+
+        <!-- TP4056 -->
+        <rect x="200" y="40" width="130" height="55" rx="6" fill="#232733" stroke="#00b894" stroke-width="1.5"/>
+        <text x="265" y="62" text-anchor="middle" fill="#00b894" font-size="10" font-weight="600">TP4056</text>
+        <text x="265" y="78" text-anchor="middle" fill="#8b8fa3" font-size="9">Charger + Protection</text>
+
+        <!-- Arrow 2 -->
+        <line x1="330" y1="67" x2="370" y2="67" stroke="#74b9ff" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+        <!-- Battery -->
+        <rect x="370" y="30" width="140" height="75" rx="6" fill="#232733" stroke="#fdcb6e" stroke-width="1.5"/>
+        <text x="440" y="55" text-anchor="middle" fill="#fdcb6e" font-size="10" font-weight="600">3700mAh LiPo</text>
+        <text x="440" y="72" text-anchor="middle" fill="#8b8fa3" font-size="9">3.7V 103395</text>
+        <text x="440" y="90" text-anchor="middle" fill="#8b8fa3" font-size="8">JST PH 2.0mm out</text>
+
+        <!-- Arrow 3 -->
+        <line x1="510" y1="67" x2="560" y2="67" stroke="#fdcb6e" stroke-width="2" marker-end="url(#arrowYellow)"/>
+        <text x="535" y="60" text-anchor="middle" fill="#fdcb6e" font-size="8">3.7V</text>
+
+        <!-- Brook Board -->
+        <rect x="560" y="25" width="210" height="85" rx="6" fill="#232733" stroke="#e17055" stroke-width="1.5"/>
+        <text x="665" y="50" text-anchor="middle" fill="#e17055" font-size="11" font-weight="600">BROOK GEN 5W</text>
+        <text x="665" y="68" text-anchor="middle" fill="#8b8fa3" font-size="9">Wireless Fighting Board</text>
+        <text x="665" y="84" text-anchor="middle" fill="#8b8fa3" font-size="8">Bluetooth to Pi</text>
+        <text x="665" y="98" text-anchor="middle" fill="#e17055" font-size="8">Accepts 3.7V direct!</text>
+
+        <!-- Joystick -->
+        <rect x="560" y="150" width="100" height="50" rx="6" fill="#232733" stroke="#74b9ff" stroke-width="1.5"/>
+        <text x="610" y="172" text-anchor="middle" fill="#74b9ff" font-size="10" font-weight="600">JOYSTICK</text>
+        <text x="610" y="188" text-anchor="middle" fill="#8b8fa3" font-size="8">8-way Sanwa</text>
+        <line x1="610" y1="150" x2="610" y2="110" stroke="#74b9ff" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+        <!-- Buttons -->
+        <rect x="670" y="150" width="100" height="50" rx="6" fill="#232733" stroke="#74b9ff" stroke-width="1.5"/>
+        <text x="720" y="172" text-anchor="middle" fill="#74b9ff" font-size="10" font-weight="600">6 BUTTONS</text>
+        <text x="720" y="188" text-anchor="middle" fill="#8b8fa3" font-size="8">30mm arcade</text>
+        <line x1="720" y1="150" x2="720" y2="110" stroke="#74b9ff" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+        <!-- OLED -->
+        <rect x="560" y="220" width="100" height="45" rx="6" fill="#232733" stroke="#a29bfe" stroke-width="1.5"/>
+        <text x="610" y="240" text-anchor="middle" fill="#a29bfe" font-size="10" font-weight="600">OLED</text>
+        <text x="610" y="254" text-anchor="middle" fill="#8b8fa3" font-size="8">I2C Display</text>
+        <line x1="640" y1="220" x2="670" y2="110" stroke="#a29bfe" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- Warning box -->
+        <rect x="30" y="140" width="480" height="80" rx="6" fill="rgba(225,112,85,0.08)" stroke="#e17055" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="50" y="163" fill="#e17055" font-size="10" font-weight="600">CHARGING CONFLICT WARNING</text>
+        <text x="50" y="180" fill="#8b8fa3" font-size="9">Brook Gen 5W has built-in USB-C charging. Do NOT plug USB-C while on Qi pad.</text>
+        <text x="50" y="196" fill="#8b8fa3" font-size="9">Use Qi (via TP4056) for charging. Use USB-C for wired play / firmware only.</text>
+        <text x="50" y="212" fill="#e17055" font-size="8">Two chargers on one cell = risk of damage, overheating, reduced battery life.</text>
+
+        <!-- Qi Pad note -->
+        <rect x="30" y="250" width="200" height="50" rx="6" fill="#232733" stroke="#6c5ce7" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="130" y="272" text-anchor="middle" fill="#6c5ce7" font-size="9" font-weight="600">QI TRANSMITTER PAD</text>
+        <text x="130" y="288" text-anchor="middle" fill="#8b8fa3" font-size="8">Needed — not in original BOM</text>
+        <line x1="130" y1="250" x2="95" y2="95" stroke="#6c5ce7" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowPurple)"/>
+
+        <!-- Arrow markers -->
+        <defs>
+          <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#74b9ff"/></marker>
+          <marker id="arrowYellow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#fdcb6e"/></marker>
+          <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#6c5ce7"/></marker>
+        </defs>
+      </svg>
+    </div>
+
+    <h3 style="margin-bottom:0.8rem;">Step-by-Step Wiring</h3>
+
+    <div class="wire-step">
+      <h4>Step 1 — Qi Receiver to TP4056</h4>
+      <p>Solder Qi receiver V+ to TP4056 IN+, Qi receiver GND to TP4056 IN-. The Qi module outputs regulated 5V — exactly what the TP4056 expects as input power.</p>
+    </div>
+    <div class="wire-step">
+      <h4>Step 2 — TP4056 to Battery</h4>
+      <p>Connect TP4056 BAT+ to LiPo positive, BAT- to LiPo negative. The built-in DW01 protection IC handles over-discharge, over-charge, and short circuit protection.</p>
+    </div>
+    <div class="wire-step">
+      <h4>Step 3 — Battery to Brook Gen 5W</h4>
+      <p>The Brook board uses a JST PH 2.0mm battery connector. Re-terminate the LiPo leads with a JST PH 2.0mm plug, or use a pigtail adapter. <strong style="color:var(--red)">Verify polarity — reversed polarity will destroy the board.</strong></p>
+    </div>
+    <div class="wire-step">
+      <h4>Step 4 — Joystick</h4>
+      <p>Connect UP/DOWN/LEFT/RIGHT switches to Brook Gen 5W directional terminals. Joystick common wire to GND on the Brook board.</p>
+    </div>
+    <div class="wire-step">
+      <h4>Step 5 — 6 Action Buttons</h4>
+      <p>Connect each button signal wire to Brook P1–P6 terminals. All button grounds daisy-chain to Brook GND.</p>
+    </div>
+    <div class="wire-step">
+      <h4>Step 6 — OLED Display</h4>
+      <p>Connect SDA/SCL to Brook I2C header. VCC to 3.3V or 5V (check module spec). GND to GND. Confirm I2C address matches the Brook display driver.</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <h2>Pi Console Box — GPIO Wiring</h2>
+    <p class="desc">Console buttons wired directly to Pi GPIO. No separate controller board needed.</p>
+
+    <table class="gpio-table">
+      <tr><th>Button</th><th>GPIO (BCM)</th><th>Physical Pin</th><th>Key Code</th></tr>
+      <tr><td>Player 1 Start</td><td>GPIO17</td><td>Pin 11</td><td>KEY_1 (2)</td></tr>
+      <tr><td>Player 2 Start</td><td>GPIO27</td><td>Pin 13</td><td>KEY_2 (3)</td></tr>
+      <tr><td>Player 3 Start</td><td>GPIO22</td><td>Pin 15</td><td>KEY_3 (4)</td></tr>
+      <tr><td>Player 4 Start</td><td>GPIO23</td><td>Pin 16</td><td>KEY_4 (5)</td></tr>
+      <tr><td>Select</td><td>GPIO24</td><td>Pin 18</td><td>KEY_5 (6)</td></tr>
+      <tr><td>Hotkey</td><td>GPIO25</td><td>Pin 22</td><td>KEY_6 (7)</td></tr>
+      <tr><td>Ground</td><td>GND</td><td>Pin 6 / 9 / 14</td><td>—</td></tr>
+    </table>
+
+    <div class="alert alert-info" style="margin-top:1rem;">
+      <strong>Why unique key codes?</strong>
+      Each button needs a different code so the system can tell which player pressed Start. Using BTN_START (315) for all four would make them indistinguishable.
+    </div>
+
+    <div style="margin-top:1rem;">
+      <svg viewBox="0 0 500 180" style="width:100%;max-width:500px;" xmlns="http://www.w3.org/2000/svg">
+        <rect width="500" height="180" rx="8" fill="#1a1d27"/>
+        <text x="250" y="25" text-anchor="middle" fill="#8b8fa3" font-size="10" font-weight="600">BUTTON WIRING SCHEMATIC</text>
+
+        <!-- 3.3V rail -->
+        <line x1="60" y1="50" x2="440" y2="50" stroke="#e17055" stroke-width="2"/>
+        <text x="40" y="54" text-anchor="end" fill="#e17055" font-size="9" font-weight="600">3.3V</text>
+
+        <!-- GND rail -->
+        <line x1="60" y1="150" x2="440" y2="150" stroke="#74b9ff" stroke-width="2"/>
+        <text x="40" y="154" text-anchor="end" fill="#74b9ff" font-size="9" font-weight="600">GND</text>
+
+        <!-- Button 1 -->
+        <line x1="100" y1="50" x2="100" y2="70" stroke="#e17055" stroke-width="1.5"/>
+        <rect x="85" y="70" width="30" height="20" rx="3" fill="#232733" stroke="#fdcb6e" stroke-width="1.5"/>
+        <text x="100" y="84" text-anchor="middle" fill="#fdcb6e" font-size="7">BTN</text>
+        <line x1="100" y1="90" x2="100" y2="105" stroke="#fdcb6e" stroke-width="1.5"/>
+        <circle cx="100" cy="108" r="3" fill="none" stroke="#00b894" stroke-width="1.5"/>
+        <text x="100" y="125" text-anchor="middle" fill="#00b894" font-size="7">GPIO</text>
+        <line x1="100" y1="130" x2="100" y2="137" stroke="#8b8fa3" stroke-width="1" stroke-dasharray="2,2"/>
+        <rect x="90" y="137" width="20" height="8" rx="1" fill="none" stroke="#8b8fa3" stroke-width="1"/>
+        <text x="100" y="143" text-anchor="middle" fill="#8b8fa3" font-size="5">10k</text>
+        <line x1="100" y1="145" x2="100" y2="150" stroke="#8b8fa3" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="100" y="170" text-anchor="middle" fill="#8b8fa3" font-size="7">P1 Start</text>
+
+        <!-- Button 2 -->
+        <line x1="200" y1="50" x2="200" y2="70" stroke="#e17055" stroke-width="1.5"/>
+        <rect x="185" y="70" width="30" height="20" rx="3" fill="#232733" stroke="#fdcb6e" stroke-width="1.5"/>
+        <text x="200" y="84" text-anchor="middle" fill="#fdcb6e" font-size="7">BTN</text>
+        <line x1="200" y1="90" x2="200" y2="105" stroke="#fdcb6e" stroke-width="1.5"/>
+        <circle cx="200" cy="108" r="3" fill="none" stroke="#00b894" stroke-width="1.5"/>
+        <text x="200" y="125" text-anchor="middle" fill="#00b894" font-size="7">GPIO</text>
+        <line x1="200" y1="130" x2="200" y2="137" stroke="#8b8fa3" stroke-width="1" stroke-dasharray="2,2"/>
+        <rect x="190" y="137" width="20" height="8" rx="1" fill="none" stroke="#8b8fa3" stroke-width="1"/>
+        <text x="200" y="143" text-anchor="middle" fill="#8b8fa3" font-size="5">10k</text>
+        <line x1="200" y1="145" x2="200" y2="150" stroke="#8b8fa3" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="200" y="170" text-anchor="middle" fill="#8b8fa3" font-size="7">P2 Start</text>
+
+        <!-- ... pattern label -->
+        <text x="300" y="100" text-anchor="middle" fill="#8b8fa3" font-size="11">. . .</text>
+        <text x="300" y="170" text-anchor="middle" fill="#8b8fa3" font-size="7">Same pattern</text>
+
+        <!-- Legend -->
+        <text x="400" y="84" text-anchor="middle" fill="#8b8fa3" font-size="8">Pull-down resistor</text>
+        <text x="400" y="96" text-anchor="middle" fill="#8b8fa3" font-size="8">(optional with</text>
+        <text x="400" y="108" text-anchor="middle" fill="#8b8fa3" font-size="8">internal pull-downs)</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- RETROPIE PANEL -->
+  <div class="panel" id="retropie">
+    <h2>RetroPie Configuration</h2>
+
+    <h3 style="margin-bottom:0.6rem;">gpio-keys Overlay — /boot/config.txt</h3>
+    <p class="desc">Each button maps to a unique key code so the system can distinguish all inputs.</p>
+    <div class="code-block"><span class="code-comment"># Corrected key codes for RetroPie
+# Each button has a unique code for proper identification</span>
+
+dtoverlay=gpio-keys,gpio=17,keycode=2,label="Player 1 Start"
+dtoverlay=gpio-keys,gpio=27,keycode=3,label="Player 2 Start"
+dtoverlay=gpio-keys,gpio=22,keycode=4,label="Player 3 Start"
+dtoverlay=gpio-keys,gpio=23,keycode=5,label="Player 4 Start"
+dtoverlay=gpio-keys,gpio=24,keycode=6,label="Select"
+dtoverlay=gpio-keys,gpio=25,keycode=7,label="Hotkey"</div>
+
+    <div class="alert alert-info">
+      <strong>gpio-keys creates a virtual keyboard, not a gamepad</strong>
+      This works but needs RetroArch keyboard-to-gamepad mapping. For native joystick device support, use the mk_arcade_joystick_rpi driver below.
+    </div>
+
+    <hr class="section-divider">
+
+    <h3 style="margin-bottom:0.6rem;">Alternative: mk_arcade_joystick_rpi Driver</h3>
+    <p class="desc">Presents GPIO buttons as proper joystick devices (/dev/input/jsX) — natively recognized by EmulationStation.</p>
+    <div class="code-block"><span class="code-comment"># Installation</span>
+cd /home/pi
+git clone https://github.com/recalbox/mk_arcade_joystick_rpi.git
+cd mk_arcade_joystick_rpi
+sudo mkdir /usr/src/mk_arcade_joystick_rpi-0.1.5
+sudo cp -a * /usr/src/mk_arcade_joystick_rpi-0.1.5/
+sudo dkms build -m mk_arcade_joystick_rpi -v 0.1.5
+sudo dkms install -m mk_arcade_joystick_rpi -v 0.1.5
+
+<span class="code-comment"># Load the driver</span>
+sudo modprobe mk_arcade_joystick_rpi map=1
+
+<span class="code-comment"># Auto-load on boot — add to /etc/modules:</span>
+mk_arcade_joystick_rpi</div>
+
+    <hr class="section-divider">
+
+    <h3 style="margin-bottom:0.6rem;">Brook Gen 5W Bluetooth Pairing</h3>
+    <div class="wire-step">
+      <h4>1. Enter Pairing Mode</h4>
+      <p>Hold the pairing button on the Brook Gen 5W for 3 seconds until the LED flashes rapidly.</p>
+    </div>
+    <div class="wire-step">
+      <h4>2. RetroPie Bluetooth Menu</h4>
+      <p>Navigate to: RetroPie Setup > Configuration / Tools > Bluetooth > Register and Connect to Bluetooth Device</p>
+    </div>
+    <div class="wire-step">
+      <h4>3. Select and Pair</h4>
+      <p>Select the Brook controller from the discovered devices list. Once paired, the LED will go solid.</p>
+    </div>
+    <div class="wire-step">
+      <h4>4. Configure Input</h4>
+      <p>In EmulationStation, press any button to trigger input configuration. Map joystick and all 6 buttons.</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <h3 style="margin-bottom:0.6rem;">Multi-Player RetroArch Config</h3>
+    <p class="desc">Edit /opt/retropie/configs/all/retroarch.cfg</p>
+    <div class="code-block"><span class="code-comment"># Map each Brook controller to a player slot</span>
+input_player1_joypad_index = "0"
+input_player2_joypad_index = "1"
+input_player3_joypad_index = "2"
+input_player4_joypad_index = "3"</div>
+  </div>
+
+  <!-- ENCLOSURE PANEL -->
+  <div class="panel" id="enclosure">
+    <h2>Enclosure Design Reference</h2>
+    <p class="desc">Component dimensions and mounting specs for your Fusion 360 designs (printing on Bambu X1 / H2C / H2D). STEP reference files in <code>STEP_Reference_Files/</code> folder — import into Fusion 360 as bodies to design around.</p>
+
+    <div class="alert alert-ok">
+      <strong>STEP files ready for Fusion 360</strong>
+      Individual component blocks: Brook Gen 5W, TP4056, LiPo battery, Qi coil, Sanwa JLF joystick, 30mm button, OLED display, and Raspberry Pi 4B. Plus a pre-positioned lap pad assembly showing approximate component layout. All in <code>STEP_Reference_Files/</code>.
+    </div>
+
+    <h3 style="margin-bottom:0.8rem;">System Architecture</h3>
+    <div class="svg-diagram">
+      <svg viewBox="0 0 750 200" style="width:100%;max-width:750px;" xmlns="http://www.w3.org/2000/svg">
+        <rect width="750" height="200" rx="8" fill="#1a1d27"/>
+
+        <!-- Pi Console Box -->
+        <rect x="20" y="30" width="220" height="140" rx="8" fill="#232733" stroke="#00b894" stroke-width="2"/>
+        <text x="130" y="55" text-anchor="middle" fill="#00b894" font-size="11" font-weight="600">PI CONSOLE BOX</text>
+        <text x="130" y="75" text-anchor="middle" fill="#8b8fa3" font-size="9">Stationary — near projector</text>
+        <text x="130" y="95" text-anchor="middle" fill="#8b8fa3" font-size="8">RPi 4 + system buttons</text>
+        <text x="130" y="110" text-anchor="middle" fill="#8b8fa3" font-size="8">Select / Hotkey / P1-P4 Start</text>
+        <text x="130" y="130" text-anchor="middle" fill="#e17055" font-size="8">HDMI out to projector</text>
+        <text x="130" y="145" text-anchor="middle" fill="#8b8fa3" font-size="8">Mains powered (no battery)</text>
+        <text x="130" y="160" text-anchor="middle" fill="#74b9ff" font-size="8">Bluetooth receiver</text>
+
+        <!-- Arrow - HDMI -->
+        <line x1="240" y1="75" x2="295" y2="45" stroke="#e17055" stroke-width="1.5" marker-end="url(#arrowRed2)"/>
+        <rect x="295" y="25" width="90" height="35" rx="4" fill="#232733" stroke="#e17055" stroke-width="1"/>
+        <text x="340" y="42" text-anchor="middle" fill="#e17055" font-size="9" font-weight="600">PROJECTOR</text>
+        <text x="340" y="54" text-anchor="middle" fill="#8b8fa3" font-size="7">HDMI</text>
+
+        <!-- Arrow - Bluetooth -->
+        <line x1="240" y1="130" x2="310" y2="130" stroke="#6c5ce7" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <text x="275" y="123" text-anchor="middle" fill="#6c5ce7" font-size="8">Bluetooth</text>
+
+        <!-- Wireless Lap Pads -->
+        <rect x="310" y="90" width="200" height="80" rx="8" fill="#232733" stroke="#6c5ce7" stroke-width="2"/>
+        <text x="410" y="113" text-anchor="middle" fill="#6c5ce7" font-size="11" font-weight="600">WIRELESS LAP PAD</text>
+        <text x="410" y="130" text-anchor="middle" fill="#8b8fa3" font-size="8">Brook Gen 5W + Joystick + 6 Buttons</text>
+        <text x="410" y="145" text-anchor="middle" fill="#8b8fa3" font-size="8">Battery + Qi charging</text>
+        <text x="410" y="158" text-anchor="middle" fill="#fdcb6e" font-size="8">On lap in beanbag</text>
+
+        <!-- Qi Pad -->
+        <line x1="510" y1="145" x2="570" y2="155" stroke="#6c5ce7" stroke-width="1" stroke-dasharray="4,3"/>
+        <rect x="570" y="130" width="80" height="40" rx="4" fill="#232733" stroke="#6c5ce7" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="610" y="148" text-anchor="middle" fill="#6c5ce7" font-size="8">QI PAD</text>
+        <text x="610" y="161" text-anchor="middle" fill="#8b8fa3" font-size="7">Charges between</text>
+        <text x="610" y="170" text-anchor="middle" fill="#8b8fa3" font-size="7">sessions</text>
+
+        <!-- x4 label -->
+        <rect x="674" y="95" width="50" height="22" rx="4" fill="#6c5ce7" opacity="0.15"/>
+        <text x="699" y="110" text-anchor="middle" fill="#6c5ce7" font-size="10" font-weight="600">x 1-4</text>
+
+        <defs>
+          <marker id="arrowRed2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e17055"/></marker>
+        </defs>
+      </svg>
+    </div>
+
+    <hr class="section-divider">
+
+    <h3 style="margin-bottom:0.8rem;">Lap Pad — Component Dimensions</h3>
+    <p class="desc">Reference measurements for your enclosure design. All dimensions in mm.</p>
+    <table>
+      <tr><th>Component</th><th>L x W x H (mm)</th><th>Mounting</th><th>Notes</th></tr>
+      <tr><td>Brook Gen 5W</td><td>97 x 52 x 15</td><td>4x M3 corner holes</td><td>JST 2.0mm battery connector on right edge. USB-C on top edge.</td></tr>
+      <tr><td>TP4056 Module</td><td>26 x 17 x 4</td><td>2x M2 holes or friction fit</td><td>Micro-USB input from Qi receiver. LED indicators need visibility.</td></tr>
+      <tr><td>3700mAh LiPo (103395)</td><td>~95 x 33 x 10</td><td>Friction bay / retaining lip</td><td>Needs padding/insulation around it. No pressure on cell.</td></tr>
+      <tr><td>Qi Receiver Coil</td><td>~50mm dia x 1.5</td><td>Recess in bottom</td><td>Must sit flush with bottom surface to maintain coupling with Qi pad.</td></tr>
+      <tr><td>OLED Display</td><td>~27 x 15 x 3</td><td>Friction snap or adhesive</td><td>I2C connection to Brook board. Needs top-plate cutout for visibility.</td></tr>
+      <tr><td>Sanwa JLF Joystick</td><td>~94 x 40 x 37 (below panel)</td><td>4x M4, 84mm diagonal pattern</td><td>24mm shaft hole. Needs ~40mm clearance below top plate.</td></tr>
+      <tr><td>30mm Arcade Button</td><td>30mm dia, ~25mm depth</td><td>Snap-in or screw-in (28mm cutout for snap)</td><td>6 buttons in Vewlix 2x3 layout: 36mm centre spacing, rows offset 12mm.</td></tr>
+    </table>
+
+    <h3 style="margin:1.5rem 0 0.8rem;">Pi Console Box — Component Dimensions</h3>
+    <table>
+      <tr><th>Component</th><th>L x W x H (mm)</th><th>Mounting</th><th>Notes</th></tr>
+      <tr><td>Raspberry Pi 4 Model B</td><td>85 x 56 x 17</td><td>4x M2.5 standoffs</td><td>HDMI x2, USB-C power, Ethernet, 4x USB-A, 3.5mm audio, GPIO header. Needs ventilation.</td></tr>
+      <tr><td>30mm Arcade Button</td><td>30mm dia, ~25mm depth</td><td>Snap-in or screw-in</td><td>6 buttons: P1-P4 Start, Select, Hotkey. Wired to GPIO via Dupont connectors.</td></tr>
+    </table>
+
+    <div class="alert alert-info" style="margin-top:1rem;">
+      <strong>Pi Console Box design considerations</strong>
+      Needs HDMI port access (projector), USB-C power input, good airflow (Pi 4 runs hot), and enough clearance for GPIO header wiring. No battery needed — mains powered.
+    </div>
+
+    <h3 style="margin:1.5rem 0 0.8rem;">Lap Pad Design Considerations</h3>
+    <div class="param-grid">
+      <div class="param-card"><div class="label">Min Internal Depth</div><div class="value">~40mm</div></div>
+      <div class="param-card"><div class="label">Joystick Below-Panel</div><div class="value">37mm clearance</div></div>
+      <div class="param-card"><div class="label">Qi Coil Position</div><div class="value">Bottom, flush recess</div></div>
+      <div class="param-card"><div class="label">USB-C Access</div><div class="value">Edge slot (firmware)</div></div>
+      <div class="param-card"><div class="label">TP4056 LEDs</div><div class="value">Need light pipe or window</div></div>
+      <div class="param-card"><div class="label">Ergonomics</div><div class="value">Rounded edges, lap comfort</div></div>
+    </div>
+
+    <div class="alert alert-warn" style="margin-top:1rem;">
+      <strong>Qi alignment matters</strong>
+      The receiver coil must align with the transmitter pad coil when the controller is set down to charge. Consider adding alignment guides, a flat bottom area, or a cradle/dock so the controller always lands in the right spot on the charging pad.
+    </div>
+  </div>
+
+  <!-- CHECKLIST PANEL -->
+  <div class="panel" id="checklist">
+    <h2>Testing Checklist</h2>
+    <p class="desc">Work through these after assembly. Click to mark complete.</p>
+
+    <h3 style="margin:1rem 0 0.6rem;">Power &amp; Charging</h3>
+    <ul class="checklist" id="checklist-power">
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Qi receiver outputs ~5V (measure with multimeter)</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>TP4056 LED red when charging, blue/green when full</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Battery voltage reads ~3.7V nominal</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Brook Gen 5W powers on from battery (LED active)</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>No excessive heat from any component after 10 min</li>
+    </ul>
+
+    <h3 style="margin:1rem 0 0.6rem;">Lap Pad Inputs</h3>
+    <ul class="checklist" id="checklist-inputs">
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Joystick UP registers</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Joystick DOWN registers</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Joystick LEFT registers</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Joystick RIGHT registers</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>All 6 action buttons register individually</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>OLED display shows status info</li>
+    </ul>
+
+    <h3 style="margin:1rem 0 0.6rem;">Wireless &amp; Pairing</h3>
+    <ul class="checklist" id="checklist-wireless">
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Brook enters Bluetooth pairing mode (rapid flash)</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Pi discovers and pairs with Brook controller</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Controller reconnects automatically after power cycle</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Input latency acceptable (no perceptible delay)</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Range sufficient from play distance (~3m+)</li>
+    </ul>
+
+    <h3 style="margin:1rem 0 0.6rem;">Pi Console Box</h3>
+    <ul class="checklist" id="checklist-pi">
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Player 1 Start button registers in EmulationStation</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Player 2 Start button registers</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Player 3 Start button registers</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Player 4 Start button registers</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Select button registers</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Hotkey functions (exit game, menu, etc.)</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>All buttons distinguishable (unique key codes)</li>
+    </ul>
+
+    <h3 style="margin:1rem 0 0.6rem;">Integration</h3>
+    <ul class="checklist" id="checklist-integration">
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Multi-player game works with 2+ controllers</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Controller survives full play session on battery</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Qi charging works when controller placed on pad</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>No charging conflict tested (USB-C unplugged during Qi)</li>
+      <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Enclosure fits all components without strain on wires</li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.panel).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340" width="340mm" height="340mm" font-family="monospace" font-size="6">
+<title>Out there (a): nested discs, plan, mm, player edge at bottom</title>
+<circle cx="170" cy="170" r="150" fill="#eee" stroke="#222" stroke-width="1"/>
+<circle cx="170" cy="170" r="138" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="170" cy="170" r="125" fill="#f6f6f6" stroke="#222" stroke-width="0.7"/>
+<polygon points="55.4,220.0 58.5,226.6 62.0,232.9 65.8,239.1 70.0,245.0 74.5,250.7 79.3,256.1 84.5,261.2 89.9,266.0 95.6,270.4 101.5,274.6 107.7,278.4 114.1,281.8 120.7,284.9 127.4,287.5 134.3,289.8 141.3,291.7 148.4,293.1 155.5,294.2 162.8,294.8 170.0,295.0 177.2,294.8 184.5,294.2 191.6,293.1 198.7,291.7 205.7,289.8 212.6,287.5 219.3,284.9 225.9,281.8 232.3,278.4 238.5,274.6 244.4,270.4 250.1,266.0 255.5,261.2 260.7,256.1 265.5,250.7 270.0,245.0 274.2,239.1 278.0,232.9 281.5,226.6 284.6,220.0" fill="#d9e4f0" stroke="none"/>
+<text x="92" y="258" >palm rest (plate, front of y=100)</text>
+<circle cx="114" cy="186" r="45" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="185" cy="200" r="20" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="225" cy="186" r="20" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="265" cy="192" r="20" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="177" cy="160" r="20" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="217" cy="146" r="20" fill="none" stroke="#222" stroke-width="0.4"/>
+<circle cx="257" cy="152" r="20" fill="none" stroke="#222" stroke-width="0.4"/>
+<rect x="66.5" y="159.5" width="95.0" height="53.0" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<circle cx="114" cy="186" r="17.5" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="114" cy="186" r="10.5" fill="none" stroke="#222" stroke-width="0.5"/>
+<text x="102" y="210" >stick 94,134</text>
+<circle cx="185" cy="200" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="185" cy="200" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="174" y="201.5" font-size="5">165,120</text>
+<circle cx="225" cy="186" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="225" cy="186" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="214" y="187.5" font-size="5">205,134</text>
+<circle cx="265" cy="192" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="265" cy="192" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="254" y="193.5" font-size="5">245,128</text>
+<circle cx="177" cy="160" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="177" cy="160" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="166" y="161.5" font-size="5">157,160</text>
+<circle cx="217" cy="146" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="217" cy="146" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="206" y="147.5" font-size="5">197,174</text>
+<circle cx="257" cy="152" r="15" fill="#fff" stroke="#222" stroke-width="0.8"/>
+<circle cx="257" cy="152" r="18" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="3,2"/>
+<text x="246" y="153.5" font-size="5">237,168</text>
+<rect x="170" y="75" width="96" height="45" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="174" y="102" >Brook 96x45</text>
+<rect x="48" y="115" width="95" height="33" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="52" y="136" >LiPo 95x33</text>
+<circle cx="205" cy="265" r="31" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<circle cx="205" cy="265" r="25" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="180" y="296" >Qi coil 50/boss 62</text>
+<rect x="153" y="23" width="30" height="4" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="120" y="38" >port board 30x26 (rear facet)</text>
+<rect x="136" y="308" width="8" height="9" fill="none" stroke="#444" stroke-width="0.6" stroke-dasharray="4,2"/>
+<text x="80" y="314" >antenna</text>
+<text x="110" y="8" >shell D300 / tyre D276 / plate D250</text>
+<text x="22" y="170" >thigh</text>
+<text x="302" y="170" >thigh</text>
+<line x1="40" y1="332" x2="140" y2="332" stroke="#222" stroke-width="1.2"/>
+<text x="40" y="328" >100 mm</text>
+</svg>
