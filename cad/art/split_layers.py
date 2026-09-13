@@ -8,8 +8,8 @@ it. The frame that keeps all files at one extent is dashed: each layer owns
 its own segments of the border, so the frames do not overlap either.
 
 Outputs (same 2160 x 2592 viewBox as the source, so imports align):
-  layers/set4/  red, blue, cream, brown           (one AMS)
-  layers/set6/  + gold, dark                      (two AMS)
+  layers/set5/  red, blue, cream, white (bun), brown   (one AMS + plate)
+  layers/set7/  + gold, dark                             (two AMS)
   layers/all/   one file per original class       (reference)
 Each folder gets _preview.png. Run: python cad/art/split_layers.py
 """
@@ -34,17 +34,27 @@ FRAME_MARGIN_MM = 1.5
 FRAME_WIDTH_MM = 0.6
 
 SETS = {
-    "set4": [("1_red_D5392B", "#D5392B", ["st0", "st9"]),
+    "set5": [("1_red_D5392B", "#D5392B", ["st0", "st9"]),
              ("2_blue_4886C5", "#4886C5", ["st3"]),
              ("3_cream_F6F0E7", "#F6F0E7", ["st4", "st5", "st7", "st1", "st8"]),
-             ("4_brown_694B30", "#694B30", ["st2", "st10", "st6"])],
-    "set6": [("1_red_D5392B", "#D5392B", ["st0", "st9"]),
+             ("4_white_FFFFFF", "#FFFFFF", ["st2w"]),
+             ("5_brown_694B30", "#694B30", ["st2", "st10", "st6"])],
+    "set7": [("1_red_D5392B", "#D5392B", ["st0", "st9"]),
              ("2_blue_4886C5", "#4886C5", ["st3"]),
              ("3_cream_F6F0E7", "#F6F0E7", ["st4", "st5", "st7"]),
-             ("4_gold_F4CF8E", "#F4CF8E", ["st1", "st8"]),
-             ("5_brown_997256", "#997256", ["st2", "st10"]),
-             ("6_dark_333735", "#333735", ["st6"])],
+             ("4_white_FFFFFF", "#FFFFFF", ["st2w"]),
+             ("5_gold_F4CF8E", "#F4CF8E", ["st1", "st8"]),
+             ("6_brown_997256", "#997256", ["st2", "st10"]),
+             ("7_dark_333735", "#333735", ["st6"])],
 }
+# The hair-bun covers are drawn in the mid-brown class st2 but are white
+# (owner, 2026-09-13). They are the st2 shapes that lie almost wholly inside
+# this box (viewBox units) and are not thin hair strands; relabelled st2w.
+BUN_BOX = (1100, 380, 1620, 830)
+BUN_MIN_INSIDE = 0.9
+BUN_MIN_THICK = 3.0        # area / perimeter, units; strands are ~2.3
+FRAME_STYLE = "dots"       # "dots" | "dashed" | "none"
+DOT_MM = 0.6
 
 
 def sample_subpath(sub):
@@ -120,6 +130,14 @@ def load_classes():
         if g is None or g.is_empty:
             continue
         order.append((cls, g))
+    bun = box(*BUN_BOX)
+    n_white = 0
+    for i, (cls, g) in enumerate(order):
+        if cls == "st2" and g.intersection(bun).area >= BUN_MIN_INSIDE * g.area and g.area / max(g.length, 1) >= BUN_MIN_THICK:
+            order[i] = ("st2w", g)
+            n_white += 1
+    colours["st2w"] = "#FFFFFF"
+    print("bun covers relabelled white: %d shapes" % n_white)
     vb = svg.viewbox
     return colours, order, (vb.x, vb.y, vb.width, vb.height)
 
@@ -163,13 +181,28 @@ def poly_d(p):
 
 
 def frame_segments(bounds, units_per_mm, n):
-    """Dashed frame: n segments per side, segment k for layer k. Top and
-    bottom span the full outer width; left and right sit between them."""
+    """Alignment marks so every layer has the same extent (Bambu sizes an
+    import by its geometry). "dashed": each layer owns segments of a border
+    line. "dots": each layer owns one DOT_MM square per side, staggered along
+    the side so no two layers touch (owner asked for the border to go,
+    2026-09-13). "none": no marks, extents differ per layer."""
     x0, y0, x1, y1 = bounds
     m, w = FRAME_MARGIN_MM * units_per_mm, FRAME_WIDTH_MM * units_per_mm
     ox0, oy0, ox1, oy1 = x0 - m - w, y0 - m - w, x1 + m + w, y1 + m + w
     ix0, iy0, ix1, iy1 = x0 - m, y0 - m, x1 + m, y1 + m
     per_layer = [[] for _ in range(n)]
+    if FRAME_STYLE == "none":
+        return [None] * n, (x0, y0, x1, y1)
+    if FRAME_STYLE == "dots":
+        d = DOT_MM * units_per_mm
+        for k in range(n):
+            fx = ox0 + (ox1 - ox0) * (k + 0.5) / n
+            fy = oy0 + (oy1 - oy0) * (k + 0.5) / n
+            per_layer[k].append(box(fx - d / 2, oy0, fx + d / 2, oy0 + d))                 # top
+            per_layer[(k + n // 2) % n].append(box(fx - d / 2, oy1 - d, fx + d / 2, oy1))  # bottom
+            per_layer[(k + 1) % n].append(box(ox0, fy - d / 2, ox0 + d, fy + d / 2))       # left
+            per_layer[(k + 3) % n].append(box(ox1 - d, fy - d / 2, ox1, fy + d / 2))       # right
+        return [unary_union(b) for b in per_layer], (ox0, oy0, ox1, oy1)
     for k in range(n):
         xa, xb = ox0 + (ox1 - ox0) * k / n, ox0 + (ox1 - ox0) * (k + 1) / n
         per_layer[k].append(box(xa, oy0, xb, iy0))                       # top
@@ -203,7 +236,7 @@ def emit(folder, groups, order, vb, units_per_mm, art_bounds):
     frames, outer = frame_segments(art_bounds, units_per_mm, len(groups))
     results = []
     for (name, fill, geom), frame in zip(painted, frames):
-        polys = clean(unary_union([geom, frame]), units_per_mm)
+        polys = clean(unary_union([geom, frame]) if frame is not None else geom, units_per_mm)
         cls = "c_" + name.split("_")[1]
         write_svg(os.path.join(folder, name + ".svg"), vb, fill, polys, cls)
         results.append((name, unary_union(polys)))
