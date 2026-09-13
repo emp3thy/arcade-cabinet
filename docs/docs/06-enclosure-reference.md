@@ -202,8 +202,8 @@ rim-band lettering and the raised-disc colour split. Renders in
 > the tray wall, over the cell and back; use ties ≥ 200 mm. Cell top now
 > 14 mm above the floor, 31 mm under the plate. **Five antenna cable hoops**
 > on the floor against the inner wall at 30, 0, −30, −60 and −90° from +x
-> (`hoop_ang_1..5`), 6 deep × 7 tall × 8 wide with a 3.5 × 4.5 opening
-> (`hoop_*`), routing the pigtail from the Brook's corner round the +x side
+> (`hoop_ang_1..5`), 8.5 deep × 7.5 tall × 8 wide with a 6 × 5 opening
+> (`hoop_*`; enlarged the same day so the antenna's 2 mm connector passes), routing the pigtail from the Brook's corner round the +x side
 > to the antenna bracket at −103°; opening ceiling is a 3.5 mm bridge,
 > prints from the floor.
 
