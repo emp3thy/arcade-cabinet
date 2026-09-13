@@ -171,8 +171,8 @@ and verified green on 2026-09-12 in the Fusion document "Arcade Controller
 v1": `lap_disc.py` (shell, plate, panel holes, stiffener pocket),
 `lap_disc_b.py` (rim slope, raised discs, tyre ridges, port boss and facet),
 `lap_disc_c.py` (Brook standoffs on the ASSUMED 88 × 37 pitch, LiPo tray,
-coil boss, antenna bracket, port window, TPU ring and tyre as separate
-bodies). Stage D, `lap_disc_d.py`, built and verified green on 2026-09-13
+coil boss — since removed by stage F — antenna bracket, port window, TPU
+ring and tyre as separate bodies). Stage D, `lap_disc_d.py`, built and verified green on 2026-09-13
 in the same document (Fusion now reports it as "Arcade Controller v2", a
 saved version, not a new file): four parametric edge fillets — `tyre_r`
 10 on the tyre's two outer edges, `ring_r` 2.5 on the TPU ring's two
@@ -188,9 +188,10 @@ port-board M3 holes (ASSUMED 24 × 20, wait for the measurement), the
 rim-band lettering and the raised-disc colour split. Renders in
 `cad/renders/`.
 
-> **Settled the same day, D-015:** the rear port replaces Qi charging. The
-> stage C coil boss and the TPU ring's coil hole are to be removed from the
-> model (stage F, pending).
+> **Settled the same day, D-015:** the rear port replaces Qi charging.
+> Stage F, `lap_disc_f.py`, removed the stage C coil boss, rebuilt the TPU
+> ring without its coil hole (re-rounded with `ring_r`) and deleted the five
+> coil parameters. Verified green; shell underside back at z = 0.
 
 Plan view: `../comfort-study/plan-outthere-circles.svg`. Full proposal:
 `../comfort-study/design-3b-outthere-forms.md`. The 280 × 200 rectangle and
