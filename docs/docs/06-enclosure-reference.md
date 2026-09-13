@@ -160,7 +160,7 @@ left of the bounding square, y from the player's edge.
 | Port board | 64-wide flat facet on the rear wall, x 133–163; the charging input (D-015). Tyre windowed over it (stage E) |
 | Antenna bracket | ~~front wall, x 116–124~~ rear-right wall at 60° from +x (D-016), 30 cm pigtail looped through the hoops |
 | Underside | TPU 85A ring ⌀110–280, 6 thick, 25 % gyroid; thigh contact 247 / 224 / 180 per side at crest spacing 170 / 200 / 240 |
-| Mass | about 2.2 kg estimated (D-016 added the ledge wedge and a thicker plate) |
+| Mass | about 2.2 kg estimated (D-016 added the ledge wedge and a thicker plate; D-017 is volume-neutral) |
 | Bed | single-nozzle mode at ⌀300 (325 × 320); ⌀296 if dual-nozzle |
 | Livery | rim band carries the marquee lettering; tyre in the player colour (red P1/P4, blue P2, green P3); button discs in the punch/kick ramp; character inlay on the free plate face — **P1 art placed 2026-09-13:** Chun-Li poster (`../../cad/art/chunli.svg`), 45.7 × 64 mm, centred at (0, −84) in model coordinates (x from the disc centre, player at −y), i.e. the front band between the cluster and the rim; 4 mm to the LK and stick discs, 6.4 mm to the plate edge. Stage G (`../../cad/lap_disc_g.py`, same day) recesses a **50.1 × 68.4 mm pocket, 0.6 mm deep**, art plus `art_margin` 2.2 a side, centred at (0, −85): the slicer colours its floor black and the per-colour layers in `../../cad/art/layers/set4/` sit inside it (frame outer 49.8 × 68.2 at 64 mm art height). Corners clear the stick disc by 1.6 mm and the plate's flat by 1.9 mm, so the pocket cannot grow. The Fusion decal (`../../cad/lap_disc_art.py`) sits on the pocket floor as a visualisation |
 
@@ -206,6 +206,19 @@ rim-band lettering and the raised-disc colour split. Renders in
 > (`hoop_*`; enlarged the same day so the antenna's 2 mm connector passes), routing the pigtail from the Brook's corner round the +x side
 > to the antenna bracket at −103°; opening ceiling is a 3.5 mm bridge,
 > prints from the floor.
+
+> **Stage L, `lap_disc_l.py` (2026-09-13, D-017):** headroom for the port
+> board. `port_relief` cuts a 28 × 6 mm box out of the ledge wedge from the
+> boss face (y 126.2) up to the ceiling (z 43.5); `port_gable` is a 3 mm 45°
+> inside-corner fill hanging from the ceiling down the boss face, bottom at
+> z 40.5, 0.8 mm clear of the board's 39.7 top; `port_pilots_k` re-cuts all
+> four ⌀2.5 × 6 pilots that the wedge had refilled. 3 mm of flat ceiling is
+> left, bridged between the gable and the wedge.
+
+> **Stage K, `lap_disc_k.py` (2026-09-13, D-017):** four inner TPU bolts at
+> r 62 (15/195/255/315°) into ⌀8 × 8 bosses on the sled floor, plus 0.8 mm
+> 45° bevels on the undersides of both tyre locating ridges (z 5 and z 41)
+> so the ring has no unsupported ledge printed open side up.
 
 > **Stage J, `lap_disc_j.py` (2026-09-13, D-016):** the serviceable assembly.
 > Shell split at the floor line into `ring` and `sled` bodies (the sled

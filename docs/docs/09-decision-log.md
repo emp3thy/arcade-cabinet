@@ -304,3 +304,36 @@ bracket). Modelled as stage J (`cad/lap_disc_j.py`).
 *Consequences:* D-014's mass estimate becomes ~2.2 kg. BOM gains 6 × M3 × 16,
 6 × M3 × 12, 6 × M3 × 4 heat-set inserts. `06-enclosure-reference.md` updated
 the same day.
+
+---
+
+**D-017 — Inner TPU bolts, bevelled tyre ridges, and headroom for the port board**
+*Date:* 2026-09-13 · *Status:* settled by the owner
+Three follow-ups to D-016, modelled as stage K (`cad/lap_disc_k.py`) and
+stage L (`cad/lap_disc_l.py`).
+
+- **Inner TPU bolts (owner):** the six base bolts at r 132.1 hold only the
+  TPU ring's outer edge, so the ring could lift near its ⌀110 inner hole.
+  Four more M3 × 12 at r 62, angles 15/195/255/315°, run up through ⌀7 × 3.5
+  counterbores in the TPU ring and ⌀3.4 clearance in the sled floor into
+  ⌀8 × 8 bosses standing on the sled floor (2.5 mm pilots, 9 mm from the
+  underside). Angles clear the Brook, the LiPo tray and the stick.
+  Base bolts are now ten per pad.
+- **Tyre ridge bevels (owner):** the two ridges that locate the TPU tyre on
+  the ring's outer wall (0.8 mm proud, 2 mm tall, at z 5 and z 41) each had
+  a horizontal underside — an unsupported ledge with the ring printed open
+  side up. A 0.8 mm 45° chamfer on each ridge's bottom outer edge removes
+  it; the ridge keeps full width over its upper 1.2 mm. The tyre's matching
+  grooves stay square, leaving a 0.8 mm triangular void inside the joint.
+- **Port board headroom (owner):** D-016's ledge wedge swept the whole way
+  round, so over the port boss it refilled the two upper M3 pilots and took
+  the top 4.4 mm of the board's envelope. Stage L cuts `port_relief`, a
+  28 × 6 mm box out of the wedge from the boss face up to the ceiling, adds
+  `port_gable`, a 3 mm 45° fill hanging from the ceiling down the boss face
+  (bottom at z 40.5, 0.8 mm above the board), and re-cuts all four pilots.
+  What is left flat is a 3 mm strip of ceiling bridged between the gable and
+  the untouched wedge. The port stays at z 24.2, so nothing outside moves.
+
+*Consequences:* BOM base bolts 6 → 10. Bodies: ring 327.6 cm³, sled 139.4,
+plate 228.1, TPU ring 309.2, tyre 302.5; mass estimate unchanged at ~2.2 kg.
+`06-enclosure-reference.md` updated the same day.

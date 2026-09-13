@@ -23,7 +23,7 @@ ordering.
 | CC pull-ups | 2 × 56 kΩ resistors per pad | **NOT NEEDED** — the port is USB-B, no CC lines (2026-09-13) |
 | Enclosure | 3D printed; Fusion CAD by Claude, owner reviews and prints (D-011). Five parts per pad: ring, sled, plate, TPU ring, TPU tyre (D-016) | **NEEDED** |
 | Plate screws | 6 × M3 × 16 socket cap, into M3 heat-set inserts (6 × M3 × 4 mm, ⌀4 hole) in the plate | **NEEDED** (D-016) |
-| Base bolts | 6 × M3 × 12 socket cap, from underneath through the TPU ring and sled into the ring bosses | **NEEDED** (D-016) |
+| Base bolts | 10 × M3 × 12 socket cap, from underneath through the TPU ring and sled: 6 at r 132.1 into the ring bosses, 4 at r 62 into sled bosses | **NEEDED** (D-016, D-017) |
 | Port board screws | 2 × M3 × 8 into the rear boss pilots | **NEEDED** (stage I) |
 | Zip ties | 2 × ≥200 mm, 4.8 wide, through the LiPo plinth tunnels | **NEEDED** (stage H) |
 | Charger | TP4056 module with DW01 protection | **NOT NEEDED** (D-010) — purchased, now surplus |
