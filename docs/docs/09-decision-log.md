@@ -415,3 +415,43 @@ is the design case. Sit on the first pad before cutting a second set.
 
 *Consequences:* TPU ring 309.2 → 289.7 cm³; mass estimate unchanged at
 ~2.2 kg. `06-enclosure-reference.md` updated the same day.
+
+---
+
+**D-020 — Fixes from the first test print: port opening, board pilots, antenna**
+*Date:* 2026-10-18 · *Status:* settled by the owner
+The first print of the ring and sled (owner's photos, 2026-10-18) showed four
+faults. Modelled as stage O (`cad/lap_disc_o.py`). **This supersedes D-016's
+antenna bracket position (60°)**, on the owner's instruction.
+
+- **Port board pilots.** The board's M3 holes are ⌀3.2 with their *edges*
+  2.1 mm from the board edges (owner), so the centres are 3.7 mm in. Stage I
+  drilled at 2 mm centres, from an earlier reading of "2 mm from the edges",
+  and the board would not line up. The pilots now sit at
+  `port_hole_gap` + `port_hole_d` / 2.
+- **Port opening 21.1 high.** The 16 mm window hid part of the USB-B socket.
+  The opening is now 21.1 high (owner) and still 22 wide, grown equally about
+  the port centre. Moving the pilots inboard puts the upper pair right at the
+  edge of a plain 22 × 21.1 window, so the opening is notched round all four
+  screws (owner's choice): 22 wide up to 18.6, 13.7 wide up to the full 21.1,
+  leaving 1 mm of wall outside each M3 thread. The tyre window follows to
+  23 × 22.1, so the **TPU tyre is reprinted too**.
+- **Antenna bracket to −60°, twice as thick.** The bracket moves to where
+  hoop 4 stood, so the pigtail runs Brook → hoops 1–3 → bracket and the stub
+  antenna points into the space hoop 5 left. Hoop 5 is deleted. The bracket
+  is 2.5 → 5 mm thick (owner).
+- **Cable hoops tightened.** The 1.1–1.4 mm pigtail rattled in the 6 × 5
+  openings, so the three remaining hoops now have 3 × 3 openings. They stay
+  closed tunnels (owner's choice over snap-in clips), and 3 × 3 still threads
+  the 2 mm U.FL plug.
+
+*Not verified:* that the 30 cm pigtail reaches from the Brook's U.FL to the
+bracket at −60° along hoops 1–3. In the photo the cable reached about −40°
+with its SMA end at the old bracket beside the Brook. Lay the cable along
+the new route before printing. A 5 mm bracket also uses up 2.5 mm more of the
+SMA bulkhead's thread, which the antenna screws onto. Check that enough is
+left for the antenna to seat fully.
+
+*Consequences:* ring 327.6 → 326.8 cm³, sled 139.4 → 140.0, tyre 302.5 →
+300.9; plate and TPU ring unchanged. Reprint ring, sled and tyre.
+`06-enclosure-reference.md` updated the same day.

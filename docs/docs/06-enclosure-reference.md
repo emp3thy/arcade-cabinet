@@ -18,7 +18,7 @@ of the components live in `../STEP_Reference_Files/`.
 | LiPo 103395 | 95 × 33 × 10 | strapped/foamed, no hard mount |
 | ~~TP4056 module~~ | ~~26 × 17~~ | **Removed by D-010** — do not allocate space or standoffs |
 | ~~Qi receiver coil~~ | ~~⌀50, 1.5 mm thick~~ | **Removed by D-015** — no coil boss, no ring hole |
-| Port board: Brook panel-mount B-C16046, USB **Type-B** socket + 3.5 mm jack, 5-pin cable to the Brook (owner, photos, 2026-09-13) | faceplate 26.1 × 31 × 1.5, rear board 28.3 deep, M3 holes at two diagonal corners, centres 2 from both edges | **Stage I:** faceplate against the inside face of the rear boss, centred on the port axis, screws from inside into four 2.5 mm pilots 6 deep (either diagonal fits); the boss window is a 22 × 16 plug tunnel, tyre window 23 × 17. Rear board reaches y = 97.9, Brook standoffs end at 94.5 |
+| Port board: Brook panel-mount B-C16046, USB **Type-B** socket + 3.5 mm jack, 5-pin cable to the Brook (owner, photos, 2026-09-13) | faceplate 26.1 × 31 × 1.5, rear board 28.3 deep, ⌀3.2 M3 holes at two diagonal corners, hole **edges** 2.1 from both board edges, so centres 3.7 in (owner, after the first print, 2026-10-18; the earlier "centres 2" was wrong and the pilots missed) | **Stage I, corrected by stage O (D-020):** faceplate against the inside face of the rear boss, centred on the port axis, screws from inside into four 2.5 mm pilots 6 deep at (±9.35, ±11.8) from the port centre (either diagonal fits). The plug opening is 22 wide × 21.1 high, notched round the four screws: 22 × 18.6 full width, 13.7 wide at the full 21.1, so 1 mm of wall stays outside each M3 thread. Tyre window 23 × 22.1. Rear board reaches y = 97.9, Brook standoffs end at 94.5 |
 | OLED module | 27 × 15 active area | panel cutout |
 | Joystick (from the cabinet — cross-pattern plate, so probably not a Sanwa JLF despite the STEP file) | **21 mm shaft hole** (measured on the steel plate, 2026-09-12; cut the printed plate at 22 mm so the steel edge is the limit); **4 mounting holes on the axes, each 16 mm from the shaft centre** (owner, 2026-09-12) | **4× M3 × 12 mm bolts through the top plate into the stick's mounting plate, nuts below (owner, 2026-09-12)**. Heads countersunk into the 3.5 mm plate. A **steel plate, 53 mm wide (left–right) × 95 mm front-to-back × 1 mm thick** from the cabinet goes between the stick and the printed plate as a stiffener; give the underside of the top plate a matching 1 mm pocket, centred on the stick (x 48.5–101.5, y 52.5–147.5 in the study's coordinates). It already has the shaft hole and the four M3 holes in the right places, so it doubles as the template for the printed plate's holes (owner, 2026-09-12). |
 | Action buttons | ⌀30 hole, snap-in; **40 mm below-panel depth** (measured 2026-09-12: from the top surface of the hole to the bottom of the microswitch) | — |
@@ -158,7 +158,7 @@ left of the bounding square, y from the player's edge.
 | LiPo | x 28–123, y 172–205, behind the stick body |
 | ~~Qi coil~~ | ~~centre (185, 55), boss ⌀62, under the right palm, hole in the TPU ring~~ — removed by D-015 |
 | Port board | 64-wide flat facet on the rear wall, x 133–163; the charging input (D-015). Tyre windowed over it (stage E) |
-| Antenna bracket | ~~front wall, x 116–124~~ rear-right wall at 60° from +x (D-016), 30 cm pigtail looped through the hoops |
+| Antenna bracket | ~~front wall, x 116–124~~ ~~rear-right wall at 60° from +x (D-016)~~ **−60° from +x, 5 mm thick (D-020)**, where hoop 4 stood. The 30 cm pigtail runs from the Brook through hoops 1–3 (30°, 0°, −30°, 3 × 3 openings), and the stub antenna points into the space hoop 5 left |
 | Underside | TPU 85A ring ⌀110–280, 6 thick, 25 % gyroid; thigh contact 247 / 224 / 180 per side at crest spacing 170 / 200 / 240. **Eight anti-slide grooves (D-019)**, 4 wide × 1 deep at 8 pitch, centres r 69–125: contact 486.2 → 291.2 cm². Print this face against a textured plate |
 | Mass | about 2.2 kg estimated (D-016 added the ledge wedge and a thicker plate; D-017 is volume-neutral) |
 | Bed | single-nozzle mode at ⌀300 (325 × 320); ⌀296 if dual-nozzle |
@@ -206,6 +206,22 @@ rim-band lettering and the raised-disc colour split. Renders in
 > (`hoop_*`; enlarged the same day so the antenna's 2 mm connector passes), routing the pigtail from the Brook's corner round the +x side
 > to the antenna bracket at −103°; opening ceiling is a 3.5 mm bridge,
 > prints from the floor.
+
+> **Stage O, `lap_disc_o.py` (2026-10-18, D-020):** fixes from the first
+> test print. **Ring:** port pilots moved to the board's real hole centres,
+> 3.7 mm in (`port_hole_inset` = `port_hole_gap` 2.1 + `port_hole_d` 3.2 / 2).
+> The plug opening is 21.1 high (`port_open_h`) × 22 wide, notched round
+> the screws: the stage C window is now `port_h` 18.6 full width, and a new
+> `port_slot` 13.7 wide (`port_slot_w`) takes the middle to 21.1. Both stop
+> `port_notch_wall` 1 mm short of an M3's 3 mm major diameter. The old 2 mm
+> pilot positions are solid again. **Tyre:** window 23 × 22.1
+> (`tyre_win_h` now follows `port_open_h`). **Sled:** hoops 4 and 5 deleted
+> (with `hoop_ang_4`, `hoop_ang_5`). The remaining three have 3 × 3 openings
+> (`hoop_in_d`, `hoop_in_h`), which still pass the 2 mm U.FL plug. The
+> antenna bracket is rebuilt at −60° (`ant_ang`), 5 mm thick (`ant_t`), and
+> joined straight into the sled after the floor split. Ring 327.6 → 326.8 cm³,
+> sled 139.4 → 140.0, tyre 302.5 → 300.9; plate and TPU ring unchanged.
+> Reprint ring, sled and tyre. Renders: `cad/renders/lap_disc_stageO_*.png`.
 
 > **Stage N, `lap_disc_n.py` (2026-09-13, D-019):** anti-slide grooves in
 > the TPU ring's underside. Eight concentric grooves, `groove_w` 4 mm wide,
