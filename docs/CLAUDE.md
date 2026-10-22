@@ -43,8 +43,9 @@ model itself.
 
 The Pi console was settled on 2026-10-22 as a ⌀160 × 115 drum in Street
 Fighter livery, two bolted parts, panel-mount sockets (D-021). Spec:
-`superpowers/specs/2026-10-21-pi-console-drum-design.md`. CAD follows as
-`cad/pi_drum_*.py`.
+`superpowers/specs/2026-10-21-pi-console-drum-design.md`. Modelled the
+same day as stages A–E (`cad/pi_drum_*.py`, exports in `cad/exports/`);
+awaiting the sockets (OI-013), the Ryu art (OI-012) and the first print.
 
 ## File map
 

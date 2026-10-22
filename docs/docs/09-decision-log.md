@@ -505,3 +505,19 @@ flange sizes, the PLA cup under the drum's internal temperature.
 gains the sockets, heatsink and fasteners; `07-testing.md` gains the thermal
 check; OI-012 (Ryu art) and OI-013 (socket dimensions) opened. CAD as
 `cad/pi_drum_*.py` in a new Fusion document, stages A–E.
+
+*Addendum, 2026-10-22 (stages A–E built, Fusion document "arcade unit v1"):*
+every stage passed its gate and its verification block; the four imported
+art sketches fail the constraints check by design, as stage M's did.
+Volumes: base 101.39 cm³ (163 faces), cup 189.25 (2,144 faces), the logo
+inlay 3.38 in seven letter pieces, each silhouette 1.60. Exports:
+`cad/exports/pi_drum.step` and `pi_drum.3mf`, eleven bodies. Amendments
+found while building, all in the spec: the webs rise to z 46 and the top
+of each web and column is cut to a 45° roof (an inverted cup cannot print
+their flat undersides); each socket pad block gets a foot down to the
+floor; pilots are ⌀2.5 × 4 blind (6 broke through the 5 mm block); the
+silhouette is 44.8 wide at 59 tall; Fusion keeps disconnected boolean
+results as separate bodies, so the inlays are nine bodies rather than
+three. The overhang audit classifies every down-facing face as bed, ledge,
+bridge, the art pocket (filled by the colour layers) or a small hole.
+The owner's slice check and the first print are next.

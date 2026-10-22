@@ -109,8 +109,11 @@ All `snake_case`, one value stated once, derived values as expressions
 - **Socket pads:** four, on the back half at 45°, 75°, 105°, 135°, each a
   vertical flat 30 wide spanning z 6–30, cut 1.42 into the outside of the
   wall (the chord at r 78.58), with the wall thickened inward to 5 behind
-  the pad so the flange screws bite. Each pad gets its socket's cutout and
-  two screw pilots from the placeholder parameters.
+  the pad so the flange screws bite; the block runs down to the floor
+  (a foot over z 3–5 added in stage E: the original block started at z 5,
+  a cantilevered underside). Each pad gets its socket's cutout and two
+  ⌀2.5 × 4 blind pilots from the placeholder parameters (6 deep broke
+  through the 5 mm block, measured in stage B).
 - **Pi bosses:** four ⌀6 × 5 at (±29, ±24.5), z 3–8, insert holes
   `pi_insert_hole` × 4 deep. The Pi sits centred, HDMI edge toward +y, USB
   edge toward +x. Lead room from the probe: 42–49 mm behind the HDMI edge,
@@ -136,10 +139,12 @@ vertical, and the channel roofs, which bridge 12 mm at the second layer.
   (0, 20). Probe: 13.0 clear of P1/P4, 13.3 of SEL/HK, 24.1 of P2/P3, its
   corners at r 59.7. The art SVG layers import exactly as on the pad
   (stage G and the Bambu layer sets in `cad/art/layers/`).
-- **Columns:** four ⌀8 from z 40 down to z 6, tangent to the cup's inner
-  wall, with a 2 × 8 web between column and wall over z 32–40 so the joint
-  is more than a line contact. Inside the base the column clears the base
-  wall by `col_clear`. M3 insert hole ⌀4 × 4.2 in each foot.
+- **Columns:** four ⌀8 from z 46 down to z 6, joined to the cup's inner
+  wall by an 8 mm wide web over z 32–46. The top of each web and column is
+  cut to a 45° roof, the plane z = 40 + (r − 72.8), so the inverted print
+  has no flat underside there (amended 2026-10-22 in stage E; the original
+  z 40 flat tops were a 90° overhang). Inside the base the column clears
+  the base wall by `col_clear`. M3 insert hole ⌀4 × 4.2 in each foot.
 - **Exhaust:** a 4 tall × 1.2 deep groove round the outside at z 101–105,
   sixteen 8 × 2.5 slots through its floor at 22.5° steps.
 - **Livery:** three debosses of `inlay_d` wrapped onto the outer cylinder
@@ -148,8 +153,10 @@ vertical, and the channel roofs, which bridge 12 mm at the second layer.
   z 67, Chun-Li at 180° (the player's left), Ryu at 0°. For each, a copy of
   the cup body taken before the deboss, minus the cup after it, is the red
   inlay body; it is kept as a separate body in the same component so the
-  slicer assigns it to the second nozzle. Five bodies export: cup, three
-  inlays, base.
+  slicer assigns it to the second nozzle. Fusion keeps a disconnected
+  boolean result as separate bodies and declines to merge them, so the
+  inlays export as seven logo letter pieces and one body per silhouette:
+  eleven bodies with the cup and base (measured 2026-10-22).
 
 Prints open side up: the lid's top face is on the bed, so the art pocket
 and the button holes are the first layers and the colour swaps happen in the
@@ -264,3 +271,5 @@ named).
 | A18 | OI-005 passes, so six buttons are right | unverified; the owner accepted the reprint risk | low: reprint the cup with two holes |
 | A19 | Lead room: 42–49 mm behind the HDMI edge, 32–35 beside the USB edge, enough for extension plugs | verified by probe for the geometry; plug lengths unverified until the parts arrive | low: shift the Pi toward the front, 20 mm available |
 | A20 | A flat floor with 12 × 2 underside channels admits enough air, and the channel roofs bridge cleanly | unverified; the thermal bench check covers the first, the first print the second | low: widen or deepen the channels, or add stick-on feet |
+| A21 | Both parts print without support in their stated orientations | **verified 2026-10-22** by stage E's face-normal audit after two fixes it forced: 45° roofs on the webs and columns, feet under the socket pad blocks. Every remaining down-facing face is a bed face, a ledge ≤ 1.5 mm, a bridge ≤ 20 mm, the art pocket (filled by the colour layers) or a hole ≤ ⌀4 | — |
+| A22 | The Fusion document is named "arcade unit v1" (the owner's choice), and the scripts check that name | verified | — |
