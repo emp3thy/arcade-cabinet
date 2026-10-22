@@ -455,3 +455,53 @@ left for the antenna to seat fully.
 *Consequences:* ring 327.6 → 326.8 cm³, sled 139.4 → 140.0, tyre 302.5 →
 300.9; plate and TPU ring unchanged. Reprint ring, sled and tyre.
 `06-enclosure-reference.md` updated the same day.
+
+---
+
+**D-021 — Pi console is a ⌀160 × 115 drum in Street Fighter livery, two bolted parts**
+*Date:* 2026-10-22 · *Status:* settled by the owner · *Spec:*
+`../superpowers/specs/2026-10-21-pi-console-drum-design.md`
+The owner asked for something more fun than a box: a cylinder with SF2
+livery on the side. Settled after a layout study
+(https://claude.ai/artifact/YHhTVcemvKwXMGXPjn4Gu1) that compared three box
+layouts, then a drum against a bonus-stage barrel.
+
+- **Form:** straight drum, ⌀160 outside, 115 tall, 3 mm walls. The barrel
+  was dropped because its bulged wall complicates the art wrap and the
+  verification.
+- **Two parts, bolted:** a PETG **base** tray (z 0–32: floor, lower wall,
+  the Pi on four M2.5-insert bosses, four socket pads, intake vents) and a
+  PLA **cup** (z 32–115: upper wall and lid in one piece, six buttons, the
+  art pocket, the side livery, exhaust vents). Four ⌀8 columns hang from
+  the cup into the base; four countersunk M3 from below. Nothing shows.
+  The owner chose PETG where the Pi's heat is and PLA for the livery and
+  art colour sets.
+- **Buttons:** four Starts on a front arc at r 57, 41° apart (40 mm
+  chord), in player order left to right; Select and Hotkey as a rear pair
+  at ±20° from the back. Six are modelled now although OI-005 is open; if
+  it fails only the cup is reprinted.
+- **Art:** the pad's 45.7 × 64 Chun-Li, multi-colour, in a 0.6 pocket on
+  the lid between the two groups, printed on the bed face so the colour
+  swaps are the first three layers. Side: black drum with red inlays on the
+  H2D's second nozzle, no purge: the SF2 logo on the front, a Chun-Li
+  silhouette on the left, Ryu on the right, each a 1.2 mm wrapped deboss
+  with a separate inlay body. Full multi-colour on a vertical wall was
+  rejected: every layer crosses every colour, roughly 1,500–2,000 AMS swaps.
+- **Ports:** panel-mount extensions (HDMI, USB-C power, USB-A pair, RJ45)
+  on four 30 mm flats round the back half of the base. A straight board
+  edge cannot meet a curved wall: the Pi's own sockets would sit 6–25 mm
+  inside it. Cutouts stay parametric until the parts are measured (OI-013).
+- **Cooling:** heatsink kit, intake holes in the floor, exhaust slots in a
+  shadow groove under the rim. No fan; a thermal bench check in
+  `07-testing.md` decides whether one is added later.
+- **Fasteners:** M2.5 heat-set inserts for the Pi, the pad's M3 inserts in
+  the column feet, M3 × 10 countersunk from below.
+
+*Not verified:* see the spec's Assumptions table, A1–A19. The load-bearing
+ones: the emboss wrap on the cylinder (stage D spike first), the socket
+flange sizes, the PLA cup under the drum's internal temperature.
+
+*Consequences:* `06-enclosure-reference.md` Pi section replaced; `02-bom.md`
+gains the sockets, heatsink and fasteners; `07-testing.md` gains the thermal
+check; OI-012 (Ryu art) and OI-013 (socket dimensions) opened. CAD as
+`cad/pi_drum_*.py` in a new Fusion document, stages A–E.

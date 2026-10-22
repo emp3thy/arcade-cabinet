@@ -225,3 +225,25 @@ edge socket needs the board horizontal on a shelf inside the boss, screws
 vertical. Owner to supply: board outline, hole pitch and diameter, socket
 type and its position relative to the holes. Then a stage cuts the holes
 and shelf or recess.
+
+---
+
+## OI-012 — Ryu art for the drum's right side (OPEN, owner)
+
+D-021 puts a red Ryu silhouette on the right of the console drum. The repo
+holds Chun-Li art (`cad/art/chunli.svg` and its layer sets) and the SF2
+logo, and nothing of Ryu. Owner to supply a source image, or the right side
+gets a mirrored Chun-Li. The silhouette script (stage D's art preparation)
+takes either.
+
+---
+
+## OI-013 — Panel-mount socket dimensions (OPEN, blocks stage B's cutouts)
+
+The drum's four socket pads are 30 mm flats between z 6 and 30 on the
+base. The HDMI, USB-C, USB-A ×2 and RJ45 panel-mount extensions have not
+been bought, so flange size, cutout and screw pitch are placeholder
+parameters in the spec (`*_cut_w`, `*_cut_h`, `*_screw_pitch`). Measure each
+part on arrival and set the parameters before the base is printed; if any
+flange exceeds 30 wide or 24 tall, the pad width or the parting line moves
+(spec assumption A10).

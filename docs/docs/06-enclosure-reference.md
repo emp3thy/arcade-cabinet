@@ -113,18 +113,28 @@ Other reference parameters from the SCAD file:
 - **Lap ergonomics**: 200 mm depth on a lap is a lot. Consider a slight wedge
   (5–8°) and rounded front edge. Underside feet only matter for table use.
 
-## Pi console box
+## Pi console — the drum (D-021, 2026-10-22)
 
-| Component | Dimensions (mm) | Notes |
-|---|---|---|
-| Raspberry Pi 4B | 85 × 56 | 4× M2.5, 58 × 49 hole pitch, 3.5 mm edge inset |
+Full numbers and the parameter table are in
+`../superpowers/specs/2026-10-21-pi-console-drum-design.md`; this is the
+summary. Frame: origin on the axis at the underside, x to the player's
+right, y toward the back, z up; angles from +x toward +y, front −90°.
 
-Openings needed: HDMI (micro-HDMI ×2), USB-C power, ethernet, USB-A ×2,
-microSD access, and ventilation. Six 30 mm buttons on the top face. A panel-mount
-USB-C extension keeps the power inlet tidy.
+| Item | Value |
+|---|---|
+| Form | ⌀160 × 115 drum, 3 walls; PETG **base** z 0–32 (floor + lower wall, one piece), PLA **cup** z 32–115 (upper wall + 5 lid, one piece) |
+| Joint | four ⌀8 columns from the cup at r 72.8, angles ±20°, ±160°, down to z 6, M3 inserts in the feet; four countersunk M3 × 10 up through the floor; 0.2 radial clearance to the base wall; 0.8 chamfers both sides of the parting line |
+| Raspberry Pi 4B | 85 × 56, holes 58 × 49, centred on the floor, HDMI edge toward +y; four ⌀6 × 5 bosses with M2.5 inserts at (±29, ±24.5); board top z 12.6, Dupont leads to about z 35 |
+| Buttons, ⌀30.5 at r 57 | P1 (−50.1, −27.2) · P2 (−20.0, −53.4) · P3 (20.0, −53.4) · P4 (50.1, −27.2) · SEL (−53.6, 19.5) · HK (53.6, 19.5); Starts 41° apart, 39.9 chord |
+| Art pocket | 50.1 × 68.4 × 0.6 centred (0, 20) in the lid top; the pad's 45.7 × 64 Chun-Li with the 2.2 margin |
+| Sockets | panel-mount HDMI, USB-C, USB-A ×2, RJ45 on four 30 mm flats at 45°, 75°, 105°, 135°, z 6–30, wall thickened to 5 behind each; cutouts parametric until measured (OI-013) |
+| Vents | 24 × ⌀5 intake holes on r 62 in the floor, eight 12 × 3 notches in the rim; exhaust groove 4 × 1.2 at z 101–105 with sixteen 8 × 2.5 slots |
+| Livery | SF2 logo 116.98 × 59.78 wrapped on the front at z 67; Chun-Li silhouette 42 × 59 at 180°, Ryu at 0°; all 1.2 deboss with separate red inlay bodies for the second nozzle |
+| Cooling | heatsink kit, no fan; thermal check in `07-testing.md` |
+| Printing | both parts open side up, no support; cup on the H2D in dual-nozzle mode (300 × 320 bed) |
 
-The Pi 4 throttles in a sealed box. Passive vents plus a heatsink is the minimum;
-a 30 mm fan is safer if it's running for hours.
+The Pi 4 throttles at 80 °C. The earlier box section (six buttons on a flat
+lid, direct port cutouts) is superseded.
 
 ## Comfort study (2026-09-12)
 
