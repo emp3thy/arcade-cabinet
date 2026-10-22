@@ -50,6 +50,17 @@ def test_main_exit_0_on_pass(monkeypatch, tmp_path):
     assert _StubClient.executed[-1].startswith("def run")
 
 
+def test_main_exit_0_on_pass_partial_with_no_failed_check(monkeypatch, tmp_path):
+    # a one-body stage: interference and clearance are skipped, nothing failed
+    msg = 'FH_VERDICT1 {"status": "pass_partial", "checks": {"constraints": "pass", "interference": "skip", "liveness": "pass"}}'
+    assert _run(monkeypatch, tmp_path, _Result(True, msg, "")) == 0
+
+
+def test_main_exit_2_on_pass_partial_with_a_failed_check(monkeypatch, tmp_path):
+    msg = 'FH_VERDICT1 {"status": "pass_partial", "checks": {"constraints": "pass", "liveness": "fail"}}'
+    assert _run(monkeypatch, tmp_path, _Result(True, msg, "")) == 2
+
+
 def test_main_exit_2_on_fail_verdict(monkeypatch, tmp_path):
     assert _run(monkeypatch, tmp_path, _Result(True, 'FH_VERDICT1 {"status": "fail"}', "")) == 2
 

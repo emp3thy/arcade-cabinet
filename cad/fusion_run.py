@@ -52,8 +52,14 @@ def main(argv: list[str]) -> int:
         print("fusion_run: no FH_VERDICT1 line")
         return 3
     status = verdict.get("status")
-    print("fusion_run: verdict %s" % status)
-    return 0 if status == "pass" else 2
+    checks = verdict.get("checks", {})
+    failed = [k for k, s in checks.items() if s not in ("pass", "skip")]
+    print("fusion_run: verdict %s%s" % (status, (", failed: " + ", ".join(failed)) if failed else ""))
+    # pass_partial means some checks were skipped (a one-body stage has no
+    # interference to test); it is green when nothing that ran failed.
+    if status == "pass" or (status == "pass_partial" and not failed):
+        return 0
+    return 2
 
 
 if __name__ == "__main__":
