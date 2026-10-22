@@ -72,7 +72,7 @@ All `snake_case`, one value stated once, derived values as expressions
 | `art_cy` | 20 | pocket centre on the y axis, behind the middle |
 | `col_r` | 72.8 | column centre radius; column spans r 68.8–76.8 against the cup's inner wall at 77 |
 | `col_d` | 8 | column diameter |
-| `col_foot_z` | 6 | column foot, on the base floor's top face |
+| `col_foot_z` | `floor_t + 0.3 mm` | column foot 0.3 above the base floor, so the cup seats on the rim and an M3 × 10 engages the whole insert (amended 2026-10-22: the first value, 6, left a 3 mm air gap under the feet) |
 | Column angles | −20, −160, 160, 20 deg | (±68.4, ∓24.9) |
 | `pad_w` | 30 | socket pad flat width; sagitta on r 80 is 1.42 |
 | `pad_back_t` | 5 | wall thickness behind a pad, so flange screws have thread |
@@ -114,11 +114,19 @@ All `snake_case`, one value stated once, derived values as expressions
   a cantilevered underside). Each pad gets its socket's cutout and two
   ⌀2.5 × 4 blind pilots from the placeholder parameters (6 deep broke
   through the 5 mm block, measured in stage B).
-- **Pi bosses:** four ⌀6 × 5 at (±29, ±24.5), z 3–8, insert holes
-  `pi_insert_hole` × 4 deep. The Pi sits centred, HDMI edge toward +y, USB
-  edge toward +x. Lead room from the probe: 42–49 mm behind the HDMI edge,
-  32–35 mm beside the USB edge. microSD on the −x side, reached by lifting
-  the cup.
+- **Pi bosses:** four ⌀6 × 5 at (±24.5, 49) and (±24.5, −9), z 3–8,
+  insert holes `pi_insert_hole` × 4 deep (amended 2026-10-22, stage F, from
+  the whole-branch review). A Pi 4B's holes sit 3.5 and 61.5 mm from the SD
+  edge of the 85 mm board, so the hole pattern is 10 mm off the board's
+  centre; the first placement centred the pattern and put the USB edge
+  against the back columns. The board now lies with its USB edge toward
+  the front (−y) and its HDMI edge toward the left (−x), its centre 10 mm
+  toward the back (`pi_board_y`): the USB-A and RJ45 plugs have 44.5 mm to
+  the front wall with no column in their band, the micro-HDMI and USB-C
+  plugs have 49 mm to the left wall and end 16 mm short of the nearest
+  column, the SD edge has 24.5 mm to the back wall. Extension leads reach
+  the rear socket pads round the sides. microSD at the back, reached by
+  lifting the cup.
 - **Fixing holes:** four ⌀3.4 at r 72.8 on the column angles, countersunk
   from below ⌀6.5 × 90°.
 - **Heatsink:** the Pi 4 heatsink kit on SoC, RAM and USB controller; no
@@ -266,10 +274,10 @@ named).
 | A13 | 0.2 radial clearance seats the columns | unverified; first print | low: one parameter, reprint the cup |
 | A14 | The Chun-Li layer SVGs union to one usable silhouette | unverified; plan task 2 does it with a preview. The libraries resolve under uv (shapely 2.2, svgelements, ezdxf 1.4, Pillow; verified 2026-10-22; cairosvg does not, so no cairo) | low: trace the silhouette by hand |
 | A15 | The toolchain runs: bundler and preflight under uv with FusionHelper editable | verified today on `cad/lap_disc_o.py`: bundle ran, preflight exit 0. The gate also reported *stub fingerprint drifted: Fusion update changed the API defs; re-run gate fidelity tests and re-bless the lock*, a FusionHelper maintenance item, not a script fault | low: re-bless the lock in FusionHelper before stage A |
-| A16 | Layout clearances: Start chord 39.9, P1–SEL 46.8, pocket 13.0 from the nearest hole, columns 11° clear of the nearest pad, Pi corners 26 from the columns | verified by probe today | — |
+| A16 | Layout clearances: Start chord 39.9, P1–SEL 46.8, pocket 13.0 from the nearest hole, columns 11° clear of the nearest pad | verified by probe today; the original "Pi corners 26 from the columns" figure assumed a board centred on its hole pattern and is superseded by A19 | — |
 | A17 | 115 tall and ⌀160 fit every printer: X1 Carbon 256 × 256 × 256, H2D dual-nozzle 300 × 320 × 325 | verified against `06-enclosure-reference.md` | — |
 | A18 | OI-005 passes, so six buttons are right | unverified; the owner accepted the reprint risk | low: reprint the cup with two holes |
-| A19 | Lead room: 42–49 mm behind the HDMI edge, 32–35 beside the USB edge, enough for extension plugs | verified by probe for the geometry; plug lengths unverified until the parts arrive | low: shift the Pi toward the front, 20 mm available |
+| A19 | Plug room with the board rotated and 10 mm back (stage F): 44.5 mm in front of the USB edge with no column in the plug band, 49 mm left of the HDMI edge with the nearest column 16 mm beyond a 20 mm plug, 24.5 behind the SD edge | **verified 2026-10-22** by stage F's analytic check, which raised on the first (centred) placement at 34.5 mm; the original figures were computed for a board centred on its hole pattern, which a Pi 4B is not (reviewer finding). Plug lengths (35 straight USB-A/RJ45, 20 micro-HDMI/USB-C) unverified until the parts arrive | low: `pi_board_y` is one parameter |
 | A20 | A flat floor with 12 × 2 underside channels admits enough air, and the channel roofs bridge cleanly | unverified; the thermal bench check covers the first, the first print the second | low: widen or deepen the channels, or add stick-on feet |
 | A21 | Both parts print without support in their stated orientations | **verified 2026-10-22** by stage E's face-normal audit after two fixes it forced: 45° roofs on the webs and columns, feet under the socket pad blocks. Every remaining down-facing face is a bed face, a ledge ≤ 1.5 mm, a bridge ≤ 20 mm, the art pocket (filled by the colour layers) or a hole ≤ ⌀4 | — |
 | A22 | The Fusion document is named "arcade unit v1" (the owner's choice), and the scripts check that name | verified | — |

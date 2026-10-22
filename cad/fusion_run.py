@@ -1,12 +1,16 @@
 """Run a bundled Fusion script through FusionHelper's MCP client and exit on
 its verdict.
 
-    python cad/fusion_run.py cad/<script>.bundled.py
+    python cad/fusion_run.py cad/<script>.bundled.py [--allow <check>]
 
-Exit codes: 0 the script ran and its last FH_VERDICT1 line says pass;
-2 it ran and the verdict is anything else; 3 the script raised, or printed
-no verdict line. The script's stdout and any error text are printed in full
-before the exit line. FUSION_MCP_URL overrides the endpoint.
+Exit codes: 0 the script ran and no check failed (status pass, or
+pass_partial with skips only); 2 it ran and a check failed; 3 the script
+raised, or printed no verdict line. `--allow <check>` names one check whose
+failure is a declared, documented exception for that stage (the imported
+art sketches fail `constraints` by design, stage M's precedent); any other
+failing check still exits 2, so the gate keeps its meaning. The script's
+stdout and any error text are printed in full before the exit line.
+FUSION_MCP_URL overrides the endpoint.
 
 The client lives in the FusionHelper checkout (tests/integration/mcp_client.py,
 stdlib only); this launcher puts that directory on sys.path rather than
@@ -33,10 +37,19 @@ def verdict_from(stdout: str):
 
 
 def main(argv: list[str]) -> int:
-    if len(argv) != 1:
-        print("usage: fusion_run.py <bundled script>")
+    allowed = set()
+    args = list(argv)
+    while "--allow" in args:
+        i = args.index("--allow")
+        if i + 1 >= len(args):
+            print("usage: fusion_run.py <bundled script> [--allow <check>]")
+            return 3
+        allowed.add(args[i + 1])
+        del args[i:i + 2]
+    if len(args) != 1:
+        print("usage: fusion_run.py <bundled script> [--allow <check>]")
         return 3
-    text = open(argv[0], encoding="utf-8").read()
+    text = open(args[0], encoding="utf-8").read()
     client = McpClient(os.environ.get("FUSION_MCP_URL", DEFAULT_URL))
     client.initialize()
     result = client.execute(text)
@@ -54,11 +67,20 @@ def main(argv: list[str]) -> int:
     status = verdict.get("status")
     checks = verdict.get("checks", {})
     failed = [k for k, s in checks.items() if s not in ("pass", "skip")]
-    print("fusion_run: verdict %s%s" % (status, (", failed: " + ", ".join(failed)) if failed else ""))
+    excused = [k for k in failed if k in allowed]
+    failed = [k for k in failed if k not in allowed]
+    print("fusion_run: verdict %s%s%s" % (
+        status, (", failed: " + ", ".join(failed)) if failed else "",
+        (", allowed: " + ", ".join(excused)) if excused else ""))
     # pass_partial means some checks were skipped (a one-body stage has no
-    # interference to test); it is green when nothing that ran failed.
-    if status == "pass" or (status == "pass_partial" and not failed):
+    # interference to test); green is "nothing that ran failed", with any
+    # declared exception excused.
+    if status == "pass":
         return 0
+    if status == "pass_partial" and not failed:
+        return 0
+    if status == "fail" and excused and not failed:
+        return 0          # only the declared exception failed
     return 2
 
 

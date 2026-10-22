@@ -26,9 +26,13 @@ so from this repo, scripts go through FusionHelper's stdlib client
 (`tests/integration/mcp_client.py`, `McpClient.execute`) via the launcher
 (added 2026-10-22):
 
-    python cad/fusion_run.py cad/<script>.bundled.py
+    python cad/fusion_run.py cad/<script>.bundled.py [--allow <check>]
 
-It prints the script's stdout and any error text, then exits 0 when the last
-`FH_VERDICT1` line says pass, 2 on any other verdict, 3 when the script raised
-or printed no verdict. `FUSION_MCP_URL` overrides the endpoint. A script that
+It prints the script's stdout and any error text, then exits 0 when no check
+failed (pass, or pass_partial with skips only), 2 when a check failed, 3 when
+the script raised or printed no verdict. `--allow constraints` declares the
+one documented exception (imported art sketches carry no constraints, stage
+M's precedent); any other failing check still exits 2. `FUSION_MCP_URL`
+overrides the endpoint; `FH_MCP_TIMEOUT_S` lengthens the client timeout for
+a long liveness pass. A script that
 raises is rolled back atomically, so the document is left as it was.

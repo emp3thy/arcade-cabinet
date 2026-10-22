@@ -520,4 +520,16 @@ silhouette is 44.8 wide at 59 tall; Fusion keeps disconnected boolean
 results as separate bodies, so the inlays are nine bodies rather than
 three. The overhang audit classifies every down-facing face as bed, ledge,
 bridge, the art pocket (filled by the colour layers) or a small hole.
+
+*Addendum, 2026-10-22, stage F (from the whole-branch review):* a Pi 4B's
+mounting holes sit 3.5 and 61.5 mm from the SD edge, so the hole pattern
+is 10 mm off the board's centre and stage A's centred pattern had put the
+USB edge 10 mm from the back columns, where no plug fits. The board now
+lies lengthways, USB edge to the front, HDMI edge to the left, centre
+10 mm toward the back; stage F's analytic check gives 44.5 mm in front of
+the USB edge with no column in the plug band and 49 mm left of the HDMI
+edge. The column feet drop from z 6 to 0.3 mm above the floor so the
+screws engage the whole insert. Volumes after: base 101.39 cm³, cup
+189.80. The launcher's `--allow constraints` declares the imported-art
+exception explicitly so every stage exits 0 on green.
 The owner's slice check and the first print are next.
