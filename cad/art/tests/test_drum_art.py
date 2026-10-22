@@ -81,6 +81,32 @@ def test_place_flip_and_centre(tmp_path):
     assert (0, -77) in [(round(x, 6), round(y, 6)) for x, y in pts]
 
 
+def test_place_swap_and_flip_x(tmp_path):
+    # the side planes map sketch x -> -z and sketch y -> +y: art (u, v) -> (-v, u)
+    src, dst = tmp_path / "in.dxf", tmp_path / "out.dxf"
+    _dxf(src, [(0, 0), (10, 0), (10, 20), (0, 20)])
+    drum_art.place(str(src), str(dst), cx=-67, cy=0, swap=True, flip_x=True)
+    assert _bbox(dst) == pytest.approx((-77, -57, -5, 5), abs=1e-6)
+    pts = [(round(x, 6), round(y, 6)) for x, y, *_ in ezdxf.readfile(dst).modelspace().query("LWPOLYLINE")[0].get_points()]
+    assert (-77, 5) in pts        # the vertex that was at (10, 20)
+
+
+def test_union_merges_overlapping_and_absorbs_nested_polylines(tmp_path):
+    src, dst = tmp_path / "in.dxf", tmp_path / "out.dxf"
+    doc = ezdxf.new()
+    msp = doc.modelspace()
+    msp.add_lwpolyline([(0, 0), (100, 0), (100, 100), (0, 100)], close=True)
+    msp.add_lwpolyline([(50, 50), (150, 50), (150, 150), (50, 150)], close=True)   # overlaps the first
+    msp.add_lwpolyline([(10, 10), (20, 10), (20, 20), (10, 20)], close=True)       # nested in the first
+    msp.add_lwpolyline([(300, 300), (310, 300), (310, 310), (300, 310)], close=True)  # separate
+    doc.saveas(src)
+    n = drum_art.union(str(src), str(dst))
+    polys = drum_art.read_polylines(str(dst))
+    assert n == 2 and len(polys) == 2
+    areas = sorted(abs(drum_art.polygon_area(pts)) for pts, _ in polys)
+    assert areas == pytest.approx([100.0, 17500.0], abs=1e-6)
+
+
 def test_art_recentres_logo_sized_box(tmp_path):
     src, dst = tmp_path / "in.dxf", tmp_path / "out.dxf"
     _dxf(src, [(-58.5, 43.0), (58.479, 43.0), (58.479, 102.777), (-58.5, 102.777)])

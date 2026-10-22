@@ -173,12 +173,44 @@ def bbox(polylines):
     return min(xs), max(xs), min(ys), max(ys)
 
 
-def transform(polylines, cx, cy, flip_y=False):
-    """Mirror about the x axis if asked, then move the bbox centre to (cx, cy)."""
-    pl = [([(x, -y if flip_y else y) for x, y in pts], c) for pts, c in polylines]
+def transform(polylines, cx, cy, flip_y=False, swap=False, flip_x=False):
+    """Optionally swap the axes (u, v) -> (v, u), then mirror about either
+    axis, then move the bbox centre to (cx, cy). The order lets a sketch
+    plane whose x maps to -z and y to +y take art as (-v, u): swap + flip_x."""
+    def tx(x, y):
+        if swap:
+            x, y = y, x
+        return (-x if flip_x else x, -y if flip_y else y)
+    pl = [([tx(x, y) for x, y in pts], c) for pts, c in polylines]
     minx, maxx, miny, maxy = bbox(pl)
     dx, dy = cx - (minx + maxx) / 2, cy - (miny + maxy) / 2
     return [([(x + dx, y + dy) for x, y in pts], c) for pts, c in pl]
+
+
+def polygon_area(pts):
+    """Signed shoelace area of a closed polyline's vertices."""
+    a = 0.0
+    for i in range(len(pts)):
+        x0, y0 = pts[i]
+        x1, y1 = pts[(i + 1) % len(pts)]
+        a += x0 * y1 - x1 * y0
+    return a / 2
+
+
+def union(in_path, out_path):
+    """Union every closed polyline in a DXF into non-overlapping, non-nested
+    outer boundaries (holes dropped), so Fusion regions each polyline into
+    exactly one profile. Returns the piece count. Needed because the pad's
+    logo DXF (7 polylines) regions into 8 profiles, and a profile that nests
+    inside another cannot be embossed after its enclosing ring."""
+    polys = [Polygon(pts) for pts, closed in read_polylines(in_path) if len(pts) >= 3]
+    polys = [p if p.is_valid else p.buffer(0) for p in polys]
+    g = _outer(unary_union(polys))
+    pl = geom_polylines(g)
+    write_polylines(out_path, pl)
+    print("pieces: %d, vertices: %d" % (len(pl), sum(len(p) for p, _ in pl)))
+    _report(pl)
+    return len(pl)
 
 
 def preview(geom, png_path):
@@ -214,8 +246,8 @@ def art(in_path, out_path):
     _report(pl)
 
 
-def place(in_path, out_path, cx, cy, flip_y=False):
-    pl = transform(read_polylines(in_path), cx, cy, flip_y)
+def place(in_path, out_path, cx, cy, flip_y=False, swap=False, flip_x=False):
+    pl = transform(read_polylines(in_path), cx, cy, flip_y, swap, flip_x)
     write_polylines(out_path, pl)
     _report(pl)
 
@@ -232,20 +264,27 @@ def main(argv):
     a = sub.add_parser("art")
     a.add_argument("src")
     a.add_argument("dst")
+    u = sub.add_parser("union")
+    u.add_argument("src")
+    u.add_argument("dst")
     p = sub.add_parser("place")
     p.add_argument("src")
     p.add_argument("dst")
     p.add_argument("--cx", type=float, required=True)
     p.add_argument("--cy", type=float, required=True)
-    p.add_argument("--flip-y", action="store_true")
+    p.add_argument("--flip-y", action="store_true", help="mirror about the x axis (after any swap)")
+    p.add_argument("--swap", action="store_true", help="swap the axes first: (u, v) -> (v, u)")
+    p.add_argument("--flip-x", action="store_true", help="mirror about the y axis (after any swap)")
     ns = ap.parse_args(argv)
     if ns.cmd == "silhouette":
         silhouette_cmd(ns.paths[:-1], ns.paths[-1], ns.height,
                        tuple(c for c in ns.exclude.split(",") if c), ns.close, ns.min_piece)
     elif ns.cmd == "art":
         art(ns.src, ns.dst)
+    elif ns.cmd == "union":
+        union(ns.src, ns.dst)
     else:
-        place(ns.src, ns.dst, ns.cx, ns.cy, ns.flip_y)
+        place(ns.src, ns.dst, ns.cx, ns.cy, ns.flip_y, ns.swap, ns.flip_x)
     return 0
 
 
