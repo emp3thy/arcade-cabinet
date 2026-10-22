@@ -23,5 +23,12 @@ globally (verified 2026-10-18 on `cad/lap_disc_n.bundled.py` and
 The Fusion MCP server listens at `http://127.0.0.1:27182/mcp` while Fusion is
 running. It is configured as an MCP server only in the FusionHelper project,
 so from this repo, scripts go through FusionHelper's stdlib client
-(`tests/integration/mcp_client.py`, `McpClient.execute`). A script that raises
-is rolled back atomically, so the document is left as it was.
+(`tests/integration/mcp_client.py`, `McpClient.execute`) via the launcher
+(added 2026-10-22):
+
+    python cad/fusion_run.py cad/<script>.bundled.py
+
+It prints the script's stdout and any error text, then exits 0 when the last
+`FH_VERDICT1` line says pass, 2 on any other verdict, 3 when the script raised
+or printed no verdict. `FUSION_MCP_URL` overrides the endpoint. A script that
+raises is rolled back atomically, so the document is left as it was.
