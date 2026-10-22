@@ -128,7 +128,7 @@ right, y toward the back, z up; angles from +x toward +y, front −90°.
 | Buttons, ⌀30.5 at r 57 | P1 (−50.1, −27.2) · P2 (−20.0, −53.4) · P3 (20.0, −53.4) · P4 (50.1, −27.2) · SEL (−53.6, 19.5) · HK (53.6, 19.5); Starts 41° apart, 39.9 chord |
 | Art pocket | 50.1 × 68.4 × 0.6 centred (0, 20) in the lid top; the pad's 45.7 × 64 Chun-Li with the 2.2 margin |
 | Sockets | panel-mount HDMI, USB-C, USB-A ×2, RJ45 on four 30 mm flats at 45°, 75°, 105°, 135°, z 6–30, wall thickened to 5 behind each; cutouts parametric until measured (OI-013) |
-| Vents | 24 × ⌀5 intake holes on r 62 in the floor, eight 12 × 3 notches in the rim; exhaust groove 4 × 1.2 at z 101–105 with sixteen 8 × 2.5 slots |
+| Vents | eight 12 × 2 channels in the floor's underside from the rim to r 50, sixteen ⌀5 intake holes (two per channel at r 58 and 68); exhaust groove 4 × 1.2 at z 101–105 with sixteen 8 × 2.5 slots |
 | Livery | SF2 logo 116.98 × 59.78 wrapped on the front at z 67; Chun-Li silhouette 42 × 59 at 180°, Ryu at 0°; all 1.2 deboss with separate red inlay bodies for the second nozzle |
 | Cooling | heatsink kit, no fan; thermal check in `07-testing.md` |
 | Printing | both parts open side up, no support; cup on the H2D in dual-nozzle mode (300 × 320 bed) |

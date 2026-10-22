@@ -82,8 +82,8 @@ All `snake_case`, one value stated once, derived values as expressions
 | `pi_hole_px`, `pi_hole_py` | 58, 49 | Pi 4B hole pitch |
 | `pi_boss_d`, `pi_boss_h` | 6, 5 | insert bosses |
 | `pi_insert_hole` | 3.4 | **placeholder** for the owner's M2.5 inserts |
-| `intake_n`, `intake_d`, `intake_r` | 24, 5, 62 | floor holes, outside the Pi's footprint (bosses at r 38) |
-| `notch_n`, `notch_w`, `notch_h` | 8, 12, 3 | rim notches so air reaches the floor holes |
+| `chan_n`, `chan_w`, `chan_d`, `chan_r0` | 8, 12, 2, 50 | channels in the floor's underside from the rim to r 50 at 45° steps from 0°, so air reaches the holes while the drum stands flat (amended 2026-10-22, see A20) |
+| `intake_n`, `intake_d`, `intake_r1`, `intake_r2` | 16 (= 2·`chan_n`), 5, 58, 68 | floor holes, two per channel, outside the Pi's footprint (bosses at r 38) and 25 mm from the nearest screw |
 | `vent_z0`, `vent_z1`, `vent_groove_d` | 101, 105, 1.2 | exhaust shadow groove |
 | `vent_n`, `vent_w`, `vent_h` | 16, 8, 2.5 | slots through the groove floor |
 | `joint_chamfer` | 0.8 | 45° on both outer edges at z 32 so the joint reads as a line |
@@ -98,9 +98,13 @@ All `snake_case`, one value stated once, derived values as expressions
 
 ## 4. Base
 
-- **Floor:** ⌀160 × 3, z 0–3. Twenty-four ⌀5 intake holes on r 62 at 15°
-  steps. Eight 12 × 3 notches in the outer rim at 45° steps starting at
-  22.5°, so the drum stands on eight feet and air reaches the floor holes.
+- **Floor:** ⌀160 × 3, z 0–3, standing flat. Eight channels 12 wide × 2
+  deep in the underside, from the rim in to r 50, at 45° steps from 0°;
+  sixteen ⌀5 intake holes, two per channel at r 58 and r 68, open into
+  them. Air enters at the channel mouths round the rim. (Amended
+  2026-10-22 during planning: the original rim notches led nowhere on a
+  flat floor, and feet would have made the floor an unsupported bridge.
+  Stick-on rubber feet remain optional.)
 - **Wall:** r 77–80, z 3–32. The top outer edge carries the joint chamfer.
 - **Socket pads:** four, on the back half at 45°, 75°, 105°, 135°, each a
   vertical flat 30 wide spanning z 6–30, cut 1.42 into the outside of the
@@ -118,7 +122,7 @@ All `snake_case`, one value stated once, derived values as expressions
   model feature.
 
 Prints open side up, no overhang except the pad thickening, which is
-vertical.
+vertical, and the channel roofs, which bridge 12 mm at the second layer.
 
 ## 5. Cup
 
@@ -228,9 +232,9 @@ Chun-Li layer SVGs into one silhouette and writes a DXF scaled to
   mirrored.
 - Socket flange dimensions, on arrival.
 - The owner's M2.5 insert size.
-- The Fusion MCP server must be registered for this project before any
-  stage runs: `claude mcp add --transport http fusion
-  http://127.0.0.1:27182/mcp`, then a new session.
+- Stage scripts run through FusionHelper's Python MCP client via the
+  launcher `cad/fusion_run.py` (plan task 1), as the pad stages did.
+  Registering the server as an MCP tool for this project is optional.
 
 ## 11. Assumptions
 
@@ -244,8 +248,8 @@ named).
 | A2 | Pi with Dupont leads reaches z 35 | unverified; check with the crimped leads in hand | low: 25 mm margin to the button bodies |
 | A3 | Button hole 30.5, fitted depth 50 | measured (D-013; the pad's first print took the buttons) | — |
 | A4 | Art 45.7 × 64; logo 116.98 × 59.78 | verified from `cad/lap_disc_g.py` and `cad/lap_disc_m.py` | — |
-| A5 | Fusion's emboss is in the API and wraps a 1.2 deboss onto the cylinder | API presence verified in the Fusion Python stubs today (`EmbossFeatures.createInput(profiles, faces, depth)`); wrapping behaviour unverified until stage D's spike | medium: fallback is a flat facet behind each art piece, which changes the look |
-| A6 | Inlay body = cup before deboss minus cup after | unverified; stage D | low: alternative is a positive emboss on a copy intersected with the recess |
+| A5 | Fusion's emboss is in the API and wraps a 1.2 deboss onto the cylinder | **verified 2026-10-22** by a scratch-document spike through the MCP client: `embossFeatures.createInput([profile], [face], "-1.2 mm")` on a r 80 wall removed area × 1.2 × ((80 − 0.6)/80) to 1e-12 cm³; the recess is 1.2 deep radially at the centre and 8 mm along the arc; `+1.2 mm` on the recess floor fills a counter back flush, adding area × 1.2 × ((78.8 + 0.6)/78.8) | — |
+| A6 | Inlay body = cup before deboss minus cup after | **verified 2026-10-22**, same spike: `copyPasteBodies` copy is exact, `combineFeatures` cut with `isKeepToolBodies = True` leaves the inlay equal to the removed volume to 1e-12 | — |
 | A7 | 1.2 mm red PLA inlays print cleanly in dual-nozzle mode on the H2D | unverified; a 40 mm coupon before the cup | low: depth or colour order change |
 | A8 | A PLA cup with six button bodies survives the drum's internal temperature | unverified; the thermal bench check | medium: cup reprinted in PETG with a PETG colour set |
 | A9 | Heatsinks plus chimney vents keep the SoC under 70 °C in SF2 | unverified; the thermal bench check | low: a 30 mm fan on the floor is a later stage |
@@ -253,9 +257,10 @@ named).
 | A11 | M2.5 inserts take a ⌀3.4 hole | unverified; the owner's inserts | low: one parameter |
 | A12 | M3 inserts take ⌀4 × 4.2 | measured (D-016, printed on the pad) | — |
 | A13 | 0.2 radial clearance seats the columns | unverified; first print | low: one parameter, reprint the cup |
-| A14 | The Chun-Li layer SVGs union to one usable silhouette | unverified; the art script is a spike before stage D | low: trace the silhouette by hand |
+| A14 | The Chun-Li layer SVGs union to one usable silhouette | unverified; plan task 2 does it with a preview. The libraries resolve under uv (shapely 2.2, svgelements, ezdxf 1.4, Pillow; verified 2026-10-22; cairosvg does not, so no cairo) | low: trace the silhouette by hand |
 | A15 | The toolchain runs: bundler and preflight under uv with FusionHelper editable | verified today on `cad/lap_disc_o.py`: bundle ran, preflight exit 0. The gate also reported *stub fingerprint drifted: Fusion update changed the API defs; re-run gate fidelity tests and re-bless the lock*, a FusionHelper maintenance item, not a script fault | low: re-bless the lock in FusionHelper before stage A |
 | A16 | Layout clearances: Start chord 39.9, P1–SEL 46.8, pocket 13.0 from the nearest hole, columns 11° clear of the nearest pad, Pi corners 26 from the columns | verified by probe today | — |
 | A17 | 115 tall and ⌀160 fit every printer: X1 Carbon 256 × 256 × 256, H2D dual-nozzle 300 × 320 × 325 | verified against `06-enclosure-reference.md` | — |
 | A18 | OI-005 passes, so six buttons are right | unverified; the owner accepted the reprint risk | low: reprint the cup with two holes |
 | A19 | Lead room: 42–49 mm behind the HDMI edge, 32–35 beside the USB edge, enough for extension plugs | verified by probe for the geometry; plug lengths unverified until the parts arrive | low: shift the Pi toward the front, 20 mm available |
+| A20 | A flat floor with 12 × 2 underside channels admits enough air, and the channel roofs bridge cleanly | unverified; the thermal bench check covers the first, the first print the second | low: widen or deepen the channels, or add stick-on feet |
