@@ -93,7 +93,7 @@ All `snake_case`, one value stated once, derived values as expressions
 | `logo_w`, `logo_h` | 116.98, 59.78 | `cad/art/logo/sf2_deboss_solid.dxf`, as D-018 |
 | `logo_z` | 67 | logo centre height; band z 35–99 |
 | `inlay_d` | 1.2 | deboss depth; 1.8 of wall left |
-| `sil_w`, `sil_h` | 42, 59 | silhouettes, the art's 0.714 aspect |
+| `sil_w`, `sil_h` | 44.8, 59 | silhouettes; the figure alone (poster title, stripes and frame excluded) measures 44.8 wide at 59 tall (plan task 2, 2026-10-22), not the poster's 0.714 aspect |
 | `sil_z` | 67 | |
 
 ## 4. Base
