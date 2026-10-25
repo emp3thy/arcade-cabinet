@@ -62,6 +62,15 @@ remains:
       phantom repeats.
 - [ ] Pi boots normally with all overlays loaded (a bad overlay line can stop
       boot — keep a spare SD card image).
+- [ ] **Thermal (D-021):** twenty minutes of SF2 with
+      `vcgencmd measure_temp` logged every ten seconds, first bare on the
+      bench, then assembled in the drum with the heatsinks fitted. Pass:
+      assembled SoC under 70 °C and the air under the lid under 50 °C. Fail
+      means a 30 mm fan on the floor, and a PETG cup if the lid air is over
+      50 °C.
+- [ ] First print fit: buttons, Pi on its inserts, four sockets on their
+      pads, cup seats on the base with the columns home and the screws
+      pulling it flat. Misfits go in a D-02x entry, as D-020 did for the pad.
 
 ## E. Integration
 

@@ -43,8 +43,15 @@ ordering.
 | System buttons | 6 arcade pushbuttons (P1–P4 Start, Select, Hotkey) | HAVE |
 | Wiring | Wire, Dupont connectors | HAVE |
 | Pull-down resistors | 10 kΩ | **NOT NEEDED** (D-005) — purchased, now surplus |
-| USB-C panel mount (optional — tidiness, not function) | Clean external power access to the Pi | NEEDED |
-| Enclosure | Fusion CAD by Claude, owner reviews and prints (D-011) | **NEEDED** |
+| USB-C panel mount | Power inlet on the drum's rear pads (D-021) | NEEDED |
+| HDMI panel mount | micro-HDMI male to HDMI female extension, ≤ 30 cm (D-021) | NEEDED |
+| USB-A ×2 panel mount | extension to the Pi's USB-A (D-021) | NEEDED |
+| RJ45 panel mount | coupler extension to the Pi's ethernet (D-021) | NEEDED |
+| Heatsink kit | Pi 4 set: SoC, RAM, USB controller (D-021) | NEEDED |
+| M2.5 heat-set inserts + M2.5 × 6 | 4 + 4, Pi bosses (D-021) | NEEDED |
+| M3 × 10 countersunk | 4, base to cup (D-021); M3 inserts from the pad stock | NEEDED |
+| Filament | black PETG (base), black and red PLA (cup and inlays) | owner's stock |
+| Enclosure | ⌀160 × 115 drum, Fusion CAD by Claude (D-011, D-021), owner reviews and prints | **NEEDED** |
 
 ## Notes
 

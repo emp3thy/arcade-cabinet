@@ -41,6 +41,12 @@ Remaining blockers: the OI-001 bench gate, JST PH 2.0 mm pigtails, confirming
 the port board passes CC through (else 56 kΩ pull-ups), and the enclosure
 model itself.
 
+The Pi console was settled on 2026-10-22 as a ⌀160 × 115 drum in Street
+Fighter livery, two bolted parts, panel-mount sockets (D-021). Spec:
+`superpowers/specs/2026-10-21-pi-console-drum-design.md`. Modelled the
+same day as stages A–E (`cad/pi_drum_*.py`, exports in `cad/exports/`);
+awaiting the sockets (OI-013), the Ryu art (OI-012) and the first print.
+
 ## File map
 
 | Path | What it is |
@@ -56,6 +62,7 @@ model itself.
 | `docs/07-testing.md` | Bring-up and acceptance checklist |
 | `docs/08-open-issues.md` | Unresolved problems and things needing verification |
 | `docs/09-decision-log.md` | Decisions made, with rationale — read before changing anything |
+| `superpowers/specs/` | Approved design specs written with the brainstorming skill (the Pi console drum, D-021); `superpowers/plans/` holds their implementation plans |
 | `Wireless_Arcade_Build_Guide.md` | Earlier long-form guide. **Superseded**; contains known errors listed in `08-open-issues.md`. Do not treat as authoritative. |
 | `Arcade_Project_Dashboard.html` | Earlier status dashboard. Same caveat. |
 | `Lap_Pad_Enclosure.scad` | OpenSCAD reference geometry. Reference only — see below. |
